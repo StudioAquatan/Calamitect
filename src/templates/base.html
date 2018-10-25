@@ -3,23 +3,22 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>Calamitect TOP(仮)</title>
+    <title>Calamitect</title>
     <link rel="stylesheet" href="{% static 'css/base.css' %}">
   </head>
   <body>
     <header>
         <div class="header-menu">
-            <div class="top"><a href="{% url 'boards:index' %}">Top</a></div>
             <div class="title">CalamiTect</div>
             <div class="signin"><a href="{% url 'accounts:create' %}">Sign In</a></div>
             <!--　ログイン後に表示される　<div class="post">投稿</div>-->
         </div>
         <nav class="header-category">
             <ul>
+                <li class="header-category-menu"><a href="{% url 'boards:index' %}">Top</a></li>
                 <li class="header-category-menu"><a href="">Category1</a></li>
                 <li class="header-category-menu"><a href="">Category2</a></li>
                 <li class="header-category-menu"><a href="">Category3</a></li>
-                <li class="header-category-menu"><a href="">Category4</a></li>
             </ul>
         </nav>
     </header>

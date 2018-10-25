@@ -28,17 +28,18 @@ header {
     border-bottom: 1px solid black;
 }
 
-.top, .title, .signin {
+.title, .signin {
     box-sizing: border-box;
     height: 100%;
     cursor: pointer;
     line-height: 3;
 }
-.top, .signin {
+.signin {
     flex-basis: 150px;
 }
 .title {
-    width: 800px;
+    flex-basis: 800px;
+    margin-left: 150px;
     font-size: 2.6rem;
     line-height: 2.2;
     text-align: center;
