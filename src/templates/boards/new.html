@@ -1,10 +1,5 @@
-{% extends 'boards/base.html' %}
+{% extends 'base.html' %}
 
 {% block content %}
-    <h2>Sign up</h2>
-    <form method="post" novalidate>
-      {% csrf_token %}
-      {{ form.as_p }}
-      <button type="submit" >Create an account</button>
-    </form>
+boards create
 {% endblock %}
