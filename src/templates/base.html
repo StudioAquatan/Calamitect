@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Calamitect</title>
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+  </head>
+  <body>
+    <header>
+        <div class="header-menu">
+            <div class="title">CalamiTect</div>
+            <div class="signin"><a href="{% url 'accounts:create' %}">Sign In</a></div>
+            <!--　ログイン後に表示される　<div class="post">投稿</div>-->
+        </div>
+        <nav class="header-category">
+            <ul>
+                <li class="header-category-menu"><a href="{% url 'boards:index' %}">Top</a></li>
+                <li class="header-category-menu"><a href="">Category1</a></li>
+                <li class="header-category-menu"><a href="">Category2</a></li>
+                <li class="header-category-menu"><a href="">Category3</a></li>
+            </ul>
+        </nav>
+    </header>
+
+
+    {% block content %}
+    {% endblock %}
+
+
+    <footer>
+        <div class="copy">&copy kitガジェット研究所</div>
+    </footer>
+  </body>
+</html>
