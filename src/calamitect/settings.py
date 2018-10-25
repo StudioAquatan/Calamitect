@@ -24,9 +24,8 @@ if os.path.exists(dotenv_file):
     dotenv.load_dotenv(dotenv_file)
 
 # 環境変数から読み込む
-
 SECRET_KEY = os.getenv('SECRET_KEY')
-SECRET_KEY = "=^z)p=2bi+=u6pg^b!6w&kf1&6f@kiz-21gxrbznq=zx%gp4c6"
+
 # Djangoのデバッグ機能の有効/無効．デプロイ時にはFalseにしないといけない．
 # 'true'や'True'などを与えるとTrueが返る．それ以外ではFalseが返る．
 DEBUG = (os.getenv('DEBUG', 'False').lower() == 'true')
@@ -129,8 +128,3 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
-
-DEBUG=True
-ALLOWED_HOSTS="*"
-LANGUAGE_CODE="ja-jp"
-TIME_ZONE="Asia/Tokyo"
