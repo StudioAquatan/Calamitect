@@ -24,8 +24,8 @@
             <ul>
                 <li class="header-category-menu"><a href="{% url 'boards:index' %}">Top</a></li>
                 <li class="header-category-menu"><a href="{% url 'boards:categoryTop' %}?category_type=1">Category1</a></li>
-                <li class="header-category-menu"><a href="">Category2</a></li>
-                <li class="header-category-menu"><a href="">Category3</a></li>
+                <li class="header-category-menu"><a href="{% url 'boards:categoryTop' %}?category_type=2">Category2</a></li>
+                <li class="header-category-menu"><a href="{% url 'boards:categoryTop' %}?category_type=3">Category3</a></li>
             </ul>
         </nav>
     </header>

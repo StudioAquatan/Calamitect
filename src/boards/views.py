@@ -12,9 +12,10 @@ def categoryTop(request):
 
     try:
         articles = Article.objects.filter(category_type=category_type)
-        print(vars(articles))
-    except User.DoesNotExist:
+        print(articles)
+    except Article.DoesNotExist:
         empty = "まだ記事が投稿されていません。"
+        print("ssffd")
         return render(request, 'boards/category_top.html', {'empty': empty})
 
     return render(request, 'boards/category_top.html', {'articles': articles})
