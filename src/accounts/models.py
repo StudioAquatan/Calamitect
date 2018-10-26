@@ -24,7 +24,6 @@ class User(AbstractBaseUser, PermissionsMixin):
     )
     email = models.EmailField(_('email address'), blank=True)
     profile_icon = models.ImageField(_('profile icon'), upload_to='profile_icons', null=True, blank=True)
-    self_introduction = models.CharField(_('self introduction'), max_length=512, blank=True)
     is_admin = models.BooleanField(default=False)
 
     date_joined = models.DateTimeField(_('date joined'), default=timezone.now)
