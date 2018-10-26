@@ -3,8 +3,7 @@ import uuid
 
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
-
-from src.accounts.models import User
+from django.conf import settings
 
 
 def get_image_path(self, filename):
@@ -28,7 +27,7 @@ class Article(models.Model):
     description = models.TextField(verbose_name=_("description"))
     category_type = models.IntegerField(verbose_name=_("category"), default=0)
     image = models.ImageField(verbose_name=_("image"), upload_to=get_image_path)
-    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name=_("user"))
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name=_("user"))
 
 
 class Tag(models.Model):
@@ -43,6 +42,17 @@ class Good(models.Model):
     """
     いいねのモデル
     """
-    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name=_("user"))
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name=_("user"))
     article = models.ForeignKey(Article, on_delete=models.CASCADE, verbose_name=_("article"))
+    created_at = models.DateTimeField(_("date_created"), auto_now_add=True)
+
+
+class Favorite(models.Model):
+    """
+    ユーザの記事に対するお気に入りのモデル
+    """
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name=_("favorite"),
+                             verbose_name=_("user"))
+    article = models.ForeignKey(Article, on_delete=models.CASCADE, related_name=_("favorite"),
+                                verbose_name=_("article"))
     created_at = models.DateTimeField(_("date_created"), auto_now_add=True)
