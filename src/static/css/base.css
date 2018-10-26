@@ -15,6 +15,7 @@ body{
 /*     header    */
 header {
     width:100%;
+    height:100px;
     background-color: white;
 }
 
@@ -27,28 +28,33 @@ header {
     margin-top: 10px;
     border-bottom: 1px solid black;
 }
-
-.title, .signin {
+a {
+    color: black;
+}
+.title, .signin, .login, .logout, .post {
     box-sizing: border-box;
     height: 100%;
-    cursor: pointer;
     line-height: 3;
 }
-.signin {
-    flex-basis: 150px;
+.signin, .login, .logout, .post {
+    cursor: pointer;
+    flex-basis: 120px;
 }
 .title {
     flex-basis: 800px;
-    margin-left: 150px;
+    margin-left: 220px;
     font-size: 2.6rem;
     line-height: 2.2;
     text-align: center;
 }
+.title a {
+    text-decoration: none;
+}
 .top {
     text-align: left;
 }
-.signin {
-    text-align: right;
+.signin, .login, .logout, .post {
+    text-align: center;
 }
 
 .header-category {

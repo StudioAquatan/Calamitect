@@ -3,6 +3,8 @@
 
 
 <div class="category-top">
+    <div class="category-top-left-dummy">
+    </div>
     <div class="category-top-left">
         <ul class="left-menu">
             <li class="new-post">
@@ -18,12 +20,31 @@
     </div>
 
     <div class="category-top-middle">
+        <div class="middle-post-title">
+            New Post
+        </div>
+        {% for article in articles %}
+        <div class="middle-post-card">
+            <div class="card-image">
+                [image]
+            </div>
+            <div class="card-title">
+                {{ article.title }}
+            </div>
+            <div class="card-tag">
+                {{ article.tag }}
+            </div>
+            <div class="card-good">
+                {{ article.good }}
+            </div>
+        </div>
+        {% endfor %}
     </div>
 
     <div class="category-top-right">
-        <div class="right-menu">
+        <ul class="tag-name-ranking">
             Tag 1
-        </div>
+        </ul>
         <ul class="tag-name-ranking">
             Tag 2
         </ul>
