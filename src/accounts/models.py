@@ -6,6 +6,8 @@ from django.db import models
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 
+from src.boards.models import Article
+
 
 class User(AbstractBaseUser, PermissionsMixin):
     """
@@ -47,11 +49,13 @@ class User(AbstractBaseUser, PermissionsMixin):
     def email_user(self, subject, message, from_email=None, **kwargs):
         send_mail(subject, message, from_email, [self.email], **kwargs)
 
+
 class Favorite(models.Model):
     """
     ユーザの記事に対するお気に入りのモデル
     """
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="favs",
-                             verbose_name="ユーザー")
-    article = models.ForeignKey(Article, on_delete=models.CASCADE, related_name="favs", verbose_name="記事")
-    created_at = models.DateTimeField("お気に入りした日時", auto_now_add=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name=_("favorite"),
+                             verbose_name=_("user"))
+    article = models.ForeignKey(Article, on_delete=models.CASCADE, related_name=_("favorite"),
+                                verbose_name=_("article"))
+    created_at = models.DateTimeField(_("date_created"), auto_now_add=True)
