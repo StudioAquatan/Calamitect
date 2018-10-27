@@ -6,6 +6,8 @@ from django.contrib.auth.forms import UserCreationForm as BaseUserCreationForm
 
 # auth user model のカスタムモデルを利用
 from django.contrib.auth import get_user_model
+User = get_user_model()
+
 
 
 class UserCreationForm(BaseUserCreationForm):
@@ -20,7 +22,6 @@ class UserCreationForm(BaseUserCreationForm):
 
 
 def create(request):
-
     if request.method == 'POST':
         username = request.POST['username']
         email = request.POST['email']
@@ -47,7 +48,6 @@ def create(request):
 def logIn(request):
 
     if request.method == 'POST':
-        User = get_user_model()
         username = request.POST['username']
         password = request.POST['password']
         try:
