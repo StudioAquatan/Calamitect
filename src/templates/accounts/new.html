@@ -1,10 +1,21 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h2>Sign up</h2>
-    <form method="post" novalidate>
-      {% csrf_token %}
-      {{ form.as_p }}
-      <button type="submit" >Create an account</button>
-    </form>
+    <div class="post-form">
+      <form method="post" action="">
+          {% csrf_token %}
+          <h2>Sign up</h2>
+          {#   username        #}
+          <div style="width: 200px; font-size: 2rem; font-wight: bold; margin-left: 100px;">Name</div>
+          <input class="form-username" type="text" name="username" />
+          {#   email           #}
+          <div style="width: 200px; font-size: 2rem; font-wight: bold; margin-left: 100px;">e-mail</div>
+          <input class="form-email" type="email" name="email" />
+          {#   password        #}
+          <div style="width: 200px; font-size: 2rem; font-wight: bold; margin-left: 100px;">password</div>
+          <input class="form-password" type="password" name="password" />
+
+          <div><input type="submit" value="送信"></div>
+      </form>
+    </div>
 {% endblock %}

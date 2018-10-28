@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+{% block content %}
+
+
+<div class="category-top">
+    <div class="category-top-left-dummy">
+    </div>
+    <div class="category-top-left">
+        <ul class="left-menu">
+            <li class="new-post">
+                New Post
+            </li>
+            <li class="ranking">
+                Ranking
+            </li>
+            <li class="search">
+                Search
+            </li>
+        </ul>
+    </div>
+
+    <div class="category-top-middle">
+        <div class="middle-post-title">
+            New Post
+        </div>
+        {{ empty }}
+        {% for article in articles %}
+        <div class="middle-post-card">
+            <div class="card-image">
+                [image]
+            </div>
+            <div class="card-title">
+                {{ article.title }}
+            </div>
+            <div class="card-tag">
+                {{ article.tag }}
+            </div>
+            <div class="card-good">
+                {{ article.good }}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <div class="category-top-right">
+        <ul class="tag-name-ranking">
+            Tag 1
+        </ul>
+        <ul class="tag-name-ranking">
+            Tag 2
+        </ul>
+        <ul class="tag-name-ranking">
+            Tag 3
+        </ul>
+        <ul class="tag-name-ranking">
+            Tag 4
+        </ul>
+        <ul class="tag-name-ranking">
+            Tag 5
+        </ul>
+        <ul class="tag-name-ranking">
+            Tag 5
+        </ul>
+    </div>
+
+</div>
+
+
+{% endblock %}

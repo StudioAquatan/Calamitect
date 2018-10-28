@@ -41,6 +41,15 @@ for host in os.getenv('ALLOWED_HOSTS', '*').split(','):
 # Application definition
 AUTH_USER_MODEL = 'accounts.User'
 
+
+# ログイン後トップページにリダイレクト
+LOGIN_REDIRECT_URL = '/'
+
+#Authentication backends
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+)
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',

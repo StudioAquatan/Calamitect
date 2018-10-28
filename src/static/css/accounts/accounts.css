@@ -1,0 +1,15 @@
+.login-form {
+    width: 1100px;
+    margin: 0 auto;
+    background-color: #ffffff;
+    margin-top: 30px;
+    text-align: center;
+}
+form{
+    margin: 0 auto;
+}
+.form-login-username, .form-login-password {
+    width: 600px;
+    height: 40px;
+    margin: 0 auto;
+}

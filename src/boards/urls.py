@@ -6,4 +6,5 @@ app_name = 'boards'
 urlpatterns = [
     path('', views.index, name='index'),
     path('boards/new/', views.create, name='create'),
+    path('boards/category-top', views.categoryTop, name='categoryTop')
 ]
