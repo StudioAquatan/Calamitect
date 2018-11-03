@@ -18,7 +18,7 @@ from django.urls import path, include
 from django.conf.urls.static import static
 
 from src.calamitect import settings
-from ..boards.urls import router as board_router
+from boards.urls import router as board_router
 
 urlpatterns = [
     path('admin/', admin.site.urls),
