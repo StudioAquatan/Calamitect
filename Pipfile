@@ -8,6 +8,8 @@ django = "*"
 python-dotenv = "*"
 pillow = "*"
 pip = "==18.0"
+djangorestframework = "*"
+django-filter = "*"
 
 [dev-packages]
 
