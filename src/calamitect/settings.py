@@ -37,15 +37,13 @@ ALLOWED_HOSTS = []
 for host in os.getenv('ALLOWED_HOSTS', '*').split(','):
     ALLOWED_HOSTS.append(host.strip())
 
-
 # Application definition
 AUTH_USER_MODEL = 'accounts.User'
-
 
 # ログイン後トップページにリダイレクト
 LOGIN_REDIRECT_URL = '/'
 
-#Authentication backends
+# Authentication backends
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
 )
@@ -59,6 +57,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'accounts',
     'boards',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
@@ -91,7 +90,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'calamitect.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
@@ -101,7 +99,6 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
@@ -121,7 +118,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/2.1/topics/i18n/
 
@@ -134,7 +130,6 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
