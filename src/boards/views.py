@@ -22,7 +22,7 @@ def index(request):
         user_id = user.id
         return render(request, 'boards/index.html', {'articles': articles, 'user_id': user_id})
 
-    return render(request, 'boards/index.html',{'articles': articles})
+    return render(request, 'boards/index.html', {'articles': articles})
 
 
 def categoryTop(request):
@@ -39,13 +39,13 @@ def categoryTop(request):
     if request.user.is_authenticated:
         user = request.user
         user_id = user.id
-        return render(request, 'boards/index.html', {'articles': articles, 'user_id': user_id})
+        return render(request, 'boards/category_top.html',
+                      {'articles': articles, 'user_id': user_id, 'category_type': category_type})
 
-    return render(request, 'boards/category_top.html', {'articles': articles})
+    return render(request, 'boards/category_top.html', {'articles': articles, 'category_type': category_type})
 
 
 def create(request):
-
     if request.method == 'POST':
         if request.user.is_authenticated:
             title = request.POST['title']
@@ -56,7 +56,7 @@ def create(request):
                 title=title,
                 description=description,
                 category_type=category_type,
-                draft_flag = draft_flag,
+                draft_flag=draft_flag,
                 user=request.user
             )
 
@@ -68,6 +68,17 @@ def create(request):
         return render(request, 'boards/index.html', {'user_id': user_id})
 
     return render(request, 'boards/new.html')
+
+
+def articleDetail(request, article_id):
+    articles = Article.objects.get(id=article_id)
+    print(articles.title)
+    if request.user.is_authenticated:
+        user = request.user
+        user_id = user.id
+        return render(request, 'boards/article_detail.html', {'articles': articles, 'user_id': user_id})
+
+    return render(request, 'boards/article_detail.html', {'articles': articles})
 
 
 class GoodViewSet(viewsets.ModelViewSet):
@@ -85,7 +96,6 @@ class CommentViewSet(viewsets.ModelViewSet):
     serializer_class = CommentSerializer
 
 
-
 # 以下のアクションは仮配置
 
 def userPage(request, user_id):
@@ -95,7 +105,7 @@ def userPage(request, user_id):
         user = request.user
         user_id = user.id
 
-    return render(request, 'accounts/userpage.html',{'user_id':user_id, 'user':user})
+    return render(request, 'accounts/userpage.html', {'user_id': user_id, 'user': user})
 
 
 def newPost(request, user_id):
@@ -105,7 +115,7 @@ def newPost(request, user_id):
         user = request.user
         user_id = user.id
 
-    return render(request, 'accounts/new_post.html',{'user_id':user_id, 'user':user})
+    return render(request, 'accounts/new_post.html', {'user_id': user_id, 'user': user})
 
 
 def postAll(request, user_id):
@@ -121,7 +131,7 @@ def postAll(request, user_id):
             empty = "まだ記事が投稿されていません。"
             return render(request, 'accounts/post_all.html', {'user_id': user_id, 'empty': empty})
 
-    return render(request, 'accounts/post_all.html',{'user_id':user_id, 'user':user, 'articles':articles})
+    return render(request, 'accounts/post_all.html', {'user_id': user_id, 'user': user, 'articles': articles})
 
 
 def good(request, user_id):
@@ -131,7 +141,7 @@ def good(request, user_id):
         user = request.user
         user_id = user.id
 
-    return render(request, 'accounts/good.html',{'user_id':user_id, 'user':user})
+    return render(request, 'accounts/good.html', {'user_id': user_id, 'user': user})
 
 
 def favorite(request, user_id):
@@ -141,4 +151,4 @@ def favorite(request, user_id):
         user = request.user
         user_id = user.id
 
-    return render(request, 'accounts/favorite.html',{'user_id':user_id, 'user':user})
+    return render(request, 'accounts/favorite.html', {'user_id': user_id, 'user': user})

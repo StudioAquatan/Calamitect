@@ -15,6 +15,7 @@ urlpatterns = [
     path('', views.index, name='index'),
     path('boards/new/', views.create, name='create'),
     path('boards/category-top', views.categoryTop, name='categoryTop'),
+    path('boards/article-detail/<int:article_id>/', views.articleDetail, name='article_detail'),
 
     path('<int:user_id>/', views.userPage, name='userpage'),
     path('new_post/<int:user_id>/', views.newPost, name='newpost'),

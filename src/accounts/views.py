@@ -8,8 +8,8 @@ from src.boards.models import Article, Tag
 
 # auth user model のカスタムモデルを利用
 from django.contrib.auth import get_user_model
-User = get_user_model()
 
+User = get_user_model()
 
 
 class UserCreationForm(BaseUserCreationForm):
@@ -18,11 +18,10 @@ class UserCreationForm(BaseUserCreationForm):
 
     email = forms.EmailField(required=True)
     username = forms.CharField(required=True)
+
     class Meta:
         model = User
-        fields = fields = ("username", "email", "password1", "password2")
-
-
+        fields = ("username", "email", "password1", "password2")
 
 
 def create(request):
@@ -46,15 +45,12 @@ def create(request):
             return redirect('boards:index')
         else:
             error_flag = 1
-            return render(request, 'accounts/new.html', {'form': form, 'error_flag':error_flag})
+            return render(request, 'accounts/new.html', {'form': form, 'error_flag': error_flag})
 
-
-    return render(request, 'accounts/new.html', {'form': form, 'error_flag':error_flag})
-
+    return render(request, 'accounts/new.html', {'form': form, 'error_flag': error_flag})
 
 
 def logIn(request):
-
     if request.method == 'POST':
         username = request.POST['username']
         password = request.POST['password']
@@ -69,7 +65,7 @@ def logIn(request):
                     return redirect('boards:index')
         except User.DoesNotExist:
             error = "名前かパスワードに誤りがあります。"
-            return render(request, 'accounts/login.html',{ 'error': error})
+            return render(request, 'accounts/login.html', {'error': error})
 
         # user = authenticate(request, username=username, password=password)
 
@@ -80,16 +76,3 @@ def logOut(request):
     logout(request)
 
     return render(request, 'boards/index.html')
-
-
-
-
-
-
-
-
-
-
-
-
-
