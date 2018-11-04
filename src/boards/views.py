@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from django.shortcuts import render, redirect, get_object_or_404
 import django_filters
 from rest_framework import viewsets, filters
-from src.accounts.models import User
+from accounts.models import User
 from .models import Article, Good, Favorite, Comment
 from .serializer import GoodSerializer, FavoriteSerializer, CommentSerializer
 

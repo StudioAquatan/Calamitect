@@ -5,13 +5,14 @@
 <div class="category-top">
     <div class="category-content">
         <div class="category-top-title">
+            カテゴリ：
             {% if category_type == '1' %}
-                カテゴリ：災害中
+                災害中
             {% elif category_type == '2' %}
                 事前対策
             {% elif category_type == '3' %}
                 ボランティア
-            {% elif category_type == '3' %}
+            {% elif category_type == '4' %}
                 アイテム紹介
             {% endif %}
             : New Post
@@ -31,19 +32,24 @@
             <div class="card-image">
                 [image]
             </div>
-            <div class="card-title">
-                <a href="{% url 'boards:article_detail' article.id%}">{{ article.title }}</a>
-            </div>
-            <div class="card-tag">
-                {{ article.tag }}
-            </div>
-            <div class="card-good">
-                {{ article.good }}
-            </div>
-            <div class="card-status">
-                {% if articles.draft_flag  %}
-                    下書き
-                {% endif %}
+            <div class="card-right">
+                <div class="card-title">
+                    <a href="{% url 'boards:article_detail' article.id%}">{{ article.title }}</a>
+                </div>
+                <div class="card-content">
+                    {{ article.description }}
+                </div>
+                <div class="card-tag">
+                    {{ article.tag }}
+                </div>
+                <div class="card-good">
+                    {{ article.good }}
+                </div>
+                <div class="card-status">
+                     {% if articles.draft_flag  %}
+                         下書き
+                     {% endif %}
+                </div>
             </div>
         </div>
         {% endfor %}
