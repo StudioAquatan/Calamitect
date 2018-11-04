@@ -56,3 +56,16 @@ class Favorite(models.Model):
     article = models.ForeignKey(Article, on_delete=models.CASCADE, related_name=_("favorite"),
                                 verbose_name=_("article"))
     created_at = models.DateTimeField(_("date_created"), auto_now_add=True)
+
+
+class Comment(models.Model):
+    """
+    コメントのモデル
+    """
+    text = models.CharField(verbose_name=_("text"), max_length=255)
+    image = models.ImageField(verbose_name=_("image"), upload_to=get_image_path)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name=_("comments"),
+                             verbose_name=_("user"))
+    article = models.ForeignKey(Article, on_delete=models.CASCADE, related_name=_("comments"),
+                                verbose_name=_("article"))
+    created_at = models.DateTimeField(_("date_created"), auto_now_add=True)
