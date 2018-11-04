@@ -3,6 +3,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.forms import UserCreationForm as BaseUserCreationForm
+from src.boards.models import Article, Tag
 
 # auth user model のカスタムモデルを利用
 from django.contrib.auth import get_user_model
@@ -22,6 +23,7 @@ class UserCreationForm(BaseUserCreationForm):
 
 
 def create(request):
+
     if request.method == 'POST':
         username = request.POST['username']
         email = request.POST['email']
@@ -71,4 +73,21 @@ def logIn(request):
 def logOut(request):
     logout(request)
 
-    return render(request, 'boards/index.html')
+    if request.user.is_authenticated:
+        user = request.user
+        user_id = user.id
+
+    return render(request, 'boards/index.html',{'user_id':user_id})
+
+
+
+
+
+
+
+
+
+
+
+
+

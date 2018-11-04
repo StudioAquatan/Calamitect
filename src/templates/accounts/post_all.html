@@ -1,0 +1,20 @@
+{% extends 'accounts/base_userpage.html' %}
+
+{% block content %}
+{% for article in articles %}
+        <div class="middle-post-card">
+            <div class="card-image">
+                [image]
+            </div>
+            <div class="card-title">
+                {{ article.title }}
+            </div>
+            <div class="card-tag">
+                {{ article.tag }}
+            </div>
+            <div class="card-good">
+                {{ article.good }}
+            </div>
+        </div>
+{% endfor %}
+{% endblock %}

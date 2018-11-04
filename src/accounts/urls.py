@@ -7,5 +7,5 @@ app_name = 'accounts'
 urlpatterns = [
     path('new/', views.create, name='create'),
     path('login/', views.logIn, name='login'),
-    path('logout/', views.logOut, name='logout')
+    path('logout/', views.logOut, name='logout'),
 ]

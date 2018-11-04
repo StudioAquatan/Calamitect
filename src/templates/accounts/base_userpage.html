@@ -54,8 +54,37 @@
     <div class="header-margin-cancel"></div>
 
     {#  内容  #}
-    {% block content %}
-    {% endblock %}
+    <div class="userpage">
+        <div class="userpage-left-dummy">
+        </div>
+        <div class="userpage-left">
+            <div class="userpage-left-title">
+                MyPage
+            </div>
+            <ul class="userpage-left-menu">
+                <li class="userpage-list">
+                    <a href="{% url 'boards:newpost' user_id%}">新規投稿</a>
+                </li>
+                <li class="userpage-list">
+                    <a href="{% url 'boards:postall' user_id%}">投稿一覧</a>
+                </li>
+                <li class="userpage-list">
+                    <a href="{% url 'boards:good' user_id%}">いいね</a>
+                </li>
+                <li class="userpage-list">
+                    <a href="{% url 'boards:favorite' user_id%}">お気に入り</a>
+                </li>
+                <li class="userpage-list">
+                    <a href="{% url 'boards:userpage' user_id%}">プロフィール</a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="userpage-middle">
+            {% block content %}
+            {% endblock %}
+        </div>
+    </div>
 
 
     <footer>
