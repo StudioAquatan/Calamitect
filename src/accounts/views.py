@@ -1,4 +1,5 @@
 from django.contrib.auth import authenticate, login, logout
+from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect, get_object_or_404
@@ -15,35 +16,39 @@ class UserCreationForm(BaseUserCreationForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
+    email = forms.EmailField(required=True)
+    username = forms.CharField(required=True)
     class Meta:
         model = User
-        fields = 'username',
+        fields = fields = ("username", "email", "password1", "password2")
 
 
 
 
 def create(request):
-
+    form = UserCreationForm(request.POST)
+    error_flag = 0
     if request.method == 'POST':
-        username = request.POST['username']
-        email = request.POST['email']
-        password = request.POST['password']
-        user = User.objects.create(
-            username=username,
-            email = email,
-            password = password
-        )
 
-        form = UserCreationForm(request.POST)
-        login(request, user)
         if form.is_valid():
-            print("nvoenbejhu")
-            user = form.save()
+            username = request.POST['username']
+            email = request.POST['email']
+            password = request.POST['password1']
+            user = User.objects.create(
+                username=username,
+                email=email,
+                password=password
+            )
+            # form.save()
 
+            login(request, user)
             return redirect('boards:index')
+        else:
+            error_flag = 1
+            return render(request, 'accounts/new.html', {'form': form, 'error_flag':error_flag})
 
 
-    return render(request, 'accounts/new.html')
+    return render(request, 'accounts/new.html', {'form': form, 'error_flag':error_flag})
 
 
 
@@ -73,11 +78,7 @@ def logIn(request):
 def logOut(request):
     logout(request)
 
-    if request.user.is_authenticated:
-        user = request.user
-        user_id = user.id
-
-    return render(request, 'boards/index.html',{'user_id':user_id})
+    return render(request, 'boards/index.html')
 
 
 

@@ -7,15 +7,39 @@
           <h2>Sign up</h2>
           {#   username        #}
           <div style="width: 200px; font-size: 2rem; font-wight: bold; margin-left: 100px;">Name</div>
-          <input class="form-username" type="text" name="username" />
+{#          <input class="form-username" type="text" name="username" />#}
+          {{ form.username }}
+          {% if error_flag %}
+              {{ form.username.errors }}
+          {% endif %}
           {#   email           #}
           <div style="width: 200px; font-size: 2rem; font-wight: bold; margin-left: 100px;">e-mail</div>
-          <input class="form-email" type="email" name="email" />
+{#          <input class="form-email" type="email" name="email" />#}
+          {{ form.email }}
+          {% if error_flag %}
+           {{ form.email.errors }}
+          {% endif %}
           {#   password        #}
           <div style="width: 200px; font-size: 2rem; font-wight: bold; margin-left: 100px;">password</div>
-          <input class="form-password" type="password" name="password" />
+{#          <input class="form-password" type="password" name="password2" />#}
+          {{ form.password1 }}
+          {% if error_flag %}
+              {{ form.password1.errors }}
+          {% endif %}
+          <div style="width: 200px; font-size: 2rem; font-wight: bold; margin-left: 100px;">password again</div>
+{#          <input class="form-password" type="password" name="password2" />#}
+          {{ form.password2 }}
+          {% if error_flag %}
+              {{ form.password1.errors }}
+          {% endif %}
 
           <div><input type="submit" value="送信"></div>
       </form>
     </div>
+
+    <style type="text/css">
+        ul.errorList{
+            list-style-type:none
+        }
+    </style>
 {% endblock %}
