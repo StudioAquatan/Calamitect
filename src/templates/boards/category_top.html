@@ -3,66 +3,57 @@
 
 
 <div class="category-top">
-    <div class="category-top-left-dummy">
-    </div>
-    <div class="category-top-left">
-        <ul class="left-menu">
-            <li class="new-post">
-                New Post
-            </li>
-            <li class="ranking">
-                Ranking
-            </li>
-            <li class="search">
-                Search
-            </li>
-        </ul>
-    </div>
-
-    <div class="category-top-middle">
-        <div class="middle-post-title">
-            New Post
+    <div class="category-content">
+        <div class="category-top-title">
+            カテゴリ：
+            {% if category_type == '1' %}
+                災害中
+            {% elif category_type == '2' %}
+                事前対策
+            {% elif category_type == '3' %}
+                ボランティア
+            {% elif category_type == '4' %}
+                アイテム紹介
+            {% endif %}
+            : New Post
         </div>
+
+        <div class="category-top-search">
+            <input class="category-search-box" type="text" placeholder=" search"/>
+            <div style="flex-basis: 300px;"></div>
+            <i class="category-search-decision fas fa-search"></i>
+            <i class="category-search-menu fa fa-angle-down"></i>
+        </div>
+
+
         {{ empty }}
         {% for article in articles %}
-        <div class="middle-post-card">
+        <div class="post-card">
             <div class="card-image">
                 [image]
             </div>
-            <div class="card-title">
-                {{ article.title }}
-            </div>
-            <div class="card-tag">
-                {{ article.tag }}
-            </div>
-            <div class="card-good">
-                {{ article.good }}
+            <div class="card-right">
+                <div class="card-title">
+                    <a href="{% url 'boards:article_detail' article.id%}">{{ article.title }}</a>
+                </div>
+                <div class="card-content">
+                    {{ article.description }}
+                </div>
+                <div class="card-tag">
+                    {{ article.tag }}
+                </div>
+                <div class="card-good">
+                    {{ article.good }}
+                </div>
+                <div class="card-status">
+                     {% if articles.draft_flag  %}
+                         下書き
+                     {% endif %}
+                </div>
             </div>
         </div>
         {% endfor %}
     </div>
-
-    <div class="category-top-right">
-        <ul class="tag-name-ranking">
-            Tag 1
-        </ul>
-        <ul class="tag-name-ranking">
-            Tag 2
-        </ul>
-        <ul class="tag-name-ranking">
-            Tag 3
-        </ul>
-        <ul class="tag-name-ranking">
-            Tag 4
-        </ul>
-        <ul class="tag-name-ranking">
-            Tag 5
-        </ul>
-        <ul class="tag-name-ranking">
-            Tag 5
-        </ul>
-    </div>
-
 </div>
 
 

@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+    <div class="article-detail">
+        <div class="article-detail-title">
+            {{ articles.title }}
+        </div>
+        <div class="article-detail-info">
+            <div class="article-detail-username">
+                ユーザー名: <br/>
+                {{ articles.user }}
+            </div>
+            <div class="article-detail-created-at">
+                投稿日: <br/>
+                {{ articles.created_at }}
+            </div>
+            <div class="article-detail-comments">
+                comment<br/>
+            </div>
+            <div class="article-detail-good">
+                good<br/>
+            </div>
+            <div class="article-detail-category">
+                {{ articles.category_type }}
+            </div>
+            <div class="article-detail-tag">
+                tag
+            </div>
+        </div>
+
+        <div class="article-detail-description">
+           {{ articles.description }}
+        </div>
+
+    </div>
+{% endblock %}

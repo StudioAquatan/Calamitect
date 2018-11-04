@@ -3,54 +3,45 @@
 
 {% block content %}
 <div class="description">
+    <div class="bxslider">
 
-    <div class="description-box">
-        <div class="description-title">CalamiTect</div>
-        <div class="description-sentence">Description of category Description of category Description of category
-            Description of category Description of category Description of category Description of category Description
-            of category Description of category Description of category Description of category Description of category</div>
+        <div class="description-box">
+           <div class="description-title">ROGOROGO</div>
+        </div>
+        <div class="description-box">
+            <div class="description-title">Sample</div>
+        </div>
+        <div class="description-box">
+            <div class="description-title">Demo</div>
+        </div>
+    </div>
+</div>
+
+
+<div class="pickup">
+    <div class="pickup-title">
+        Pickup Atricle
     </div>
 
+     {{ empty }}
+     {% for article in articles %}
+     <div class="pickup-content">
+            <div class="pickup-card-image">
+                [image]
+            </div>
+            <div class="pickup-card-title">
+                {{ article.title }}
+            </div>
+            <div class="pickup-card-tag">
+                {{ article.tag }}
+            </div>
+            <div class="pickup-card-good">
+                {{ article.good }}
+            </div>
+        </div>
+        {% endfor %}
+
 </div>
 
-
-<div class="section-list">
-    <section class="section-category">
-        <div class="category-left">
-            <div style="height: 130px; line-height:3; font-size: 2rem; margin-left: 15px;">Category1</div>
-            <div style="margin-left: 15px;">Description of category Description of category Description of category Description of category Description
-                of category Description of category Description of category Description of category Description of category</div>
-        </div>
-        <div class="category-right">
-        </div>
-    </section>
-        <section class="section-category">
-        <div class="category-left">
-            <div style="height: 130px; line-height:3; font-size: 2rem; margin-left: 15px;">Category2</div>
-            <div style="margin-left: 15px;">Description of category Description of category Description of category Description of category Description
-                of category Description of category Description of category Description of category Description of category</div>
-        </div>
-        <div class="category-right">
-        </div>
-    </section>
-        <section class="section-category" style="margin-top: 0px;">
-        <div class="category-left">
-            <div style="height: 130px; line-height:3; font-size: 2rem; margin-left: 15px;">Category3</div>
-            <div style="margin-left: 15px;">Description of category Description of category Description of category Description of category Description
-                of category Description of category Description of category Description of category Description of category</div>
-        </div>
-        <div class="category-right">
-        </div>
-    </section>
-        <section class="section-category"style="margin-top: 0px;">
-        <div class="category-left">
-            <div style="height: 130px; line-height:3; font-size: 2rem; margin-left: 15px;">Category4</div>
-            <div style="margin-left: 15px;">Description of category Description of category Description of category Description of category Description
-                of category Description of category Description of category Description of category Description of category</div>
-        </div>
-        <div class="category-right">
-        </div>
-    </section>
-</div>
 
 {% endblock %}

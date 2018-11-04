@@ -1,0 +1,25 @@
+{% extends 'accounts/base_userpage.html' %}
+
+{% block content %}
+{% for article in articles %}
+        <div class="middle-post-card">
+            <div class="card-image">
+                [image]
+            </div>
+            <div class="card-title">
+                <a href="{% url 'boards:article_detail' article.id%}">{{ article.title }}</a>
+            </div>
+            <div class="card-tag">
+                {{ article.tag }}
+            </div>
+            <div class="card-good">
+                {{ article.good }}
+            </div>
+            <div class="card-status">
+                {% if articles.draft_flag  %}
+                    下書き
+                {% endif %}
+            </div>
+        </div>
+{% endfor %}
+{% endblock %}
