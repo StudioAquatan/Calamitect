@@ -27,7 +27,9 @@ class Article(models.Model):
     description = models.TextField(verbose_name=_("description"))
     category_type = models.IntegerField(verbose_name=_("category"), default=0)
     image = models.ImageField(verbose_name=_("image"), upload_to=get_image_path)
+    draft_flag = models.BooleanField(verbose_name=_("draft-flag"))
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name=_("user"))
+    created_at = models.DateTimeField(_("date_created"), auto_now_add=True)
 
 
 class Tag(models.Model):
