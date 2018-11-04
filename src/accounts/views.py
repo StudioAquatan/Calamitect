@@ -30,6 +30,7 @@ def create(request):
     error_flag = 0
     if request.method == 'POST':
 
+        print(form.is_valid())
         if form.is_valid():
             username = request.POST['username']
             email = request.POST['email']

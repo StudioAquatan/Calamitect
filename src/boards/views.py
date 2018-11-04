@@ -51,11 +51,12 @@ def create(request):
             title = request.POST['title']
             description = request.POST['description']
             category_type = request.POST['category_type']
-
+            draft_flag = request.POST['draft_flag']
             Article.objects.create(
                 title=title,
                 description=description,
                 category_type=category_type,
+                draft_flag = draft_flag,
                 user=request.user
             )
 
