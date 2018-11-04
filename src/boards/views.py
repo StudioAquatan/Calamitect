@@ -4,8 +4,8 @@ from django.shortcuts import render, redirect, get_object_or_404
 import django_filters
 from rest_framework import viewsets, filters
 
-from .models import Article, Good, Favorite
-from .serializer import GoodSerializer, FavoriteSerializer
+from .models import Article, Good, Favorite, Comment
+from .serializer import GoodSerializer, FavoriteSerializer, CommentSerializer
 
 
 def index(request):
@@ -54,3 +54,8 @@ class GoodViewSet(viewsets.ModelViewSet):
 class FavoriteViewSet(viewsets.ModelViewSet):
     queryset = Favorite.objects.all()
     serializer_class = FavoriteSerializer
+
+
+class CommentViewSet(viewsets.ModelViewSet):
+    queryset = Comment.objects.all()
+    serializer_class = CommentSerializer
