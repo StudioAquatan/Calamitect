@@ -396,7 +396,8 @@ div.good-info-upper a, div.good-info a{
 }
 .article-comment-content{
     width: 640px;
-    height: 50px;
+    min-height: 50px;
+    height: 100%;
     overflow: hidden;
     word-wrap: break-word;
 }
