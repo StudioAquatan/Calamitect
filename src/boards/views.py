@@ -159,24 +159,29 @@ def articleDetail(request, article_id):
     if request.user.is_authenticated:
         user = request.user
         user_id = user.id
-        return render(request, 'boards/article_detail.html', {'articles': articles, 'article_id':article_id, 'good_sum':good_sum,'user_id': user_id, 'comments':copy_comments, 'comments_sum':comments_sum})
+        return render(request, 'boards/article_detail.html',
+                      {'articles': articles, 'article_id': article_id, 'good_sum': good_sum, 'user_id': user_id,
+                       'comments': copy_comments, 'comments_sum': comments_sum})
 
-    return render(request, 'boards/article_detail.html', {'articles': articles, 'article_id':article_id, 'good_sum':good_sum,'comments':copy_comments,'comments_sum':comments_sum})
+    return render(request, 'boards/article_detail.html',
+                  {'articles': articles, 'article_id': article_id, 'good_sum': good_sum, 'comments': copy_comments,
+                   'comments_sum': comments_sum})
+
 
 def good(request, article_id):
     article = Article.objects.get(id=article_id)
 
-    is_good= Good.objects.filter(user=request.user, article=article).count()
+    is_good = Good.objects.filter(user=request.user, article=article).count()
     if is_good != 0:
         good = Good.objects.get(user=request.user, article=article)
         good.delete()
-        return redirect('boards:article_detail',article_id=article_id)
+        return redirect('boards:article_detail', article_id=article_id)
 
     Good.objects.create(
         user=request.user,
         article=article
     )
-    return redirect('boards:article_detail',article_id=article_id)
+    return redirect('boards:article_detail', article_id=article_id)
 
 
 class GoodViewSet(viewsets.ModelViewSet):
@@ -225,11 +230,41 @@ def postAll(request, user_id):
 
         try:
             articles = Article.objects.filter(user=user)
+
+            for article in articles:
+                sum = Good.objects.filter(article=article).count()
+                article.good_sum = sum
+
         except Article.DoesNotExist:
             empty = "まだ記事が投稿されていません。"
             return render(request, 'accounts/post_all.html', {'user_id': user_id, 'empty': empty})
 
     return render(request, 'accounts/post_all.html', {'user_id': user_id, 'user': user, 'articles': articles})
+
+
+def postEdit(request, user_id, article_id):
+    user = get_object_or_404(User, pk=user_id)
+
+    if request.user.is_authenticated:
+        user = request.user
+        user_id = user.id
+
+        articles = Article.objects.get(id=article_id)
+
+        if request.method == 'POST':
+            title = request.POST['title']
+            description = request.POST['description']
+            category_type = request.POST['category_type']
+            draft_flag = request.POST['draft_flag']
+
+            articles.title = title
+            articles.description = description
+            articles.category_type =category_type
+            articles.draft_flag =draft_flag
+            articles.save()
+
+            return redirect('boards:post_edit', article_id=article_id, user_id=user_id )
+    return render(request, 'accounts/post_edit.html', {'user_id': user_id, 'user': user, 'articles': articles})
 
 
 def myGood(request, user_id):
@@ -238,6 +273,13 @@ def myGood(request, user_id):
     if request.user.is_authenticated:
         user = request.user
         user_id = user.id
+
+        goods = Good.objects.filter(user=user)
+        for good in goods:
+            sum = Good.objects.filter(article=good.article).count()
+            good.article.good_sum = sum
+
+        return render(request, 'accounts/good.html', {'user_id': user_id, 'user': user, 'goods': goods})
 
     return render(request, 'accounts/good.html', {'user_id': user_id, 'user': user})
 

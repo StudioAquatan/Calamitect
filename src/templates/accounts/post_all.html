@@ -2,24 +2,32 @@
 
 {% block content %}
 {% for article in articles %}
-        <div class="middle-post-card">
-            <div class="card-image">
+         <div class="post-card-postall">
+            <div class="card-image-postall">
                 [image]
             </div>
-            <div class="card-title">
-                <a href="{% url 'boards:article_detail' article.id%}">{{ article.title }}</a>
+            <div class="card-right-postall">
+                <div class="card-title-postall">
+                    <a href="{% url 'boards:article_detail' article.id%}">{{ article.title }}</a>
+                    <a href="{% url 'boards:post_edit' user_id article.id%}"><span style="color:blue;">[編集]</span></a>
+                </div>
+                <div class="card-content-postall">
+                    {{ article.description }}
+                </div>
+                <div class="card-tag-postall">
+                    {{ article.tag }}
+                </div>
+                <div class="card-good-postall">
+                    <div class="card-postall-good-info">
+                        <i class="far fa-thumbs-up"></i>{{ article.good_sum }}
+                    </div>
+                </div>
+                <div class="card-status">
+                    {% if article.draft_flag  %}
+                     [下書き]
+                    {% endif %}
+                </div>
             </div>
-            <div class="card-tag">
-                {{ article.tag }}
-            </div>
-            <div class="card-good">
-                {{ article.good }}
-            </div>
-            <div class="card-status">
-                {% if articles.draft_flag  %}
-                    下書き
-                {% endif %}
-            </div>
-        </div>
+         </div>
 {% endfor %}
 {% endblock %}

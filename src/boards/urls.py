@@ -24,4 +24,5 @@ urlpatterns = [
     path('post_all/<int:user_id>/', views.postAll, name='postall'),
     path('my_good/<int:user_id>/', views.myGood, name='mygood'),
     path('my_favorite/<int:user_id>/', views.myFavorite, name='myfavorite'),
+    path('post_edit/<int:user_id>/<int:article_id>/', views.postEdit, name='post_edit'),
 ]
