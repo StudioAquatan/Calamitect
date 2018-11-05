@@ -17,10 +17,11 @@ urlpatterns = [
     path('boards/category-top', views.categoryTop, name='categoryTop'),
     path('boards/search', views.search, name='search'),
     path('boards/article-detail/<int:article_id>/', views.articleDetail, name='article_detail'),
+    path('boards/good/<int:article_id>', views.good, name='good'),
 
     path('<int:user_id>/', views.userPage, name='userpage'),
     path('new_post/<int:user_id>/', views.newPost, name='newpost'),
     path('post_all/<int:user_id>/', views.postAll, name='postall'),
-    path('good/<int:user_id>/', views.good, name='good'),
-    path('favorite/<int:user_id>/', views.favorite, name='favorite'),
+    path('my_good/<int:user_id>/', views.myGood, name='mygood'),
+    path('my_favorite/<int:user_id>/', views.myFavorite, name='myfavorite'),
 ]

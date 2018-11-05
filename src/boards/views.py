@@ -153,13 +153,30 @@ def articleDetail(request, article_id):
         _user = User.objects.get(id=copy.user_id)
         copy.username = _user.username
 
+    comments_sum = comments.count()
+    good_sum = Good.objects.filter(article=articles).count()
 
     if request.user.is_authenticated:
         user = request.user
         user_id = user.id
-        return render(request, 'boards/article_detail.html', {'articles': articles, 'article_id':article_id,'user_id': user_id, 'comments':copy_comments})
+        return render(request, 'boards/article_detail.html', {'articles': articles, 'article_id':article_id, 'good_sum':good_sum,'user_id': user_id, 'comments':copy_comments, 'comments_sum':comments_sum})
 
-    return render(request, 'boards/article_detail.html', {'articles': articles, 'article_id':article_id, 'comments':copy_comments})
+    return render(request, 'boards/article_detail.html', {'articles': articles, 'article_id':article_id, 'good_sum':good_sum,'comments':copy_comments,'comments_sum':comments_sum})
+
+def good(request, article_id):
+    article = Article.objects.get(id=article_id)
+
+    is_good= Good.objects.filter(user=request.user, article=article).count()
+    if is_good != 0:
+        good = Good.objects.get(user=request.user, article=article)
+        good.delete()
+        return redirect('boards:article_detail',article_id=article_id)
+
+    Good.objects.create(
+        user=request.user,
+        article=article
+    )
+    return redirect('boards:article_detail',article_id=article_id)
 
 
 class GoodViewSet(viewsets.ModelViewSet):
@@ -215,7 +232,7 @@ def postAll(request, user_id):
     return render(request, 'accounts/post_all.html', {'user_id': user_id, 'user': user, 'articles': articles})
 
 
-def good(request, user_id):
+def myGood(request, user_id):
     user = get_object_or_404(User, pk=user_id)
 
     if request.user.is_authenticated:
@@ -225,7 +242,7 @@ def good(request, user_id):
     return render(request, 'accounts/good.html', {'user_id': user_id, 'user': user})
 
 
-def favorite(request, user_id):
+def myFavorite(request, user_id):
     user = get_object_or_404(User, pk=user_id)
 
     if request.user.is_authenticated:

@@ -17,9 +17,13 @@
             </div>
             <div class="article-detail-comments">
                 comment<br/>
+                <span style="display: inline-block; font-size: 2.3rem; margin-left: 50px;">{{ comments_sum }}</span>
             </div>
             <div class="article-detail-good">
                 good<br/>
+                <div class="good-info-upper">
+                    <a href="{% url 'boards:good' article_id %}"><i class="far fa-thumbs-up"></i>{{ good_sum }}</a>
+                </div>
             </div>
             <div class="article-detail-category">
                 {{ articles.category_type }}
@@ -31,6 +35,11 @@
 
         <div class="article-detail-description">
            {{ articles.description }}
+        </div>
+        <div class="article-sub-info">
+             <div class="good-info">
+                <a href="{% url 'boards:good' article_id %}"><i class="far fa-thumbs-up"></i>{{ good_sum }}</a>
+             </div>
         </div>
     </div>
 
