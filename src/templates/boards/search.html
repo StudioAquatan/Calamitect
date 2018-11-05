@@ -5,30 +5,14 @@
 <div class="category-top">
     <div class="category-content">
         <div class="category-top-title">
-            カテゴリ：
-            {% if category_type == '1' %}
-                災害中
-            {% elif category_type == '2' %}
-                事前対策
-            {% elif category_type == '3' %}
-                ボランティア
-            {% elif category_type == '4' %}
-                アイテム紹介
-            {% endif %}
-            {%  if sort_type == '1' %}
-            : New Post
-            {% elif sort_type == '2'%}
-            : Good
-            {% else %}
-            : New Post
-            {% endif %}
+            検索結果：
         </div>
 
         <div class="category-top-search">
             <div class="category-search-decision ">
                 <form method="post" action="">
                       {% csrf_token %}
-                    <input class="category-search-box" type="text" name="search_key" placeholder=" search"/>
+                    <input class="category-search-box" type="text" name="search_key" value="{{ search_words }}"/>
                     <button type="submit" class="category-search-mark">
 	                    <i class="fas fa-search"></i>
                     </button>
@@ -39,10 +23,10 @@
             {#     クリックで出現    #}
             <div id="category_search-menu" class="search-menu-bar display-none">
                 <div class="sorted-new">
-                    <a href="{% url 'boards:categoryTop' %}?category_type={{ category_type }}&sort_type=1">New</a>
+                    <a href="{% url 'boards:search' %}?search_words={{ search_words }}&sort_type=1">New</a>
                 </div>
                 <div class="sorted-good">
-                    <a href="{% url 'boards:categoryTop' %}?category_type={{ category_type }}&sort_type=2">Good</a>
+                    <a href="{% url 'boards:search' %}?search_words={{ search_words }}&sort_type=2">Good</a>
                 </div>
             </div>
         </div>

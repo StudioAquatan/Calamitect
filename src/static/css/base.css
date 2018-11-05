@@ -216,22 +216,3 @@ footer {
     font-size: 4rem;
     font-weight: bold;
 }
-
-/*  pickup */
-
-.pickup{
-    width: 750px;
-    margin: 0 auto;
-    margin-top: 50px;
-}
-
-.pickup-title{
-    font-weight: bold;
-}
-
-.pickup-content{
-    width:740px;
-    height: 170px;
-    margin: 20px auto;
-    border: 1px solid black;
-}

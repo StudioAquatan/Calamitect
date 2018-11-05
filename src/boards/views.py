@@ -1,5 +1,6 @@
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
+from django.db.models import Q
 from django.shortcuts import render, redirect, get_object_or_404
 import django_filters
 from rest_framework import viewsets, filters
@@ -13,6 +14,7 @@ def index(request):
 
     try:
         articles = Article.objects.all()
+        articles.order_by("created_at").reverse()
     except Article.DoesNotExist:
         empty = "まだ記事が投稿されていません。"
         return render(request, 'boards/index.html', {'empty': empty})
@@ -28,21 +30,82 @@ def index(request):
 def categoryTop(request):
     category_type = request.GET['category_type']
 
+    if 'sort_type' in request.GET:
+        sort_type = request.GET['sort_type']
+    else:
+        sort_type = 0
+
+    if 'search_key' in request.POST:
+        search_key = request.POST['search_key']
+    else:
+        search_key = 0
+
     try:
+        # 先に全件取得
         articles = Article.objects.filter(category_type=category_type)
         print(articles)
     except Article.DoesNotExist:
         empty = "まだ記事が投稿されていません。"
-        print("ssffd")
         return render(request, 'boards/category_top.html', {'empty': empty})
+
+    if sort_type == '1':
+        # createdが新しい順(降順)
+        articles = articles.order_by('created_at').reverse()
+    if sort_type == '2':
+        # createdが古い順(昇順)
+        articles = articles.order_by('created_at')
+
+    if search_key:
+        # 検索時
+        articles = Article.objects.filter(Q(description__icontains=search_key) | Q(title__icontains=search_key))
 
     if request.user.is_authenticated:
         user = request.user
         user_id = user.id
         return render(request, 'boards/category_top.html',
-                      {'articles': articles, 'user_id': user_id, 'category_type': category_type})
+                      {'articles': articles, 'user_id': user_id, 'category_type': category_type,
+                       'sort_type': sort_type})
 
-    return render(request, 'boards/category_top.html', {'articles': articles, 'category_type': category_type})
+    return render(request, 'boards/category_top.html',
+                  {'articles': articles, 'category_type': category_type, 'sort_type': sort_type})
+
+
+def search(request):
+    # 検索ワード取得
+    if 'search_words' in request.POST:
+        search_words = request.POST['search_words']
+    elif 'search_words' in request.GET:
+        search_words = request.GET['search_words']
+    else:
+        search_words = 0
+
+    # ソートタイプ取得
+    if 'sort_type' in request.GET:
+        sort_type = request.GET['sort_type']
+    else:
+        sort_type = 0
+
+    if search_words:
+        # 検索で取得
+        articles = Article.objects.filter(Q(description__icontains=search_words) | Q(title__icontains=search_words))
+    else:
+        articles = None
+
+    if sort_type == '1':
+        # createdが新しい順(降順)
+        articles = articles.order_by('created_at').reverse()
+    if sort_type == '2':
+        # createdが古い順(昇順)
+        articles = articles.order_by('created_at')
+
+    if request.user.is_authenticated:
+        user = request.user
+        user_id = user.id
+        return render(request, 'boards/search.html',
+                      {'articles': articles, 'user_id': user_id, 'search_words': search_words, 'sort_type': sort_type})
+
+    return render(request, 'boards/search.html',
+                  {'articles': articles, 'search_words': search_words, 'sort_type': sort_type})
 
 
 def create(request):
@@ -72,13 +135,31 @@ def create(request):
 
 def articleDetail(request, article_id):
     articles = Article.objects.get(id=article_id)
-    print(articles.title)
+    article = Article.objects.get(id=article_id)
+    comments = Comment.objects.filter(article=articles)
+
+    if request.method == 'POST':
+        text = request.POST['text']
+        user = request.user
+        Comment.objects.create(
+            text=text,
+            user=user,
+            article=article,
+        )
+
+    import copy
+    copy_comments = copy.deepcopy(comments)
+    for copy in copy_comments:
+        _user = User.objects.get(id=copy.user_id)
+        copy.username = _user.username
+
+
     if request.user.is_authenticated:
         user = request.user
         user_id = user.id
-        return render(request, 'boards/article_detail.html', {'articles': articles, 'user_id': user_id})
+        return render(request, 'boards/article_detail.html', {'articles': articles, 'article_id':article_id,'user_id': user_id, 'comments':copy_comments})
 
-    return render(request, 'boards/article_detail.html', {'articles': articles})
+    return render(request, 'boards/article_detail.html', {'articles': articles, 'article_id':article_id, 'comments':copy_comments})
 
 
 class GoodViewSet(viewsets.ModelViewSet):
