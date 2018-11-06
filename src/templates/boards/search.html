@@ -33,30 +33,32 @@
 
         {{ empty }}
         {% for article in articles %}
-        <div class="post-card">
-            <div class="card-image">
-                [image]
+            {% if article.draft_flag == False %}
+            <div class="post-card">
+                <div class="card-image">
+                    [image]
+                </div>
+                <div class="card-right">
+                    <div class="card-title">
+                        <a href="{% url 'boards:article_detail' article.id%}">{{ article.title }}</a>
+                    </div>
+                    <div class="card-content">
+                        {{ article.description }}
+                    </div>
+                    <div class="card-tag">
+                        {{ article.tag }}
+                    </div>
+                    <div class="card-good">
+                        {{ article.good }}
+                    </div>
+                    <div class="card-status">
+                         {% if articles.draft_flag  %}
+                             下書き
+                         {% endif %}
+                    </div>
+                </div>
             </div>
-            <div class="card-right">
-                <div class="card-title">
-                    <a href="{% url 'boards:article_detail' article.id%}">{{ article.title }}</a>
-                </div>
-                <div class="card-content">
-                    {{ article.description }}
-                </div>
-                <div class="card-tag">
-                    {{ article.tag }}
-                </div>
-                <div class="card-good">
-                    {{ article.good }}
-                </div>
-                <div class="card-status">
-                     {% if articles.draft_flag  %}
-                         下書き
-                     {% endif %}
-                </div>
-            </div>
-        </div>
+            {% endif %}
         {% endfor %}
     </div>
 </div>

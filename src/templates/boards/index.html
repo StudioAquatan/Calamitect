@@ -25,6 +25,7 @@
 
      {{ empty }}
      {% for article in articles %}
+         {% if article.draft_flag == False %}
          <div class="post-card-mini">
             <div class="card-image-mini">
                 [image]
@@ -49,6 +50,7 @@
                 </div>
             </div>
          </div>
+         {% endif %}
      {% endfor %}
 
 </div>

@@ -19,7 +19,11 @@ form{
     margin: 0 auto;
     margin-right: 15px;
 }
-
+.form-tag {
+    width: 300px;
+    height: 20px;
+    margin: 0 auto;
+}
 .form-description {
     width: 600px;
     height: 200px;
@@ -141,6 +145,7 @@ div.sorted-new a, div.sorted-good a{
 .post-card {
     margin: 30px auto;
     border: 1px solid black;
+    border-radius: 8px;
     width: 900px;
     height: 200px;
     display: flex;
@@ -176,10 +181,11 @@ div.card-title a{
     font-weight: lighter;
     font-size: 1.7rem;
     color: #787878;
-    height: 50px;
+    height: 45px;
     padding-right: 50px;
+    width: 500px;
     overflow: hidden;
-
+    word-wrap: break-word;
     /*chrome とsafariのみ効く三点リーダー*/
     display: -webkit-box;
     -webkit-box-orient: vertical;
@@ -210,6 +216,7 @@ div.card-title a{
 .post-card-mini {
     margin: 30px auto;
     border: 1px solid black;
+    border-radius: 8px;
     width: 750px;
     height: 200px;
     display: flex;
@@ -234,8 +241,10 @@ div.card-title a{
     font-size: 1.7rem;
     color: #787878;
     padding-right: 50px;
-    height: 50px;
+    height: 45px;
+    width: 500px;
     overflow: hidden;
+    word-wrap: break-word;
 
     /*chrome とsafariのみ効く三点リーダー*/
     display: -webkit-box;
@@ -252,7 +261,7 @@ div.card-title a{
 }
 
 .article-detail-info{
-    height: 200px;
+    height: 140px;
     width: 800px;
     margin: 0 auto;
     border-bottom: 1px solid black;

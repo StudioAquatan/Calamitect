@@ -5,7 +5,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 import django_filters
 from rest_framework import viewsets, filters
 from accounts.models import User
-from .models import Article, Good, Favorite, Comment
+from .models import Article, Good, Favorite, Comment, Tag
 from .serializer import GoodSerializer, FavoriteSerializer, CommentSerializer
 
 
@@ -57,7 +57,7 @@ def categoryTop(request):
 
     if search_key:
         # 検索時
-        articles = Article.objects.filter(Q(description__icontains=search_key) | Q(title__icontains=search_key))
+        articles = Article.objects.filter(Q(description__icontains=search_key) | Q(title__icontains=search_key) ,category_type=category_type)
 
     if request.user.is_authenticated:
         user = request.user
@@ -115,12 +115,18 @@ def create(request):
             description = request.POST['description']
             category_type = request.POST['category_type']
             draft_flag = request.POST['draft_flag']
-            Article.objects.create(
+            article = Article.objects.create(
                 title=title,
                 description=description,
                 category_type=category_type,
                 draft_flag=draft_flag,
                 user=request.user
+            )
+
+            tag_name = request.POST['tag']
+            Tag.objects.create(
+                name=tag_name,
+                article=article
             )
 
             return redirect('boards:index')
@@ -136,8 +142,9 @@ def create(request):
 def articleDetail(request, article_id):
     articles = Article.objects.get(id=article_id)
     article = Article.objects.get(id=article_id)
-    comments = Comment.objects.filter(article=articles)
 
+
+    # comment作成時
     if request.method == 'POST':
         text = request.POST['text']
         user = request.user
@@ -146,6 +153,7 @@ def articleDetail(request, article_id):
             user=user,
             article=article,
         )
+    comments = Comment.objects.filter(article=articles)
 
     import copy
     copy_comments = copy.deepcopy(comments)
@@ -156,16 +164,21 @@ def articleDetail(request, article_id):
     comments_sum = comments.count()
     good_sum = Good.objects.filter(article=articles).count()
 
+    tags = Tag.objects.filter(article=articles)
+
     if request.user.is_authenticated:
         user = request.user
         user_id = user.id
+        if request.method == 'POST':
+            return redirect('boards:article_detail',article_id=article_id)
+
         return render(request, 'boards/article_detail.html',
                       {'articles': articles, 'article_id': article_id, 'good_sum': good_sum, 'user_id': user_id,
-                       'comments': copy_comments, 'comments_sum': comments_sum})
+                       'comments': copy_comments, 'comments_sum': comments_sum, 'tags':tags})
 
     return render(request, 'boards/article_detail.html',
                   {'articles': articles, 'article_id': article_id, 'good_sum': good_sum, 'comments': copy_comments,
-                   'comments_sum': comments_sum})
+                   'comments_sum': comments_sum,'tags':tags})
 
 
 def good(request, article_id):
@@ -204,9 +217,12 @@ class CommentViewSet(viewsets.ModelViewSet):
 def userPage(request, user_id):
     user = get_object_or_404(User, pk=user_id)
 
-    if request.user.is_authenticated:
-        user = request.user
-        user_id = user.id
+    if request.method == 'POST':
+        title = request.POST['title']
+        description = request.POST['description']
+        category_type = request.POST['category_type']
+        draft_flag = request.POST['draft_flag']
+
 
     return render(request, 'accounts/userpage.html', {'user_id': user_id, 'user': user})
 

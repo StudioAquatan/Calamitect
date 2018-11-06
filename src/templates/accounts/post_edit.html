@@ -9,7 +9,8 @@
       <div style="width: 200px; font-size: 2rem; font-wight: bold; margin-left: 100px;">カテゴリー</div>
       <label class="form-category"><input type="radio" name="category_type" value="1" {% if articles.category_type == 1 %}checked="checked"{% endif %}>災害中</label>
       <label class="form-category"><input type="radio" name="category_type" value="2" {% if articles.category_type == 2 %}checked="checked"{% endif %}>事前対策</label>
-      <label class="form-category"><input type="radio" name="category_type" value="3" {% if articles.category_type == 3 %}checked="checked"{% endif %}>アイテム紹介</label>
+         <label class="form-category"><input type="radio" name="category_type" value="2" {% if articles.category_type == 3 %}checked="checked"{% endif %}>ボランティア</label>
+      <label class="form-category"><input type="radio" name="category_type" value="3" {% if articles.category_type == 4 %}checked="checked"{% endif %}>アイテム紹介</label>
       <div style="width: 200px; font-size: 2rem; font-wight: bold; margin-left: 100px;">内容</div>
       <textarea class="form-description" name="description" >{{ articles.description }}</textarea>
       <br />

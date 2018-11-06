@@ -118,6 +118,7 @@ input.profile-input-icon{
     width: 650px;
     height: 190px;
     border: 1px solid grey;
+    border-radius: 8px;
     margin: 30px auto;
     display: flex;
     justify-content: center;
@@ -177,6 +178,7 @@ div.card-title-good a{
     width: 650px;
     height: 190px;
     border: 1px solid grey;
+    border-radius: 8px;
     margin: 30px auto;
     display: flex;
     justify-content: center;

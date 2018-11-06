@@ -26,10 +26,12 @@
                 </div>
             </div>
             <div class="article-detail-category">
-                {{ articles.category_type }}
+                カテゴリ：{{ articles.category_type }}
             </div>
             <div class="article-detail-tag">
-                tag
+                {% for tag in tags %}
+                <i class="fas fa-tags"></i> {{ tag.name }}
+                {% endfor %}
             </div>
         </div>
 
