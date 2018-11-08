@@ -23,7 +23,7 @@
             <div class="logout"><a href="{% url 'accounts:logout' %}">ログアウト</a></div>
             <div class="post"><a href="{% url 'boards:userpage' user_id%}">MyPage</a></div>
             {% else %}
-            <div class="signin"><a href="{% url 'accounts:create'%}">登録</a></div>
+            <div class="signin"><a href="{% url 'accounts:register'%}">登録</a></div>
             <div class="login"><a href="{% url 'accounts:login' %}">ログイン</a></div>
             {% endif %}
 
