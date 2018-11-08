@@ -165,9 +165,9 @@ def articleDetail(request, article_id):
     good_sum = Good.objects.filter(article=articles).count()
 
     is_good = Good.objects.filter(user=request.user, article=article).count()
-    double_flag = 0
+    done_good_flag = 0
     if is_good != 0:
-        double_flag = 1
+        done_good_flag = 1
 
 
     if request.user.is_authenticated:
@@ -178,14 +178,16 @@ def articleDetail(request, article_id):
 
         return render(request, 'boards/article_detail.html',
                       {'articles': articles, 'article_id': article_id, 'good_sum': good_sum, 'user_id': user_id,
-                       'comments': copy_comments, 'comments_sum': comments_sum, 'tags':tags,'double_flag':double_flag})
+                       'comments': copy_comments, 'comments_sum': comments_sum, 'tags':tags,'done_good_flag':done_good_flag})
 
     return render(request, 'boards/article_detail.html',
                   {'articles': articles, 'article_id': article_id, 'good_sum': good_sum, 'comments': copy_comments,
-                   'comments_sum': comments_sum,'tags':tags,'double_flag':double_flag})
+                   'comments_sum': comments_sum,'tags':tags,'done_good_flag':done_good_flag})
 
 
 def good(request, article_id):
+    print(article_id)
+
     article = Article.objects.get(id=article_id)
     is_good = Good.objects.filter(user=request.user, article=article).count()
 
