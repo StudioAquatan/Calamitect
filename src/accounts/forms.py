@@ -62,7 +62,7 @@ class LoginUserForm(forms.Form):
         password = self.cleaned_data.get('password')
         try:
             user = User.objects.get(username=username)
-        except ObjectDoesNotExist:
+        except User.DoesNotExist:
             raise forms.ValidationError("正しいユーザ名を入力してください")
         if not user.check_password(password):
             raise forms.ValidationError("正しいパスワードを入力してください")
