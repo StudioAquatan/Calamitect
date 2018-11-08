@@ -302,3 +302,11 @@ def favorite(request, user_id):
         user_id = user.id
 
     return render(request, 'accounts/favorite.html', {'user_id': user_id, 'user': user})
+
+import urllib.request
+from bs4 import BeautifulSoup
+def get_quake(path):
+    html = urllib.request.urlopen("http://www.jma.go.jp/jp/quake/quake_sindo_index.html")
+    soup = BeautifulSoup(html, "lxml")
+    infotable = soup.find_all("div", attrs={"id": "info", "class": "infotable"})
+    body = [e.text for e in infotable]
