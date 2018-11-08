@@ -3,8 +3,11 @@ from django.contrib.auth.models import User
 from django.shortcuts import render, redirect, get_object_or_404
 import django_filters
 from rest_framework import viewsets, filters
+from django.views import View
 from accounts.models import User
+
 from .models import Article, Good, Favorite, Comment
+from .forms import CreateArticleForm
 from .serializer import GoodSerializer, FavoriteSerializer, CommentSerializer
 
 
@@ -45,29 +48,33 @@ def categoryTop(request):
     return render(request, 'boards/category_top.html', {'articles': articles, 'category_type': category_type})
 
 
-def create(request):
-    if request.method == 'POST':
+class CreateArticleView(View):
+    def get(self, request, *args, **kwargs):
+        get_object_or_404(User, pk=request.user.id)
         if request.user.is_authenticated:
-            title = request.POST['title']
-            description = request.POST['description']
-            category_type = request.POST['category_type']
-            draft_flag = request.POST['draft_flag']
-            Article.objects.create(
-                title=title,
-                description=description,
-                category_type=category_type,
-                draft_flag=draft_flag,
-                user=request.user
-            )
+            context = {
+                'user_id': request.user.id,
+                'user': request.user,  # TODO user渡せばuser_id渡さなくてもいい気がする
+                'form': CreateArticleForm,
+            }
+            return render(request, 'accounts/new_post.html', context)
+        else:
+            return  # TODO ここに404ページへのredirectを配置
 
-            return redirect('boards:index')
+    def post(self, request):
+        form = CreateArticleForm(request.POST)
+        is_valid = form.is_valid()
+        if not is_valid:
+            return render(request, 'accounts/new.html', {'form': form})
+        article = form.save(commit=False)
+        article.category_type = request.POST['category_type']
+        article.draft_flag = request.POST['draft_flag']
+        article.user = request.user
+        article.save()
+        return redirect('boards:index')
 
-    if request.user.is_authenticated:
-        user = request.user
-        user_id = user.id
-        return render(request, 'boards/index.html', {'user_id': user_id})
 
-    return render(request, 'boards/new.html')
+create_article = CreateArticleView.as_view()
 
 
 def articleDetail(request, article_id):
@@ -106,16 +113,6 @@ def userPage(request, user_id):
         user_id = user.id
 
     return render(request, 'accounts/userpage.html', {'user_id': user_id, 'user': user})
-
-
-def newPost(request, user_id):
-    user = get_object_or_404(User, pk=user_id)
-
-    if request.user.is_authenticated:
-        user = request.user
-        user_id = user.id
-
-    return render(request, 'accounts/new_post.html', {'user_id': user_id, 'user': user})
 
 
 def postAll(request, user_id):
