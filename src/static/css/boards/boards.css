@@ -328,6 +328,13 @@ div.good-info-upper a, div.good-info a{
     width: 100%;
     height: 100%;
     text-decoration: none;
+    cursor: pointer;
+    user-select: none;
+    
+}
+#id{
+    height: 10px;
+    width: 10px;
 }
 .good-info{
     height: 25px;

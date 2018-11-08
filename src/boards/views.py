@@ -142,7 +142,7 @@ def create(request):
 def articleDetail(request, article_id):
     articles = Article.objects.get(id=article_id)
     article = Article.objects.get(id=article_id)
-
+    tags = Tag.objects.filter(article=articles)
 
     # comment作成時
     if request.method == 'POST':
@@ -164,7 +164,11 @@ def articleDetail(request, article_id):
     comments_sum = comments.count()
     good_sum = Good.objects.filter(article=articles).count()
 
-    tags = Tag.objects.filter(article=articles)
+    is_good = Good.objects.filter(user=request.user, article=article).count()
+    double_flag = 0
+    if is_good != 0:
+        double_flag = 1
+
 
     if request.user.is_authenticated:
         user = request.user
@@ -174,17 +178,17 @@ def articleDetail(request, article_id):
 
         return render(request, 'boards/article_detail.html',
                       {'articles': articles, 'article_id': article_id, 'good_sum': good_sum, 'user_id': user_id,
-                       'comments': copy_comments, 'comments_sum': comments_sum, 'tags':tags})
+                       'comments': copy_comments, 'comments_sum': comments_sum, 'tags':tags,'double_flag':double_flag})
 
     return render(request, 'boards/article_detail.html',
                   {'articles': articles, 'article_id': article_id, 'good_sum': good_sum, 'comments': copy_comments,
-                   'comments_sum': comments_sum,'tags':tags})
+                   'comments_sum': comments_sum,'tags':tags,'double_flag':double_flag})
 
 
 def good(request, article_id):
     article = Article.objects.get(id=article_id)
-
     is_good = Good.objects.filter(user=request.user, article=article).count()
+
     if is_good != 0:
         good = Good.objects.get(user=request.user, article=article)
         good.delete()
