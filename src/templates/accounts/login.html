@@ -3,14 +3,23 @@
 {% block content %}
     <div class="login-form">
       <form method="post" action="">
-          {% csrf_token %}{{ error }}
-          <h2>ログイン</h2>
-          {#   username        #}
-          <div style="width: 200px; font-size: 2rem; font-wight: bold; margin-left: 100px;">name</div>
-          <input class="form-login-username" type="text" name="username" />
-          {#   password        #}
-          <div style="width: 200px; font-size: 2rem; font-wight: bold; margin-left: 100px;">password</div>
-          <input class="form-login-password" type="password" name="password" />
+      <h2>ログイン</h2>
+          {% csrf_token %}
+          {% for field in form %}
+                <div style="width: 200px; font-size: 2rem; font-wight: bold; margin-left: 100px;">{{ field.label }}</div>
+                {{ field }}
+                {% if field.errors %}
+                    <p>{{ field.errors.0 }}</p>
+                {% endif %}
+            {% endfor %}
+
+            {% if form.non_field_errors %}
+                <ul>
+                    {% for non_field_error in form.non_field_errors %}
+                        <li>{{ non_field_error }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
 
           <div><input type="submit" value="送信"></div>
       </form>

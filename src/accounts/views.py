@@ -1,9 +1,9 @@
-from django.contrib.auth.models import User
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import login as auth_login
+from django.contrib.auth import logout as auth_logout
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views import View
 
-from .forms import RegisterUserForm
+from .forms import RegisterUserForm, LoginUserForm
 
 
 class RegisterView(View):
@@ -17,42 +17,36 @@ class RegisterView(View):
         form = RegisterUserForm(request.POST)
         is_valid = form.is_valid()
         if not is_valid:
-            return render(request, 'accounts/new.html',
-                          {'form': form})
+            return render(request, 'accounts/new.html', {'form': form})
         user = form.save(commit=False)
         user.set_password(form.cleaned_data['password'])
         user.save()
         return redirect('boards:index')
 
 
+class LoginView(View):
+    def get(self, request):
+        context = {
+            'form': LoginUserForm
+        }
+        return render(request, 'accounts/login.html', context)
+
+    def post(self, request):
+        form = LoginUserForm(request.POST)
+        is_valid = form.is_valid()
+        if not is_valid:
+            return render(request, 'accounts/login.html', {'form': form})
+        user = form.get_user()
+        auth_login(request, user)
+        return redirect('boards:index')
+
+
+class LogoutView(View):
+    def get(self, request):
+        auth_logout(request)
+        return render(request, 'boards/index.html')
 
 
 register = RegisterView.as_view()
-
-
-def logIn(request):
-    if request.method == 'POST':
-        username = request.POST['username']
-        password = request.POST['password']
-        try:
-            user = User.objects.get(
-                username=username,
-                password=password,
-            )
-            if user is not None:
-                if user.is_active:
-                    login(request, user)
-                    return redirect('boards:index')
-        except User.DoesNotExist:
-            error = "名前かパスワードに誤りがあります。"
-            return render(request, 'accounts/login.html', {'error': error})
-
-        # user = authenticate(request, username=username, password=password)
-
-    return render(request, 'accounts/login.html')
-
-
-def logOut(request):
-    logout(request)
-
-    return render(request, 'boards/index.html')
+login = LoginView.as_view()
+logout = LogoutView.as_view()
