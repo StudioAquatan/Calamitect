@@ -12,7 +12,7 @@
             <div class="category-search-decision ">
                 <form method="post" action="">
                       {% csrf_token %}
-                    <input class="category-search-box" type="text" name="search_key" value="{{ search_words }}"/>
+                    <input class="category-search-box" type="text" name="search_words" value="{{ search_words }}"/>
                     <button type="submit" class="category-search-mark">
 	                    <i class="fas fa-search"></i>
                     </button>
