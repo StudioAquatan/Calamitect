@@ -13,13 +13,13 @@ router.register(r'comment', CommentViewSet)
 
 urlpatterns = [
     path('', views.index, name='index'),
-    path('boards/new/', views.create, name='create'),
+    path('boards/new/', views.create_article, name='create'),
     path('boards/category-top', views.categoryTop, name='categoryTop'),
     path('boards/article-detail/<int:article_id>/', views.articleDetail, name='article_detail'),
 
     path('<int:user_id>/', views.userPage, name='userpage'),
-    path('new_post/<int:user_id>/', views.newPost, name='newpost'),
-    path('post_all/<int:user_id>/', views.postAll, name='postall'),
-    path('good/<int:user_id>/', views.good, name='good'),
-    path('favorite/<int:user_id>/', views.favorite, name='favorite'),
+    path('<int:user_id>/new_post/', views.create_article, name='newpost'),
+    path('<int:user_id>/post_all/', views.postAll, name='postall'),
+    path('<int:user_id>/good/', views.good, name='good'),
+    path('<int:user_id>/favorite/', views.favorite, name='favorite'),
 ]
