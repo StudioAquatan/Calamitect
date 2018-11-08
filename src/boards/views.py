@@ -12,7 +12,8 @@ from .serializer import GoodSerializer, FavoriteSerializer, CommentSerializer
 
 
 def index(request):
-    print(request.user.is_authenticated)
+    # 緊急地震情報
+    quake_info, display = get_quake_info()
 
     try:
         articles = Article.objects.all()
@@ -24,9 +25,9 @@ def index(request):
     if request.user.is_authenticated:
         user = request.user
         user_id = user.id
-        return render(request, 'boards/index.html', {'articles': articles, 'user_id': user_id})
+        return render(request, 'boards/index.html', {'articles': articles, 'user_id': user_id,'quake_info':quake_info, 'display':display})
 
-    return render(request, 'boards/index.html', {'articles': articles})
+    return render(request, 'boards/index.html', {'articles': articles, 'quake_info':quake_info, 'display':display})
 
 
 def categoryTop(request):
@@ -302,3 +303,74 @@ def favorite(request, user_id):
         user_id = user.id
 
     return render(request, 'accounts/favorite.html', {'user_id': user_id, 'user': user})
+
+
+
+#  地震速報の取得
+
+import urllib.request
+from bs4 import BeautifulSoup
+
+def get_quake_info():
+    # 緊急速報の取得
+    html = urllib.request.urlopen("http://www.jma.go.jp/jp/quake/quake_sindo_index.html")
+    soup = BeautifulSoup(html, "lxml")
+    infotable = soup.find_all("div", attrs={"id": "info", "class": "infotable"})
+
+    # 正規表現でタグ除去用
+    import re
+    tag_remove = re.compile(r"<[^>]*?>")
+
+
+    # 緊急速報の中での最新詳細情報のURL取得
+    base_link = "http://www.jma.go.jp/jp/quake"
+    add_link = infotable[0].a.get("href")
+    link = base_link + add_link.lstrip(".")
+
+    # 最新情報取得
+    html_up_to_date = urllib.request.urlopen(link)
+    soup_up_to_date = BeautifulSoup(html_up_to_date, "lxml")
+    infotable_up_to_date = soup_up_to_date.find_all("table", attrs={"id": "infobox", "class": "textframe"})
+    for info_up_to_date in infotable_up_to_date:
+        # タグ除去
+        get_text = tag_remove.sub("", info_up_to_date.text)
+
+    # 余分な文字消去
+    get_text = get_text.replace("震度速報","")
+    #　配列化
+    get_text_array = get_text.split("\n")
+
+    info = []
+    for i in range(len(get_text_array)):
+        get_text_array[i] = get_text_array[i].strip()
+
+        if "気象庁発表" in get_text_array[i]:
+            string_array = get_text_array[i].split("気象庁発表")
+            for j in range(len(string_array)):
+                if j == 0:
+                    # ”気象庁発表”が消えたので追加する
+                    string_array[j] = string_array[j] + "気象庁発表"
+                info.append(string_array[j])
+
+        elif "震度" in get_text_array[i]:
+            string_array = get_text_array[i].split("震度")
+            for k in range(len(string_array)):
+                if k > 0:
+                    # ”震度”が消えたので追加する
+                    string_array[k] = "震度" + string_array[k]
+                info.append(string_array[k])
+            print(info)
+        else:
+            info.append(get_text_array[i])
+
+    # 空白のリスト要素を除去
+    info = list(filter(lambda x: x != "", info))
+
+    display_on_off = False
+    for _info in info:
+        if "震度３" in _info:
+            display_on_off =True
+
+    print(display_on_off)
+    return info, display_on_off
+

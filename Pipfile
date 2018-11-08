@@ -10,6 +10,8 @@ pillow = "*"
 pip = "==18.0"
 djangorestframework = "*"
 django-filter = "*"
+"beautifulsoup4" = "*"
+lxml = "*"
 
 [dev-packages]
 

@@ -198,20 +198,25 @@ footer {
 
 
 
-/*  container  */
+/*  description index.html */
 
 .description {
     width: 1000px;
-    height: 400px;
+    min-height: 400px;
+    height: 100%;
     margin: 0 auto;
+    margin-top: 20px;
     background-color: white;
     position: relative;
     z-index: 0;
 }
 
 .description-box{
-    height:350px;
+    min-height:350px;
+    height:100%;
 }
+
+/*  contents  */
 .description-title{
     margin: 0 auto;
     margin-top: 150px;
@@ -219,4 +224,64 @@ footer {
     text-align: center;
     font-size: 4rem;
     font-weight: bold;
+}
+
+/* 緊急速報時　地震速報 */
+
+.quake-title{
+    color:red;
+    text-align: center;
+    font-weight: bold;
+    margin-top: 30px;
+    font-size: 4rem;
+}
+.quake-info1{
+    color: black;
+    font-size: 1.7rem;
+    font-weight: bold;
+    width:600px;
+    margin: 0 auto;
+    text-align: center;
+    margin-top: 20px;
+}
+.quake-info2{
+    color:black;
+    font-size: 1.7rem;
+    font-weight: bold;
+    width:600px;
+    margin: 0 auto;
+    text-align: left;
+    margin-top: 10px;
+}
+.quake-position{
+    color:blue;
+    font-size: 1.7rem;
+    font-weight: bold;
+    width:600px;
+    box-sizing: border-box;
+    padding-right: 20px;
+    margin: 0 auto;
+    margin-top: 20px;
+
+}
+.quake-position:last-child{
+    color: black;
+}
+
+.blinking{
+	-webkit-animation:blink 1.0s ease-in-out infinite alternate;
+    -moz-animation:blink 1.0s ease-in-out infinite alternate;
+    animation:blink 1.0s ease-in-out infinite alternate;
+}
+@-webkit-keyframes blink{
+    0% {opacity:0;}
+    100% {opacity:1;}
+}
+@-moz-keyframes blink{
+    0% {opacity:0;}
+    100% {opacity:1;}
+}
+@keyframes blink{
+    0% {opacity:0;}
+    100% {opacity:1;}
 }
