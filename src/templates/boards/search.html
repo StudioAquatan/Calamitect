@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% block content %}
+
+
+<div class="category-top">
+    <div class="category-content">
+        <div class="category-top-title">
+            検索結果：
+        </div>
+
+        <div class="category-top-search">
+            <div class="category-search-decision ">
+                <form method="post" action="">
+                      {% csrf_token %}
+                    <input class="category-search-box" type="text" name="search_words" value="{{ search_words }}"/>
+                    <button type="submit" class="category-search-mark">
+	                    <i class="fas fa-search"></i>
+                    </button>
+                </form>
+            </div>
+            <i id="category-search" class="category-search-menu fa fa-angle-down"></i>
+
+            {#     クリックで出現    #}
+            <div id="category_search-menu" class="search-menu-bar display-none">
+                <div class="sorted-new">
+                    <a href="{% url 'boards:search' %}?search_words={{ search_words }}&sort_type=1">New</a>
+                </div>
+                <div class="sorted-good">
+                    <a href="{% url 'boards:search' %}?search_words={{ search_words }}&sort_type=2">Good</a>
+                </div>
+            </div>
+        </div>
+
+        {{ empty }}
+        {% for article in articles %}
+            {% if article.draft_flag == False %}
+            <div class="post-card">
+                <div class="card-image">
+                    [image]
+                </div>
+                <div class="card-right">
+                    <div class="card-title">
+                        <a href="{% url 'boards:article_detail' article.id%}">{{ article.title }}</a>
+                    </div>
+                    <div class="card-content">
+                        {{ article.description }}
+                    </div>
+                    <div class="card-tag">
+                        {{ article.tag }}
+                    </div>
+                    <div class="card-good">
+                        {{ article.good }}
+                    </div>
+                    <div class="card-status">
+                         {% if articles.draft_flag  %}
+                             下書き
+                         {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+</div>
+
+
+{% endblock %}

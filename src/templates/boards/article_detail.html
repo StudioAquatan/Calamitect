@@ -17,21 +17,119 @@
             </div>
             <div class="article-detail-comments">
                 comment<br/>
+                <span style="display: inline-block; font-size: 2.3rem; margin-left: 50px;">{{ comments_sum }}</span>
             </div>
             <div class="article-detail-good">
                 good<br/>
+                <div class="good-info-upper">
+                    <form class="good_form" action="{% url 'boards:good' %}" method="POST">
+                        {% csrf_token %}
+                        <input type="hidden" id="input_article_id" name="article_id" value="{{ article_id }}">
+                        <button type="submit" class="good-button-layout">
+                            <div id="good_sum_1" class="goodbtn"><i class="far fa-thumbs-up"></i>{{ good_sum }}</div>
+                        </button>
+                    </form>
+                </div>
             </div>
             <div class="article-detail-category">
-                {{ articles.category_type }}
+                カテゴリ：{{ articles.category_type }}
             </div>
             <div class="article-detail-tag">
-                tag
+                {% for tag in tags %}
+                    <i class="fas fa-tags"></i> {{ tag.name }}
+                {% endfor %}
             </div>
         </div>
 
         <div class="article-detail-description">
-           {{ articles.description }}
+            {{ articles.description }}
         </div>
-
+        <div class="article-sub-info">
+            <div class="good-info">
+                <form class="good_form" action="{% url 'boards:good' %}" method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" class="input_article_id" name="article_id" value="{{ article_id }}">
+                    <button type="submit" class="good-button-layout">
+                        <div id="good_sum_2" class="goodbtn"><i class="far fa-thumbs-up"></i>{{ good_sum }}</div>
+                    </button>
+                </form>
+            </div>
+        </div>
     </div>
+
+
+    <div class="article-comment-create">
+        <div class="article-comment-title">
+            Comments
+        </div>
+        <form class="comment-form" method="post" action="{% url 'boards:article_detail' article_id %}">
+            {% csrf_token %}
+            <textarea class="comment-box" name="text">comments</textarea>
+            <button type="submit" class="comment-button">
+                送信
+            </button>
+        </form>
+    </div>
+
+    {% for comment in comments %}
+        <div class="article-comment-list">
+            <div class="article-comment-list-header">
+                <div class="article-comment-user">
+                    名前:{{ comment.username }}
+                </div>
+                <div class="article-comment-create-at">
+                    コメント日:{{ comment.created_at }}
+                </div>
+            </div>
+            <div class="article-comment-content">
+                {{ comment.text }}
+            </div>
+        </div>
+    {% endfor %}
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script>
+    <script>
+        var done_good_flag = {{ done_good_flag }};
+        var in_flag = true;
+        $('.good_form').submit(function (event) {
+            event.preventDefault();
+            var form = $(this);
+            $.ajax({
+                method: form.prop("method"),
+                url: form.prop("action"),
+                data: {
+                    csrfmiddlewaretoken: '{{ csrf_token }}',
+                    article_id: $('.input_article_id').val()
+                },
+                dataType: "text",
+                async: true, //trueなら非同期処理。falseなら同期処理。
+                timeout: 10000,
+            })
+                .done(function (data) {
+                    if (done_good_flag === 0) {
+                        if (in_flag) {
+                            var h = '<i class="far fa-thumbs-up"></i>' + ({{ good_sum }}+1);
+                            in_flag = false;
+                        } else {
+                            var h = '<i class="far fa-thumbs-up"></i>' + ({{ good_sum }});
+                            in_flag = true;
+                        }
+                    } else {
+                        if (in_flag) {
+                            var h = '<i class="far fa-thumbs-up"></i>' + ({{ good_sum }} -1);
+                            in_flag = false;
+                        } else {
+                            var h = '<i class="far fa-thumbs-up"></i>' + ({{ good_sum }});
+                            in_flag = true;
+                        }
+                    }
+                    $("#good_sum_1").html(h);
+                    $("#good_sum_2").html(h);
+                }).fail(function () {
+                    console.log("failed")
+            });
+        });
+    </script>
 {% endblock %}

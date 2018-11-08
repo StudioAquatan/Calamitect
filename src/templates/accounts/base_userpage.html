@@ -38,7 +38,7 @@
                 </ul>
             </nav>
             <div id="search" class="search-bar display-none">
-                <form method="post" action="">
+                <form method="post" action="{% url 'boards:search' %}">
                     {% csrf_token %}
                     <input class="search-box" type="text" name="search-words" placeholder="検索"/>
                     <button type="submit" class="search-decisiton">
@@ -69,7 +69,7 @@
                     <a href="{% url 'boards:postall' user_id%}">投稿一覧</a>
                 </li>
                 <li class="userpage-list">
-                    <a href="{% url 'boards:good' user_id%}">いいね</a>
+                    <a href="{% url 'boards:mygood' user_id%}">いいね</a>
                 </li>
                 <li class="userpage-list">
                     <a href="{% url 'boards:favorite' user_id%}">お気に入り</a>
@@ -107,5 +107,6 @@
           });
         });
     </script>
+
   </body>
 </html>

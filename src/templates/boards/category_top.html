@@ -15,16 +15,37 @@
             {% elif category_type == '4' %}
                 アイテム紹介
             {% endif %}
+            {%  if sort_type == '1' %}
             : New Post
+            {% elif sort_type == '2'%}
+            : Good
+            {% else %}
+            : New Post
+            {% endif %}
         </div>
 
         <div class="category-top-search">
-            <input class="category-search-box" type="text" placeholder=" search"/>
-            <div style="flex-basis: 300px;"></div>
-            <i class="category-search-decision fas fa-search"></i>
-            <i class="category-search-menu fa fa-angle-down"></i>
-        </div>
+            <div class="category-search-decision ">
+                <form method="post" action="">
+                      {% csrf_token %}
+                    <input class="category-search-box" type="text" name="search_key" placeholder=" search"/>
+                    <button type="submit" class="category-search-mark">
+	                    <i class="fas fa-search"></i>
+                    </button>
+                </form>
+            </div>
+            <i id="category-search" class="category-search-menu fa fa-angle-down"></i>
 
+            {#     クリックで出現    #}
+            <div id="category_search-menu" class="search-menu-bar display-none">
+                <div class="sorted-new">
+                    <a href="{% url 'boards:categoryTop' %}?category_type={{ category_type }}&sort_type=1">New</a>
+                </div>
+                <div class="sorted-good">
+                    <a href="{% url 'boards:categoryTop' %}?category_type={{ category_type }}&sort_type=2">Good</a>
+                </div>
+            </div>
+        </div>
 
         {{ empty }}
         {% for article in articles %}

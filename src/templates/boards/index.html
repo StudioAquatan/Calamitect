@@ -25,21 +25,33 @@
 
      {{ empty }}
      {% for article in articles %}
-     <div class="pickup-content">
-            <div class="pickup-card-image">
+         {% if article.draft_flag == False %}
+         <div class="post-card-mini">
+            <div class="card-image-mini">
                 [image]
             </div>
-            <div class="pickup-card-title">
-                {{ article.title }}
+            <div class="card-right-mini">
+                <div class="card-title">
+                    <a href="{% url 'boards:article_detail' article.id%}">{{ article.title }}</a>
+                </div>
+                <div class="card-content-mini">
+                    {{ article.description }}
+                </div>
+                <div class="card-tag">
+                    {{ article.tag }}
+                </div>
+                <div class="card-good">
+                    {{ article.good }}
+                </div>
+                <div class="card-status">
+                     {% if articles.draft_flag  %}
+                         下書き
+                     {% endif %}
+                </div>
             </div>
-            <div class="pickup-card-tag">
-                {{ article.tag }}
-            </div>
-            <div class="pickup-card-good">
-                {{ article.good }}
-            </div>
-        </div>
-        {% endfor %}
+         </div>
+         {% endif %}
+     {% endfor %}
 
 </div>
 
