@@ -169,7 +169,6 @@ def articleDetail(request, article_id):
     if is_good != 0:
         done_good_flag = 1
 
-
     if request.user.is_authenticated:
         user = request.user
         user_id = user.id
@@ -185,9 +184,8 @@ def articleDetail(request, article_id):
                    'comments_sum': comments_sum,'tags':tags,'done_good_flag':done_good_flag})
 
 
-def good(request, article_id):
-    print(article_id)
-
+def good(request):
+    article_id = int(request.POST['article_id'])
     article = Article.objects.get(id=article_id)
     is_good = Good.objects.filter(user=request.user, article=article).count()
 

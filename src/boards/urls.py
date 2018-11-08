@@ -17,7 +17,7 @@ urlpatterns = [
     path('boards/category-top', views.categoryTop, name='categoryTop'),
     path('boards/search', views.search, name='search'),
     path('boards/article-detail/<int:article_id>/', views.articleDetail, name='article_detail'),
-    path('boards/good/<int:article_id>', views.good, name='good'),
+    path('boards/good/', views.good, name='good'),
 
     path('<int:user_id>/', views.userPage, name='userpage'),
     path('<int:user_id>/new_post/', views.create_article, name='newpost'),

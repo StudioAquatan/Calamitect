@@ -22,7 +22,13 @@
             <div class="article-detail-good">
                 good<br/>
                 <div class="good-info-upper">
-                    <a id="good_sum" class="a" ><i class="far fa-thumbs-up"></i>{{ good_sum }}</a>
+                    <form class="good_form" action="{% url 'boards:good' %}" method="POST">
+                        {% csrf_token %}
+                        <input type="hidden" id="input_article_id" name="article_id" value="{{ article_id }}">
+                        <button type="submit" class="good-button-layout">
+                            <div id="good_sum_1" class="goodbtn"><i class="far fa-thumbs-up"></i>{{ good_sum }}</div>
+                        </button>
+                    </form>
                 </div>
             </div>
             <div class="article-detail-category">
@@ -40,7 +46,13 @@
         </div>
         <div class="article-sub-info">
             <div class="good-info">
-                <a id="good_sum2" class="a" ><i class="far fa-thumbs-up"></i>{{ good_sum }}</a>
+                <form class="good_form" action="{% url 'boards:good' %}" method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" class="input_article_id" name="article_id" value="{{ article_id }}">
+                    <button type="submit" class="good-button-layout">
+                        <div id="good_sum_2" class="goodbtn"><i class="far fa-thumbs-up"></i>{{ good_sum }}</div>
+                    </button>
+                </form>
             </div>
         </div>
     </div>
@@ -81,34 +93,43 @@
     <script>
         var done_good_flag = {{ done_good_flag }};
         var in_flag = true;
-        $('.a').click(function () {
+        $('.good_form').submit(function (event) {
+            event.preventDefault();
+            var form = $(this);
             $.ajax({
-                type: "GET",
-                url: "{% url 'boards:good' article_id %}",
+                method: form.prop("method"),
+                url: form.prop("action"),
+                data: {
+                    csrfmiddlewaretoken: '{{ csrf_token }}',
+                    article_id: $('.input_article_id').val()
+                },
+                dataType: "text",
                 async: true, //trueなら非同期処理。falseなら同期処理。
                 timeout: 10000,
             })
-            .done(function (data) {
-                if(done_good_flag == 0){
-                    if (in_flag){
-                        var h = '<i class="far fa-thumbs-up"></i>' + ({{ good_sum }}+ 1);
-                        in_flag = false;
-                    }else {
-                        var h = '<i class="far fa-thumbs-up"></i>' + ({{ good_sum }});
-                        in_flag = true;
+                .done(function (data) {
+                    if (done_good_flag == 0) {
+                        if (in_flag) {
+                            var h = '<i class="far fa-thumbs-up"></i>' + ({{ good_sum }}+1);
+                            in_flag = false;
+                        } else {
+                            var h = '<i class="far fa-thumbs-up"></i>' + ({{ good_sum }});
+                            in_flag = true;
+                        }
+                    } else {
+                        if (in_flag) {
+                            var h = '<i class="far fa-thumbs-up"></i>' + ({{ good_sum }} -1);
+                            in_flag = false;
+                        } else {
+                            var h = '<i class="far fa-thumbs-up"></i>' + ({{ good_sum }});
+                            in_flag = true;
+                        }
                     }
-                } else {
-                    if (in_flag){
-                        var h = '<i class="far fa-thumbs-up"></i>' + ({{ good_sum }} - 1);
-                        in_flag = false;
-                    }else {
-                        var h = '<i class="far fa-thumbs-up"></i>' + ({{ good_sum }});
-                        in_flag = true;
-                    }
-                }
-                $("#good_sum").html(h);
-                $("#good_sum2").html(h);
-            })
+                    $("#good_sum_1").html(h);
+                    $("#good_sum_2").html(h);
+                }).fail(function (data) {
+                    console.log(failed)
+            });
         });
     </script>
 {% endblock %}
