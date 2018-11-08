@@ -1,40 +1,8 @@
-.post-form {
-    width: 1100px;
-    margin: 0 auto;
-    background-color: #ffffff;
-    margin-top: 30px;
-    text-align: center;
-}
-form{
-    margin: 0 auto;
-}
-.form-title {
-    width: 600px;
-    height: 40px;
-    margin: 0 auto;
-}
-.form-category {
-    width: 40px;
-    height: 40px;
-    margin: 0 auto;
-    margin-right: 15px;
-}
-.form-tag {
-    width: 300px;
-    height: 20px;
-    margin: 0 auto;
-}
-.form-description {
-    width: 600px;
-    height: 200px;
-    margin: 0 auto;
-}
-
 
 /*   category-top-page  */
 
 .category-top {
-    width: 900px;
+    width: 1000px;
     height: 100%;
     margin: 0 auto;
     display: flex;
@@ -146,7 +114,7 @@ div.sorted-new a, div.sorted-good a{
     margin: 30px auto;
     border: 1px solid black;
     border-radius: 8px;
-    width: 900px;
+    width: 1000px;
     height: 200px;
     display: flex;
 }
@@ -167,7 +135,6 @@ div.sorted-new a, div.sorted-good a{
 .card-title {
     box-sizing: border-box;
     padding-top: 20px;
-    padding-left: 20px;
     flex-basis: auto;
     font-weight: bold;
     font-size: 2.5rem;
@@ -183,7 +150,7 @@ div.card-title a{
     color: #787878;
     height: 45px;
     padding-right: 50px;
-    width: 500px;
+    width: 700px;
     overflow: hidden;
     word-wrap: break-word;
     /*chrome とsafariのみ効く三点リーダー*/
@@ -197,7 +164,7 @@ div.card-title a{
 /* index */
 
 .pickup{
-    width: 750px;
+    width: 1000px;
     margin: 0 auto;
     margin-top: 50px;
 }
@@ -206,18 +173,13 @@ div.card-title a{
     font-weight: bold;
 }
 
-.pickup-content{
-    width:740px;
-    height: 170px;
-    margin: 20px auto;
-    border: 1px solid black;
-}
+
 
 .post-card-mini {
     margin: 30px auto;
     border: 1px solid black;
     border-radius: 8px;
-    width: 750px;
+    width: 1000px;
     height: 200px;
     display: flex;
 }
@@ -230,10 +192,10 @@ div.card-title a{
     box-sizing: border-box;
     padding-top: 20px;
     padding-left: 30px;
-    flex-basis: 150px;
+    flex-basis: 200px;
 }
 .card-right-mini{
-    flex-basis: 600px;
+    flex-basis: 700px;
 }
 
 .card-content-mini{
@@ -242,7 +204,7 @@ div.card-title a{
     color: #787878;
     padding-right: 50px;
     height: 45px;
-    width: 500px;
+    width: 700px;
     overflow: hidden;
     word-wrap: break-word;
 
@@ -262,16 +224,19 @@ div.card-title a{
 
 .article-detail-info{
     height: 140px;
-    width: 800px;
+    width: 900px;
+    box-sizing: border-box;
+    padding-left: 50px;
+    padding-right: 50px;
     margin: 0 auto;
     border-bottom: 1px solid black;
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-around;
+    justify-content: flex-start;
 }
 
 .article-detail-title{
-    width: 800px;
+    width: 900px;
     height: 50px;
     text-align: left;
     font-weight: bold;
@@ -283,7 +248,7 @@ div.card-title a{
 .article-detail-created-at,
 .article-detail-comments,
 .article-detail-good{
-    flex-basis: 170px;
+    flex-basis: 200px;
     height: 55px;
     font-size: 1.5rem;
 }
@@ -295,16 +260,22 @@ div.card-title a{
 }
 
 .article-detail-description{
-    width: 800px;
+    width: 900px;
     margin: 20px auto;
     border-bottom: 1px solid black;
     min-height: 200px;
     height: 100%;
+    box-sizing: border-box;
+    padding-left: 50px;
+    padding-right: 50px;
  }
 
 .article-sub-info{
     height: 100px;
-    width: 800px;
+    width: 900px;
+    box-sizing: border-box;
+    padding-left: 50px;
+    padding-right: 50px;
     font-size: 2rem;
     border-bottom: 1px solid black;
     margin: 0 auto;
@@ -339,7 +310,6 @@ div.good-info-upper a, div.good-info a{
 .good-info{
     height: 25px;
     width: 80px;
-    margin-left: 70px;
     box-sizing: border-box;
     font-weight: bold;
     text-align: center;
@@ -349,9 +319,12 @@ div.good-info-upper a, div.good-info a{
 }
 
 .article-comment-create{
-    width: 800px;
+    width: 900px;
     height: 200px;
     margin: 0 auto;
+    box-sizing: border-box;
+    padding-left: 50px;
+    padding-right: 50px;
     margin-bottom: 10px;
     border-bottom: 1px solid grey;
 }
@@ -360,20 +333,21 @@ div.good-info-upper a, div.good-info a{
     font-weight: bold;
     width: 100%;
     text-align: left;
-    margin-left: 20px;
     margin-bottom: 30px;
 }
 .comment-form{
     width: 100%;
     display: flex;
-    justify-content: flex-end;
+    justify-content: flex-start;
 }
 .comment-box{
     display: inline-block;
-    flex-basis: 600px;
+    flex-basis: 700px;
     height: 70px;
     border: none;
+    box-sizing: border-box;
     border: 1px solid grey;
+    padding: 1px;
     margin-right: 50px;
     font-size: 2rem;
 }
@@ -387,13 +361,14 @@ div.good-info-upper a, div.good-info a{
 }
 
 .article-comment-list{
-    width: 700px;
+    width: 800px;
     height: 100%;
     margin: 20px auto;
     border: 1px solid grey;
     border-radius: 8px;
     box-sizing: border-box;
-    padding: 20px;
+    padding-left: 30px;
+    padding-right: 30px;
 }
 .article-comment-list-header{
     width: 700px;
@@ -416,4 +391,30 @@ div.good-info-upper a, div.good-info a{
     height: 100%;
     overflow: hidden;
     word-wrap: break-word;
+}
+
+
+
+/*  not_found  */
+
+.not_found{
+    width: 600px;
+    margin: 0 auto;
+    margin-top: 80px;
+    margin-bottom: 80px;
+}
+.not_found_title{
+    width: 600px;
+    font-size: 4rem;
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: 50px;
+    color: rgba(0,0,0,0.6);
+}
+.not_found_content{
+    width: 300px;
+    margin: 0 auto;
+    font-size: 2rem;
+    text-align: center;
+    color: rgba(0,0,0,0.6);
 }
