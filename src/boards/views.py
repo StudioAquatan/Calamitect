@@ -6,7 +6,7 @@ import django_filters
 from rest_framework import viewsets, filters
 from django.views import View
 from accounts.models import User
-from .models import Article, Good, Favorite, Comment
+from .models import Article, Good, Favorite, Comment, Tag
 from .forms import CreateArticleForm
 from .serializer import GoodSerializer, FavoriteSerializer, CommentSerializer
 
@@ -296,7 +296,7 @@ def myGood(request, user_id):
     return render(request, 'accounts/good.html', {'user_id': user_id, 'user': user})
 
 
-def myFavorite(request, user_id):
+def favorite(request, user_id):
     user = get_object_or_404(User, pk=user_id)
 
     if request.user.is_authenticated:

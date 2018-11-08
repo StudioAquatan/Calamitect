@@ -22,6 +22,7 @@ urlpatterns = [
     path('<int:user_id>/', views.userPage, name='userpage'),
     path('<int:user_id>/new_post/', views.create_article, name='newpost'),
     path('<int:user_id>/post_all/', views.postAll, name='postall'),
-    path('<int:user_id>/good/', views.good, name='good'),
+    path('<int:user_id>/post_edit/<int:article_id>/', views.postEdit, name='post_edit'),
+    path('<int:user_id>/good/', views.myGood, name='mygood'),
     path('<int:user_id>/favorite/', views.favorite, name='favorite'),
 ]
