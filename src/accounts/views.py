@@ -1,76 +1,52 @@
-from django.contrib.auth import authenticate, login, logout
-from django import forms
-from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.models import User
+from django.contrib.auth import login as auth_login
+from django.contrib.auth import logout as auth_logout
 from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth.forms import UserCreationForm as BaseUserCreationForm
+from django.views import View
 
-# auth user model のカスタムモデルを利用
-from django.contrib.auth import get_user_model
-User = get_user_model()
+from .forms import RegisterUserForm, LoginUserForm
 
 
-class UserCreationForm(BaseUserCreationForm):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
+class RegisterView(View):
+    def get(self, request):
+        context = {
+            'form': RegisterUserForm
+        }
+        return render(request, 'accounts/new.html', context)
 
-    email = forms.EmailField(required=True)
-    username = forms.CharField(required=True)
-
-    class Meta:
-        model = User
-        fields = ("username", "email", "password1", "password2")
-
-
-def create(request):
-    form = UserCreationForm(request.POST)
-    error_flag = 0
-    if request.method == 'POST':
-
-        print(form.is_valid())
-        if form.is_valid():
-            username = request.POST['username']
-            email = request.POST['email']
-            password = request.POST['password1']
-            user = User.objects.create(
-                username=username,
-                email=email,
-                password=password
-            )
-            # form.save()
-
-            login(request, user)
-            return redirect('boards:index')
-        else:
-            error_flag = 1
-            return render(request, 'accounts/new.html', {'form': form, 'error_flag': error_flag})
-
-    return render(request, 'accounts/new.html', {'form': form, 'error_flag': error_flag})
+    def post(self, request):
+        form = RegisterUserForm(request.POST)
+        is_valid = form.is_valid()
+        if not is_valid:
+            return render(request, 'accounts/new.html', {'form': form})
+        user = form.save(commit=False)
+        user.set_password(form.cleaned_data['password'])
+        user.save()
+        return redirect('boards:index')
 
 
-def logIn(request):
-    if request.method == 'POST':
-        username = request.POST['username']
-        password = request.POST['password']
-        try:
-            user = User.objects.get(
-                username=username,
-                password=password,
-            )
-            if user is not None:
-                if user.is_active:
-                    login(request, user)
-                    return redirect('boards:index')
-        except User.DoesNotExist:
-            error = "名前かパスワードに誤りがあります。"
-            return render(request, 'accounts/login.html', {'error': error})
+class LoginView(View):
+    def get(self, request):
+        context = {
+            'form': LoginUserForm
+        }
+        return render(request, 'accounts/login.html', context)
 
-        # user = authenticate(request, username=username, password=password)
-
-    return render(request, 'accounts/login.html')
+    def post(self, request):
+        form = LoginUserForm(request.POST)
+        is_valid = form.is_valid()
+        if not is_valid:
+            return render(request, 'accounts/login.html', {'form': form})
+        user = form.get_user()
+        auth_login(request, user)
+        return redirect('boards:index')
 
 
-def logOut(request):
-    logout(request)
+class LogoutView(View):
+    def get(self, request):
+        auth_logout(request)
+        return render(request, 'boards/index.html')
 
-    return render(request, 'boards/index.html')
+
+register = RegisterView.as_view()
+login = LoginView.as_view()
+logout = LogoutView.as_view()

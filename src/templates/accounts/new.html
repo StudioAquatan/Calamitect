@@ -2,44 +2,26 @@
 
 {% block content %}
     <div class="post-form">
-      <form method="post" action="">
-          {% csrf_token %}
-          <h2>Sign up</h2>
-          {#   username        #}
-          <div style="width: 200px; font-size: 2rem; font-wight: bold; margin-left: 100px;">Name</div>
-{#          <input class="form-username" type="text" name="username" />#}
-          {{ form.username }}
-          {% if error_flag %}
-              {{ form.username.errors }}
-          {% endif %}
-          {#   email           #}
-          <div style="width: 200px; font-size: 2rem; font-wight: bold; margin-left: 100px;">e-mail</div>
-{#          <input class="form-email" type="email" name="email" />#}
-          {{ form.email }}
-          {% if error_flag %}
-           {{ form.email.errors }}
-          {% endif %}
-          {#   password        #}
-          <div style="width: 200px; font-size: 2rem; font-wight: bold; margin-left: 100px;">password</div>
-{#          <input class="form-password" type="password" name="password2" />#}
-          {{ form.password1 }}
-          {% if error_flag %}
-              {{ form.password1.errors }}
-          {% endif %}
-          <div style="width: 200px; font-size: 2rem; font-wight: bold; margin-left: 100px;">password again</div>
-{#          <input class="form-password" type="password" name="password2" />#}
-          {{ form.password2 }}
-          {% if error_flag %}
-              {{ form.password2.errors }}
-          {% endif %}
+        <form method="post" action="">
+            {% csrf_token %}
+            <h2>Sign up</h2>
+            {% for field in form %}
+                <div style="width: 200px; font-size: 2rem; font-weight: bold; margin-left: 100px;">{{ field.label }}</div>
+                {{ field }}
+                {% if field.errors %}
+                    <p>{{ field.errors.0 }}</p>
+                {% endif %}
+            {% endfor %}
 
-          <div><input type="submit" value="送信"></div>
-      </form>
+            {% if form.non_field_errors %}
+                <ul>
+                    {% for non_field_error in form.non_field_errors %}
+                        <li>{{ non_field_error }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+
+            <div><input type="submit" value="送信"></div>
+        </form>
     </div>
-
-    <style type="text/css">
-        ul.errorList{
-            list-style-type:none
-        }
-    </style>
 {% endblock %}
