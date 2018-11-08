@@ -21,7 +21,6 @@
             <i id="search_btn" class="search fas fa-search"></i>
             {% if user.is_authenticated %}
             <div class="logout"><a href="{% url 'accounts:logout' %}">ログアウト</a></div>
-{#            <div class="post"><a href="{% url 'boards:create' %}">投稿</a></div>#}
             <div class="post"><a href="{% url 'boards:userpage' user_id%}">MyPage</a></div>
             {% else %}
             <div class="signin"><a href="{% url 'accounts:create'%}">登録</a></div>
