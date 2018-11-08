@@ -6,7 +6,7 @@
       <h2>ログイン</h2>
           {% csrf_token %}
           {% for field in form %}
-                <div style="width: 200px; font-size: 2rem; font-wight: bold; margin-left: 100px;">{{ field.label }}</div>
+                <div style="width: 200px; font-size: 2rem; font-weight: bold; margin-left: 100px;">{{ field.label }}</div>
                 {{ field }}
                 {% if field.errors %}
                     <p>{{ field.errors.0 }}</p>
