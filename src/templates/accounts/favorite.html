@@ -4,7 +4,7 @@
 {% block content %}
 {% for favorite in favorites %}
          <div class="post-card-good shadow">
-            <div class="card-image-good">
+            <div class="card-image-mini">
                 {% if favorite.article.user.profile_icon %}
                     <a href="{{ favorite.article.user.profile_icon.url }}">
                         <img src="{{ favorite.article.user.profile_icon.url }}" title="user-icon" width="100px" height="100px">

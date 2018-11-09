@@ -9,6 +9,11 @@ class CreateArticleForm(forms.ModelForm):
     class Meta:
         model = Article
         fields = ('title', 'description', 'image')
+        labels = {
+            'title': 'タイトル',
+            'description': '本文',
+            'image': '画像'
+        }
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
