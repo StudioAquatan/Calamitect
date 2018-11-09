@@ -18,7 +18,6 @@ def index(request):
     quake_info, display = get_quake_info()
 
     try:
-        article = Article.objects.get(pk=1)
         articles = Article.objects.all()
         articles = articles.order_by("created_at").reverse()
     except Article.DoesNotExist:
