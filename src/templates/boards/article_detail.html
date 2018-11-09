@@ -31,17 +31,21 @@
                     </form>
                 </div>
             </div>
+            <div class="article-detail-mylist">
+                mylist<br/>
+                {# TODOここにmylistボタン設置 #}
+            </div>
             <div class="article-detail-category">
                 カテゴリ：
-                {%  if articles.category_type == 1 %}
+                {% if articles.category_type == 1 %}
                     事前対策
-                {%  elif articles.category_type == 2 %}
+                {% elif articles.category_type == 2 %}
                     災害中
-                {%  elif articles.category_type == 3 %}
+                {% elif articles.category_type == 3 %}
                     ボランティア
-                {%  else %}
+                {% else %}
                     アイテム紹介
-                {%  endif %}
+                {% endif %}
             </div>
             <div class="article-detail-tag">
                 {% for tag in tags %}
@@ -61,6 +65,12 @@
                     <button type="submit" class="good-button-layout">
                         <div id="good_sum_2" class="goodbtn"><i class="far fa-thumbs-up"></i>{{ good_sum }}</div>
                     </button>
+                </form>
+            </div>
+            <div class="mylist-info">
+                <form class="mylist_form" action="{% url 'boards:mylist' %}" method="POST">
+                    {% csrf_token %}
+                    {# TODO ここにマイリストボタン設置#}
                 </form>
             </div>
             <div style="position: relative; top: -23px;left: 140px;"><a
@@ -135,7 +145,8 @@
                         </ul>
                     {% endif %}
 
-                    <div class="submit_area"><input id="id_submit" type="submit" value="送信"></div><br>
+                    <div class="submit_area"><input id="id_submit" type="submit" value="送信"></div>
+                    <br>
                     <div class="close_area">閉じる</div>
                 </form>
             </div>
@@ -151,7 +162,7 @@
         $('.good_form').submit(function (event) {
             event.preventDefault();
             var form = $(this);
-            var enter_login = "{{ enter_login_form }}"
+            var enter_login = "{{ enter_login_form }}";
             if (enter_login === "True") {
                 $('#enter_login').removeClass("display-none");
                 $('#back_board').removeClass("display-none");
@@ -167,7 +178,7 @@
                     async: true, //trueなら非同期処理。falseなら同期処理。
                     timeout: 10000,
                 })
-                    .done(function (data) {
+                    .done(function () {
                         if (done_good_flag === 0) {
                             if (in_flag) {
                                 var h = '<i class="far fa-thumbs-up"></i>' + ({{ good_sum }}+1) + '<i class="fas fa-check"></i>';
@@ -187,6 +198,52 @@
                         }
                         $("#good_sum_1").html(h);
                         $("#good_sum_2").html(h);
+                    }).fail(function () {
+                    console.log("failed")
+                });
+            }
+        });
+
+        var done_favorite_flag = {{ done_good_flag }};
+        var current_done_favorite_flag = true;
+        $('.mylist_form').submit(function (event) {
+            event.preventDefault();
+            var form = $(this);
+            var enter_login = "{{ enter_login_form }}";
+            if (enter_login === "True") {
+                $('#enter_login').removeClass("display-none");
+                $('#back_board').removeClass("display-none");
+            } else {
+                $.ajax({
+                    method: form.prop("method"),
+                    url: form.prop("action"),
+                    data: {
+                        csrfmiddlewaretoken: '{{ csrf_token }}',
+                        article_id: $('.input_article_id').val()
+                    },
+                    dataType: "text",
+                    async: true, //trueなら非同期処理。falseなら同期処理。
+                    timeout: 10000,
+                })
+                    .done(function () {
+                        if (done_mylist_flag === 0) {
+                            if (in_flag) {
+                                var h = '<i class="far fa-book"></i>' + '<i class="fas fa-check"></i>';
+                                in_flag = false;
+                            } else {
+                                var h = '<i class="far fa-book"></i>';
+                                in_flag = true;
+                            }
+                        } else {
+                            if (in_flag) {
+                                var h = '<i class="far fa-book"></i>';
+                                in_flag = false;
+                            } else {
+                                var h = '<i class="far fa-book"></i>' + '<i class="fas fa-check"></i>';
+                                in_flag = true;
+                            }
+                        }
+                        $("#mylist").html(h);
                     }).fail(function () {
                     console.log("failed")
                 });

@@ -13,6 +13,7 @@ import time
 import timeout_decorator
 from accounts.forms import LoginUserForm
 
+
 def index(request):
     # 緊急地震情報
     quake_info, display = get_quake_info()
@@ -27,9 +28,10 @@ def index(request):
     if request.user.is_authenticated:
         user = request.user
         user_id = user.id
-        return render(request, 'boards/index.html', {'articles': articles, 'user_id': user_id,'quake_info':quake_info, 'display':display})
+        return render(request, 'boards/index.html',
+                      {'articles': articles, 'user_id': user_id, 'quake_info': quake_info, 'display': display})
 
-    return render(request, 'boards/index.html', {'articles': articles, 'quake_info':quake_info, 'display':display})
+    return render(request, 'boards/index.html', {'articles': articles, 'quake_info': quake_info, 'display': display})
 
 
 def categoryTop(request):
@@ -62,7 +64,8 @@ def categoryTop(request):
 
     if search_key:
         # 検索時
-        articles = Article.objects.filter(Q(description__icontains=search_key) | Q(title__icontains=search_key) ,category_type=category_type)
+        articles = Article.objects.filter(Q(description__icontains=search_key) | Q(title__icontains=search_key),
+                                          category_type=category_type)
 
     if request.user.is_authenticated:
         user = request.user
@@ -179,9 +182,6 @@ def articleDetail(request, article_id):
         is_good = 0
         enter_login_form = True
 
-
-
-
     done_good_flag = 0
     if is_good != 0:
         done_good_flag = 1
@@ -190,15 +190,17 @@ def articleDetail(request, article_id):
         user = request.user
         user_id = user.id
         if request.method == 'POST':
-            return redirect('boards:article_detail',article_id=article_id)
+            return redirect('boards:article_detail', article_id=article_id)
 
         return render(request, 'boards/article_detail.html',
                       {'articles': articles, 'article_id': article_id, 'good_sum': good_sum, 'user_id': user_id,
-                       'comments': copy_comments, 'comments_sum': comments_sum, 'tags':tags,'done_good_flag':done_good_flag, 'enter_login_form':enter_login_form, 'form': LoginUserForm})
+                       'comments': copy_comments, 'comments_sum': comments_sum, 'tags': tags,
+                       'done_good_flag': done_good_flag, 'enter_login_form': enter_login_form, 'form': LoginUserForm})
 
     return render(request, 'boards/article_detail.html',
                   {'articles': articles, 'article_id': article_id, 'good_sum': good_sum, 'comments': copy_comments,
-                   'comments_sum': comments_sum,'tags':tags,'done_good_flag':done_good_flag, 'enter_login_form':enter_login_form, 'form': LoginUserForm})
+                   'comments_sum': comments_sum, 'tags': tags, 'done_good_flag': done_good_flag,
+                   'enter_login_form': enter_login_form, 'form': LoginUserForm})
 
 
 def good(request):
@@ -216,6 +218,35 @@ def good(request):
         article=article
     )
     return redirect('boards:article_detail', article_id=article_id)
+
+
+class MylistView(View):
+    def get(self, request, *args, **kwargs):
+        get_object_or_404(User, pk=request.user.id)
+
+        if request.user.is_authenticated:
+            user = request.user
+            user_id = user.id
+            mylists = Favorite.objects.filter(user=user)
+            return render(request, 'accounts/mylist.html', {'user_id': user_id, 'user': user, 'mylists': mylists})
+
+        return render(request, 'boards/index.html')
+
+    def post(self, request):
+        article_id = int(request.POST['article_id'])
+        article = Article.objects.get(id=article_id)
+        is_mylist = Good.objects.filter(user=request.user, article=article).count()
+
+        if is_mylist != 0:
+            mylist = Favorite.objects.get(user=request.user, article=article)
+            mylist.delete()
+            return redirect('boards:article_detail', article_id=article_id)
+
+        Favorite.objects.create(user=request.user, article=article)
+        return redirect('boards:article_detail', article_id=article_id)
+
+
+mylist = MylistView.as_view()
 
 
 class GoodViewSet(viewsets.ModelViewSet):
@@ -243,7 +274,6 @@ def userPage(request, user_id):
         description = request.POST['description']
         category_type = request.POST['category_type']
         draft_flag = request.POST['draft_flag']
-
 
     return render(request, 'accounts/userpage.html', {'user_id': user_id, 'user': user})
 
@@ -286,11 +316,11 @@ def postEdit(request, user_id, article_id):
 
             articles.title = title
             articles.description = description
-            articles.category_type =category_type
-            articles.draft_flag =draft_flag
+            articles.category_type = category_type
+            articles.draft_flag = draft_flag
             articles.save()
 
-            return redirect('boards:post_edit', article_id=article_id, user_id=user_id )
+            return redirect('boards:post_edit', article_id=article_id, user_id=user_id)
     return render(request, 'accounts/post_edit.html', {'user_id': user_id, 'user': user, 'articles': articles})
 
 
@@ -311,27 +341,17 @@ def myGood(request, user_id):
     return render(request, 'accounts/good.html', {'user_id': user_id, 'user': user})
 
 
-def favorite(request, user_id):
-    user = get_object_or_404(User, pk=user_id)
-
-    if request.user.is_authenticated:
-        user = request.user
-        user_id = user.id
-
-    return render(request, 'accounts/favorite.html', {'user_id': user_id, 'user': user})
-
-
-
 #  地震速報の取得
 
 import urllib.request
 from bs4 import BeautifulSoup
 from urllib.error import HTTPError, URLError
 
+
 def get_quake_info():
     # 緊急速報の取得
     try:
-        html = urllib.request.urlopen("http://www.jma.go.jp/jp/quake/quake_sindo_index.html",timeout=2)
+        html = urllib.request.urlopen("http://www.jma.go.jp/jp/quake/quake_sindo_index.html", timeout=2)
     except (HTTPError, URLError) as error:
         # タイムアウト処理
         return 0, 0
@@ -350,8 +370,8 @@ def get_quake_info():
     get_text = infotable_up_to_date[0].text
 
     # 余分な文字消去
-    get_text = get_text.replace("震度速報","")
-    #　配列化
+    get_text = get_text.replace("震度速報", "")
+    # 　配列化
     get_text_array = get_text.split("\n")
 
     info = []
@@ -382,7 +402,6 @@ def get_quake_info():
     display_on_off = False
     for _info in info:
         if "震度３" in _info:
-            display_on_off =True
+            display_on_off = True
 
     return info, display_on_off
-

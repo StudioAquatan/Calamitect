@@ -1,0 +1,27 @@
+{% extends 'accounts/base_userpage.html' %}
+
+{% block content %}
+{% for mylist in mylists %}
+         <div class="post-card-good">
+            <div class="card-image-good">
+                [image]
+            </div>
+            <div class="card-right-good">
+                <div class="card-title-good">
+                    <a href="{% url 'boards:article_detail' mylist.article.id%}">{{ mylist.article.title }}</a>
+                </div>
+                <div class="card-content-good">
+                    {{ mylist.article.description }}
+                </div>
+                <div class="card-tag-good">
+                    {{ mylist.article.tag }}
+                </div>
+                <div class="card-good-good">
+                    <div class="card-good-good-info">
+                        <i class="far fa-thumbs-up"></i>{{ mylist.article.mylist_sum }}
+                    </div>
+                </div>
+            </div>
+         </div>
+{% endfor %}
+{% endblock %}
