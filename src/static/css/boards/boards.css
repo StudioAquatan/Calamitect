@@ -145,8 +145,10 @@ div.card-title a{
     cursor: pointer;
 }
 .card-content{
+    font-family: "Helvetica Neue", "YuGothic";
     font-weight: lighter;
     font-size: 1.7rem;
+    line-height: 2;
     color: #787878;
     height: 45px;
     padding-right: 50px;
@@ -199,8 +201,10 @@ div.card-title a{
 }
 
 .card-content-mini{
+    font-family: "Helvetica Neue", "YuGothic";
     font-weight: lighter;
     font-size: 1.7rem;
+    line-height: 2;
     color: #787878;
     padding-right: 50px;
     height: 45px;
@@ -260,6 +264,7 @@ div.card-title a{
 }
 
 .article-detail-description{
+    font-family: "Helvetica Neue", "YuGothic";
     width: 900px;
     margin: 20px auto;
     border-bottom: 1px solid black;
@@ -268,6 +273,7 @@ div.card-title a{
     box-sizing: border-box;
     padding-left: 50px;
     padding-right: 50px;
+    line-height: 2;
  }
 
 .article-sub-info{
