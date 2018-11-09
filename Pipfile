@@ -10,6 +10,7 @@ pillow = "*"
 pip = "==18.0"
 djangorestframework = "*"
 django-filter = "*"
+markdown = "*"
 
 [dev-packages]
 

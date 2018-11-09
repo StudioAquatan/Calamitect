@@ -4,6 +4,8 @@ import uuid
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.conf import settings
+from django.utils.html import mark_safe
+from markdown import markdown
 
 
 def get_image_path(self, filename):
@@ -30,6 +32,9 @@ class Article(models.Model):
     draft_flag = models.BooleanField(verbose_name=_("draft-flag"))
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name=_("user"))
     created_at = models.DateTimeField(_("date_created"), auto_now_add=True)
+
+    def get_description_as_markdown(self):
+        return mark_safe(markdown(self.description, safe_mode='escape'))
 
 
 class Tag(models.Model):
