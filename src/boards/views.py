@@ -16,6 +16,10 @@ from accounts.forms import LoginUserForm
 def index(request):
     # 緊急地震情報
     quake_info, display = get_quake_info()
+    if "emergency" in request.GET:
+        display = True
+    else:
+        display = False
 
     try:
         articles = Article.objects.all()
