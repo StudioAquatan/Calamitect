@@ -24,7 +24,7 @@
 
             <i id="search_btn" class="search fas fa-search"></i>
             {% if user.is_authenticated %}
-            <div class="logout">
+            <div class="username">
                 <a href="{% url 'boards:userpage'  user_id %}">{{ user.username }}</a>
             </div>
             <i id="my_menu_btn" class="post fa fa-angle-down"></i>
