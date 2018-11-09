@@ -3,8 +3,8 @@
 
 {% block content %}
     {% for article in articles %}
-        <div class="post-card-postall">
-            <div class="card-image-postall">
+        <div class="post-card-good shadow">
+            <div class="card-image-mini">
                 {% if article.user.profile_icon %}
                     <a href="{{ article.user.profile_icon.url }}">
                         <img src="{{ article.user.profile_icon.url }}" title="user-icon" width="100px" height="100px">
