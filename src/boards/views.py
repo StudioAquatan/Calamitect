@@ -19,10 +19,9 @@ def index(request):
 
     try:
         articles = Article.objects.all()
-        articles.order_by("created_at").reverse()
+        articles = articles.order_by("created_at").reverse()
     except Article.DoesNotExist:
-        empty = "まだ記事が投稿されていません。"
-        return render(request, 'boards/index.html', {'empty': empty})
+        articles = None
 
     if request.user.is_authenticated:
         user = request.user
@@ -82,13 +81,13 @@ def search(request):
     elif 'search_words' in request.GET:
         search_words = request.GET['search_words']
     else:
-        search_words = 0
+        search_words = None
 
     # ソートタイプ取得
     if 'sort_type' in request.GET:
         sort_type = request.GET['sort_type']
     else:
-        sort_type = 0
+        sort_type = None
 
     if search_words:
         # 検索で取得
@@ -99,7 +98,7 @@ def search(request):
     if sort_type == '1':
         # createdが新しい順(降順)
         articles = articles.order_by('created_at').reverse()
-    if sort_type == '2':
+    elif sort_type == '2':
         # createdが古い順(昇順)
         articles = articles.order_by('created_at')
 
