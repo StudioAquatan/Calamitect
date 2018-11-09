@@ -4,6 +4,29 @@
 {% block content %}
 <div class="description">
     <div class="bxslider">
+        {#  地震速報時に表示  #}
+        {% if display == True %}
+            <div class="description-box" style="background-color: #eaeaea">
+                <div class="quake-title blinking">
+                    [ 地震速報 ]
+                </div>
+                {%  for info in quake_info %}
+                    {%  if info == quake_info.0 %}
+                        <div class="quake-info1">
+                            {{ quake_info.0 }}
+                        </div>
+                    {% elif info == quake_info.1 %}
+                        <div class="quake-info2">
+                            {{ quake_info.1 }}
+                        </div>
+                    {% else %}
+                        <div class="quake-position">
+                            {{ info }}
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        {% endif %}
 
         <div class="description-box">
            <div class="description-title">ROGOROGO</div>
@@ -16,7 +39,6 @@
         </div>
     </div>
 </div>
-
 
 <div class="pickup">
     <div class="pickup-title">
