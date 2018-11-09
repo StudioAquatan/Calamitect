@@ -317,11 +317,6 @@ def get_quake_info():
     soup = BeautifulSoup(html, "lxml")
     infotable = soup.find_all("div", attrs={"id": "info", "class": "infotable"})
 
-    # 正規表現でタグ除去用
-    import re
-    tag_remove = re.compile(r"<[^>]*?>")
-
-
     # 緊急速報の中での最新詳細情報のURL取得
     base_link = "http://www.jma.go.jp/jp/quake"
     add_link = infotable[0].a.get("href")
@@ -331,9 +326,7 @@ def get_quake_info():
     html_up_to_date = urllib.request.urlopen(link)
     soup_up_to_date = BeautifulSoup(html_up_to_date, "lxml")
     infotable_up_to_date = soup_up_to_date.find_all("table", attrs={"id": "infobox", "class": "textframe"})
-    for info_up_to_date in infotable_up_to_date:
-        # タグ除去
-        get_text = tag_remove.sub("", info_up_to_date.text)
+    get_text = infotable_up_to_date[0].text
 
     # 余分な文字消去
     get_text = get_text.replace("震度速報","")
@@ -371,6 +364,5 @@ def get_quake_info():
         if "震度３" in _info:
             display_on_off =True
 
-    print(display_on_off)
     return info, display_on_off
 
