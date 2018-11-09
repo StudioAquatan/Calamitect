@@ -32,6 +32,7 @@ class Article(models.Model):
     draft_flag = models.BooleanField(verbose_name=_("draft-flag"))
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name=_("user"))
     created_at = models.DateTimeField(_("date_created"), auto_now_add=True)
+    good_cnt = models.IntegerField(verbose_name=_("good_cnt"), default=0)
 
     def get_description_as_markdown(self):
         return mark_safe(markdown(self.description, safe_mode='escape'))
