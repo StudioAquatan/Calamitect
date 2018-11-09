@@ -14,7 +14,7 @@
     <div class="post-form">
         <form method="post" action="{% url 'boards:create' %}" novalidate>
             {% csrf_token %}
-            <div class=""> カテゴリー</div>
+            <div style="width: 200px; font-size: 2rem; font-weight: bold; margin-left: 100px;"> カテゴリー</div>
             <label class="form-category">
                 <input type="radio" name="category_type" value="1" checked="checked">事前対策</label>
             <label class="form-category">
