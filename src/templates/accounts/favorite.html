@@ -1,10 +1,20 @@
 {% extends 'accounts/base_userpage.html' %}
+{% load static %}
 
 {% block content %}
 {% for favorite in favorites %}
          <div class="post-card-good shadow">
             <div class="card-image-good">
-                [image]
+                {% if favorite.article.user.profile_icon %}
+                    <a href="{{ favorite.article.user.profile_icon.url }}">
+                        <img src="{{ favorite.article.user.profile_icon.url }}" title="user-icon" width="100px" height="100px">
+                    </a>
+                {% else %}
+                    <a href="{% get_media_prefix %}/profile_icons/default.png">
+                        <img src="{% get_media_prefix %}/profile_icons/default.png" title="user-icon"
+                             width="100px" height="100px">
+                    </a>
+                {% endif %}
             </div>
             <div class="card-right-good">
                 <div class="card-title-good">
