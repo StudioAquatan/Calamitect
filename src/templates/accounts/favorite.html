@@ -1,5 +1,27 @@
 {% extends 'accounts/base_userpage.html' %}
 
 {% block content %}
-
+{% for favorite in favorites %}
+         <div class="post-card-good">
+            <div class="card-image-good">
+                [image]
+            </div>
+            <div class="card-right-good">
+                <div class="card-title-good">
+                    <a href="{% url 'boards:article_detail' favorite.article.id%}">{{ favorite.article.title }}</a>
+                </div>
+                <div class="card-content-good">
+                    {{ favorite.article.description }}
+                </div>
+                <div class="card-tag-good">
+                    {{ favorite.article.tag }}
+                </div>
+                <div class="card-good-good">
+                    <div class="card-good-good-info">
+                        <i class="far fa-thumbs-up"></i>{{ favorite.article.good_sum }}
+                    </div>
+                </div>
+            </div>
+         </div>
+{% endfor %}
 {% endblock %}

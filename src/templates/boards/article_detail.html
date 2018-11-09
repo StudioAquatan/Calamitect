@@ -26,10 +26,26 @@
                         {% csrf_token %}
                         <input type="hidden" id="input_article_id" name="article_id" value="{{ article_id }}">
                         <button type="submit" class="good-button-layout">
-                            <div id="good_sum_1" class="goodbtn"><i class="far fa-thumbs-up"></i>{{ good_sum }}</div>
+                            <div id="good_sum_1" class="goodbtn"><i class="fas fa-folder-plus"></i>{{ good_sum }}</div>
                         </button>
                     </form>
                 </div>
+            </div>
+            <div class="article-detail-favorite">
+                <div class="favorite_text">マイリスト登録</div>
+                <form class="favorite_form_upper" action="{% url 'boards:favorite' %}" method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" class="input_article_id" name="article_id" value="{{ article_id }}">
+                    <button type="submit" class="favorite-button-layout">
+                        <div id="favorite_1" class="favoritebtn">
+                            {% if done_favorite_flag %}
+                                <i class="far fa-folder"></i><i class="fas fa-check"></i>
+                            {% else %}
+                                <i class="fas fa-folder-plus"></i>
+                            {% endif %}
+                        </div>
+                    </button>
+                </form>
             </div>
             <div class="article-detail-category">
                 カテゴリ：
@@ -68,12 +84,27 @@
                     </button>
                 </form>
             </div>
-            <div style="position: relative; top: -23px;left: 140px;"><a
+            <div class="favorite-info">
+                <form class="favorite_form" action="{% url 'boards:favorite' %}" method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" class="input_article_id" name="article_id" value="{{ article_id }}">
+                    <button type="submit" style="position: relative; top: -24px;  left: 140px;" class="favorite-button-layout">
+                        <div id="favorite_2" class="favoritebtn">
+                            {% if done_favorite_flag %}
+                                <i class="far fa-folder"></i><i class="fas fa-check"></i>
+                            {% else %}
+                                <i class="fas fa-folder-plus"></i>
+                            {% endif %}
+                        </div>
+                    </button>
+                </form>
+            </div>
+            <div style="position: relative; top: -51px;left: 270px;"><a
                     href="https://twitter.com/share?ref_src=twsrc%5Etfw" style="display: inline-block;width:100px;"
                     class="twitter-share-button" data-show-count="false" data-size="large">Tweet</a></div>
             <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
-            <div style="position:relative; left:260px; top: -60px;">
+            <div style="position:relative; left:400px; top: -88px;">
                 <div class="fb-like" data-href="{% url 'boards:article_detail' article_id %}" data-layout="button_count"
                      data-action="like" data-size="large" data-show-faces="true" data-share="true"></div>
             </div>
@@ -139,7 +170,6 @@
                             {% endfor %}
                         </ul>
                     {% endif %}
-
                     <div class="submit_area"><input id="id_submit" type="submit" value="送信"></div>
                     <br>
                     <div class="close_area">閉じる</div>
@@ -152,12 +182,53 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script>
     <script>
+    var done_favorite_flag = {{ done_favorite_flag }};
+        var current_done_favorite_flag = true;
+        $('.favorite_form').submit(function (event) {
+            event.preventDefault();
+            var form = $(this);
+            $.ajax({
+                method: form.prop("method"),
+                url: form.prop("action"),
+                data: {
+                    csrfmiddlewaretoken: '{{ csrf_token }}',
+                    article_id: $('.input_article_id').val()
+                },
+                dataType: "text",
+                async: true, //trueなら非同期処理。falseなら同期処理。
+                timeout: 10000,
+            })
+                .done(function () {
+                    if (done_favorite_flag === 0) {
+                        if (current_done_favorite_flag) {
+                            var h = '<i class="far fa-folder"></i>' + '<i class="fas fa-check"></i>';
+                            current_done_favorite_flag = false;
+                        } else {
+                            var h = '<i class="fas fa-folder-plus"></i>';
+                            current_done_favorite_flag = true;
+                        }
+                    } else {
+                        if (current_done_favorite_flag) {
+                            var h = '<i class="fas fa-folder-plus"></i>';
+                            current_done_favorite_flag = false;
+                        } else {
+                            var h = '<i class="far fa-folder"></i>' + '<i class="fas fa-check"></i>';
+                            current_done_favorite_flag = true;
+                        }
+                    }
+                    $("#favorite_1").html(h);
+                    $("#favorite_2").html(h);
+                }).fail(function () {
+                console.log("failed")
+            });
+        });
+
         var done_good_flag = {{ done_good_flag }};
         var in_flag = true;
         $('.good_form').submit(function (event) {
             event.preventDefault();
             var form = $(this);
-            var enter_login = "{{ enter_login_form }}"
+            var enter_login = "{{ enter_login_form }}";
             if (enter_login === "True") {
                 $('#enter_login').removeClass("display-none");
                 $('#back_board').removeClass("display-none");
@@ -173,7 +244,7 @@
                     async: true, //trueなら非同期処理。falseなら同期処理。
                     timeout: 10000,
                 })
-                    .done(function (data) {
+                    .done(function () {
                         if (done_good_flag === 0) {
                             if (in_flag) {
                                 var h = '<i class="far fa-thumbs-up"></i>' + ({{ good_sum }}+1) + '<i class="fas fa-check"></i>';

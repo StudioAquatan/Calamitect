@@ -46,7 +46,6 @@ def categoryTop(request):
     try:
         # 先に全件取得
         articles = Article.objects.filter(category_type=category_type)
-        print(articles)
     except Article.DoesNotExist:
         empty = "まだ記事が投稿されていません。"
         return render(request, 'boards/category_top.html', {'empty': empty})
@@ -170,6 +169,8 @@ def articleDetail(request, article_id):
     comments_sum = comments.count()
     good_sum = Good.objects.filter(article=articles).count()
 
+
+    # いいね済みかどうか
     enter_login_form = False
     try:
         is_good = Good.objects.filter(user=request.user, article=article).count()
@@ -177,12 +178,20 @@ def articleDetail(request, article_id):
         is_good = 0
         enter_login_form = True
 
-
-
-
     done_good_flag = 0
     if is_good != 0:
         done_good_flag = 1
+
+
+    # マイリスト登録済かどうか
+    try:
+        is_favorite = Favorite.objects.filter(user=request.user, article=article).count()
+    except:
+        is_favorite = 0
+
+    done_favorite_flag = 0
+    if is_favorite != 0:
+        done_favorite_flag = 1
 
     if request.user.is_authenticated:
         user = request.user
@@ -192,11 +201,11 @@ def articleDetail(request, article_id):
 
         return render(request, 'boards/article_detail.html',
                       {'articles': articles, 'article_id': article_id, 'good_sum': good_sum, 'user_id': user_id,
-                       'comments': copy_comments, 'comments_sum': comments_sum, 'tags':tags,'done_good_flag':done_good_flag, 'enter_login_form':enter_login_form, 'form': LoginUserForm})
+                       'comments': copy_comments, 'comments_sum': comments_sum, 'tags':tags,'done_good_flag':done_good_flag,'done_favorite_flag':done_favorite_flag, 'enter_login_form':enter_login_form, 'form': LoginUserForm})
 
     return render(request, 'boards/article_detail.html',
                   {'articles': articles, 'article_id': article_id, 'good_sum': good_sum, 'comments': copy_comments,
-                   'comments_sum': comments_sum,'tags':tags,'done_good_flag':done_good_flag, 'enter_login_form':enter_login_form, 'form': LoginUserForm})
+                   'comments_sum': comments_sum,'tags':tags,'done_good_flag':done_good_flag,'done_favorite_flag':done_favorite_flag, 'enter_login_form':enter_login_form, 'form': LoginUserForm})
 
 
 def good(request):
@@ -215,6 +224,20 @@ def good(request):
     )
     return redirect('boards:article_detail', article_id=article_id)
 
+def favorite(request):
+    article_id = int(request.POST['article_id'])
+    article = Article.objects.get(id=article_id)
+    is_favorite = Favorite.objects.filter(user=request.user, article=article).count()
+    if is_favorite != 0:
+        favorite = Favorite.objects.get(user=request.user, article=article)
+        favorite.delete()
+        return redirect('boards:article_detail', article_id=article_id)
+
+    Favorite.objects.create(
+        user=request.user,
+        article=article
+    )
+    return redirect('boards:article_detail', article_id=article_id)
 
 class GoodViewSet(viewsets.ModelViewSet):
     queryset = Good.objects.all()
@@ -309,12 +332,19 @@ def myGood(request, user_id):
     return render(request, 'accounts/good.html', {'user_id': user_id, 'user': user})
 
 
-def favorite(request, user_id):
+def myFavorite(request, user_id):
     user = get_object_or_404(User, pk=user_id)
 
     if request.user.is_authenticated:
         user = request.user
         user_id = user.id
+
+        favorites = Favorite.objects.filter(user=user)
+        for favorite in favorites:
+            sum = Good.objects.filter(article=favorite.article).count()
+            favorite.article.good_sum = sum
+
+        return render(request, 'accounts/favorite.html', {'user_id': user_id, 'user': user, 'favorites': favorites})
 
     return render(request, 'accounts/favorite.html', {'user_id': user_id, 'user': user})
 
