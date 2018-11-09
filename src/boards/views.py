@@ -352,7 +352,6 @@ def get_quake_info():
                     # ”震度”が消えたので追加する
                     string_array[k] = "震度" + string_array[k]
                 info.append(string_array[k])
-            print(info)
         else:
             info.append(get_text_array[i])
 
