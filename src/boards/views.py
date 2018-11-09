@@ -46,7 +46,6 @@ def categoryTop(request):
     try:
         # 先に全件取得
         articles = Article.objects.filter(category_type=category_type)
-        print(articles)
     except Article.DoesNotExist:
         empty = "まだ記事が投稿されていません。"
         return render(request, 'boards/category_top.html', {'empty': empty})
@@ -229,10 +228,9 @@ def favorite(request):
     article_id = int(request.POST['article_id'])
     article = Article.objects.get(id=article_id)
     is_favorite = Favorite.objects.filter(user=request.user, article=article).count()
-
     if is_favorite != 0:
         favorite = Favorite.objects.get(user=request.user, article=article)
-        good.delete()
+        favorite.delete()
         return redirect('boards:article_detail', article_id=article_id)
 
     Favorite.objects.create(
@@ -343,12 +341,12 @@ def myFavorite(request, user_id):
 
         favorites = Favorite.objects.filter(user=user)
         for favorite in favorites:
-            favorite = Good.objects.filter(article=favorite.article).count()
+            sum = Good.objects.filter(article=favorite.article).count()
             favorite.article.good_sum = sum
 
-        return render(request, 'accounts/good.html', {'user_id': user_id, 'user': user, 'favorites': favorites})
+        return render(request, 'accounts/favorite.html', {'user_id': user_id, 'user': user, 'favorites': favorites})
 
-    return render(request, 'accounts/good.html', {'user_id': user_id, 'user': user})
+    return render(request, 'accounts/favorite.html', {'user_id': user_id, 'user': user})
 
 
 
