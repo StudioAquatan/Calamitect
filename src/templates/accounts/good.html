@@ -2,12 +2,13 @@
 {% load static %}
 
 {% block content %}
-{% for good in goods %}
-         <div class="post-card-good shadow">
+    {% for good in goods %}
+        <div class="post-card-good shadow">
             <div class="card-image-mini">
                 {% if good.article.user.profile_icon %}
                     <a href="{{ good.article.user.profile_icon.url }}">
-                        <img src="{{ good.article.user.profile_icon.url }}" title="user-icon" width="100px" height="100px">
+                        <img src="{{ good.article.user.profile_icon.url }}" title="user-icon" width="100px"
+                             height="100px">
                     </a>
                 {% else %}
                     <a href="{% get_media_prefix %}/profile_icons/default.png">
@@ -18,20 +19,21 @@
             </div>
             <div class="card-right-good">
                 <div class="card-title-good">
-                    <a href="{% url 'boards:article_detail' good.article.id%}">{{ good.article.title }}</a>
+                    <a href="{% url 'boards:article_detail' good.article.id %}">{{ good.article.title }}</a>
                 </div>
                 <div class="card-content-good">
                     {{ good.article.description }}
                 </div>
-                <div class="card-tag-good">
-                    {{ good.article.tag }}
+                <div class="card-username-good">
+                    投稿者：{{ good.article.user.username }}
+                </div>
+                <div class="card-created-at-good">
+                    投稿日時：{{ good.article.created_at }}
                 </div>
                 <div class="card-good-good">
-                    <div class="card-good-good-info">
-                        <i class="far fa-thumbs-up"></i>{{ good.article.good_sum }}
-                    </div>
+                    <div class="card-good-sum-good"><i class="far fa-thumbs-up">{{ good.article.good_cnt }}</i></div>
                 </div>
             </div>
-         </div>
-{% endfor %}
+        </div>
+    {% endfor %}
 {% endblock %}
