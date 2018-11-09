@@ -336,6 +336,8 @@ div.card-title a{
     font-weight: bold;
     text-align: center;
     padding: 0px;
+    transition-property: all;
+    transition-duration:  200ms;
 }
 .good-button-layout:hover{
     cursor: pointer;
@@ -388,8 +390,10 @@ div.card-title a{
     line-height: 1.4;
     font-size: 1.7rem;
     font-weight: bold;
+    transition-property: all;
+    transition-duration:  200ms;
 }
-.comment-nutton:hover{
+.comment-button:hover{
     background-color: rgba(255,131,0,0.8);
     cursor: pointer;
 }

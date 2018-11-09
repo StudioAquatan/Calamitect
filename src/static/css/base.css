@@ -3,7 +3,13 @@
 html{
     font-size: 62.5%;
 }
+a{
+    transition-property: color;
+    transition-duration:  300ms;
+}
+
 a:hover {
+    text-decoration: none;
     color: rgba(10,10,10,0.4);
 }
 
@@ -80,13 +86,27 @@ a {
     text-align: center;
     background-color: rgba(255,131,0,1);
     border-radius: 8px;
+    transition-property: all;
+    transition-duration:  200ms;
+}
+.post:hover{
+    background-color: rgba(220,120,0,1);
 }
 .search {
-    width: 50px;
+    width: 40px;
+    height: 35px;
     cursor: pointer;
     font-size: 2.5rem;
-    margin-top: 20px;
+    box-sizing: border-box;
+    border-radius: 10px;
+    margin-top: 16px;
+    padding-top: 3px;
     margin-right: 25px;
+    transition-property: all;
+    transition-duration:  200ms;
+}
+.search:hover{
+    background-color: rgba(220,120,0,1);
 }
 .navi-button {
     width: 27px;
@@ -98,6 +118,11 @@ a {
     margin-right: 580px;
     background-color: rgba(255,131,0,1);
     border-radius: 8px;
+    transition-property: all;
+    transition-duration:  200ms;
+}
+.navi-button:hover{
+    background-color: rgba(220,120,0,1);
 }
 
 .header-category {
@@ -127,6 +152,8 @@ header li{
     width: 110px;
     line-height: 2;
     border-radius: 8px;
+    transition-property: all;
+    transition-duration:  200ms;
 }
 header li:hover{
     background-color: rgba(255,131,0,0.7);
@@ -174,9 +201,11 @@ header input{
     border: 1px solid grey;
     box-shadow: 0px 0px;
     margin-top: 5px;
+    transition-property: all;
+    transition-duration:  200ms;
 }
 .search-decisiton:hover{
-    background-color: rgba(255,131,0,0.8);
+    background-color: rgba(255,131,0,1);
     cursor: pointer;
 }
 
