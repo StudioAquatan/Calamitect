@@ -1,8 +1,18 @@
 {% extends 'accounts/base_userpage.html' %}
+{% load static %}
+
+{% block stylesheet %}
+    <link rel="stylesheet" href="{% static 'css/boards/simplemde.min.css' %}">
+{% endblock %}
+
+{% block javascript %}
+    <script src="{% static 'js/boards/simplemde.min.js' %}"></script>
+{% endblock %}
 
 {% block content %}
+
     <div class="post-form">
-        <form method="post" action="{% url 'boards:create' %}" enctype="multipart/form-data">
+        <form method="post" action="{% url 'boards:create' %}" novalidate>
             {% csrf_token %}
             <div style="width: 200px; font-size: 2rem; font-weight: bold; margin-left: 100px;">カテゴリー</div>
             <label class="form-category">
@@ -36,4 +46,7 @@
             <div><input type="submit" value="送信"></div>
         </form>
     </div>
+    <script>
+        new SimpleMDE({ element: document.getElementById("id_description") });
+    </script>
 {% endblock %}

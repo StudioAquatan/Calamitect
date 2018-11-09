@@ -128,7 +128,12 @@ class CreateArticleView(View):
         form = CreateArticleForm(request.POST)
         is_valid = form.is_valid()
         if not is_valid:
-            return render(request, 'accounts/new.html', {'form': form})
+            context = {
+                'user_id': request.user.id,
+                'user': request.user,  # TODO user渡せばuser_id渡さなくてもいい気がする
+                'form': form,
+            }
+            return render(request, 'accounts/new_post.html', context)
         article = form.save(commit=False)
         article.category_type = request.POST['category_type']
         article.draft_flag = request.POST['draft_flag']

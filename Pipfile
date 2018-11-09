@@ -12,6 +12,7 @@ djangorestframework = "*"
 django-filter = "*"
 "beautifulsoup4" = "*"
 lxml = "*"
+markdown = "*"
 
 [dev-packages]
 
