@@ -4,7 +4,9 @@
 {% for article in articles %}
          <div class="post-card-postall">
             <div class="card-image-postall">
-                [image]
+                <a href="{{ user.profile_icon.url }}">
+                            <img src="{{ user.profile_icon.url }}" title="user-icon" width="100px" height="100px">
+                        </a>
             </div>
             <div class="card-right-postall">
                 <div class="card-title-postall">

@@ -25,8 +25,7 @@ def index(request):
 
     if request.user.is_authenticated:
         user = request.user
-        user_id = user.id
-        return render(request, 'boards/index.html', {'articles': articles, 'user_id': user_id,'quake_info':quake_info, 'display':display})
+        return render(request, 'boards/index.html', {'articles': articles, 'user': user,'user_id': user.id,'quake_info':quake_info, 'display':display})
 
     return render(request, 'boards/index.html', {'articles': articles, 'quake_info':quake_info, 'display':display})
 
