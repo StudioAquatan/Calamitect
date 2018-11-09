@@ -135,7 +135,7 @@ div.sorted-new a, div.sorted-good a{
 
 .post-card {
     margin: 30px auto;
-    border: 0.4px solid grey;
+    border: 0.5px solid rgba(0,0,0,0.2);
     border-radius: 8px;
     width: 1000px;
     height: 200px;
@@ -206,7 +206,7 @@ div.card-title a{
 
 .post-card-mini {
     margin: 30px auto;
-    border: 0.4px solid grey;
+    border: 0.5px solid rgba(0,0,0,0.2);
     border-radius: 8px;
     width: 1000px;
     height: 200px;
