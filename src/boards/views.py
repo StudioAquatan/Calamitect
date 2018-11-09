@@ -331,7 +331,7 @@ from urllib.error import HTTPError, URLError
 def get_quake_info():
     # 緊急速報の取得
     try:
-        html = urllib.request.urlopen("http://www.jma.go.jp/jp/quake/quake_sindo_index.html",timeout=5)
+        html = urllib.request.urlopen("http://www.jma.go.jp/jp/quake/quake_sindo_index.html",timeout=2)
     except (HTTPError, URLError) as error:
         # タイムアウト処理
         return 0, 0

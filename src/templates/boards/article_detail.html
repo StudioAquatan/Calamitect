@@ -32,7 +32,16 @@
                 </div>
             </div>
             <div class="article-detail-category">
-                カテゴリ：{{ articles.category_type }}
+                カテゴリ：
+                {%  if articles.category_type == 1 %}
+                    事前対策
+                {%  elif articles.category_type == 2 %}
+                    災害中
+                {%  elif articles.category_type == 3 %}
+                    ボランティア
+                {%  else %}
+                    アイテム紹介
+                {%  endif %}
             </div>
             <div class="article-detail-tag">
                 {% for tag in tags %}
