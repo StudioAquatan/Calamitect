@@ -25,6 +25,12 @@ def index(request):
     try:
         articles = Article.objects.all()
         articles = articles.order_by("created_at").reverse()
+
+        for article in articles:
+            good_cnt = Good.objects.filter(article=article).count()
+            article.good_cnt = good_cnt
+            article.save()
+
     except Article.DoesNotExist:
         articles = None
 
@@ -234,12 +240,16 @@ def good(request):
     if is_good != 0:
         good = Good.objects.get(user=request.user, article=article)
         good.delete()
+        article.good_cnt -= - 1
+        article.save()
         return redirect('boards:article_detail', article_id=article_id)
 
     Good.objects.create(
         user=request.user,
         article=article
     )
+    article.good_cnt += 1
+    article.save()
     return redirect('boards:article_detail', article_id=article_id)
 
 
