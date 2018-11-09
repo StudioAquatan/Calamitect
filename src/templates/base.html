@@ -27,7 +27,7 @@
         <i id="search_btn" class="search fas fa-search"></i>
         {% if user.is_authenticated %}
             <div class="logout">
-                <a href="{% url 'boards:userpage' user_id %}">{{ user.username }}</a>
+                <a href="{% url 'boards:postall' user_id %}">{{ user.username }}</a>
             </div>
             <div id="my_menu_btn" class="post"><i class="fa fa-angle-down"></i></div>
         {% else %}
@@ -59,7 +59,7 @@
             <div id="my_menu" class="header-my display-none shadow">
                 <ul>
                     <li class="header-my-menu"><a href="{% url 'boards:newpost' user_id %}">記事投稿</a></li>
-                    <li class="header-my-menu"><a href="{% url 'boards:userpage' user_id %}">マイページ</a></li>
+                    <li class="header-my-menu"><a href="{% url 'boards:postall' user_id %}">マイページ</a></li>
                     <li class="header-my-menu"><a href="{% url 'accounts:logout' %}">サインアウト</a></li>
                 </ul>
             </div>
