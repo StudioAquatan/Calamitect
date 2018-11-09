@@ -29,25 +29,38 @@ form{
     width: 720px;
     height: 40px;
     margin: 0 auto;
+    text-align: left;
+    margin-left: 40px;
 }
 .form-category {
     width: 40px;
     height: 40px;
     margin: 0 auto;
-    margin-right: 15px;
+    margin-left: 40px;
 }
 .form-tag {
     width: 300px;
     height: 20px;
     margin: 0 auto;
+    margin-left: 40px;
 }
 .form-description {
     width: 720px;
     height: 200px;
     margin: 0 auto;
     padding: 1px;
+    margin-left: 40px;
 }
-
+#id_title{
+    margin: 0 auto;
+    text-align: left;
+    margin-left: 40px;
+}
+#id_image{
+    margin: 0 auto;
+    text-align: left;
+    margin-left: 40px;
+}
 
 
 /*   userpage  */
