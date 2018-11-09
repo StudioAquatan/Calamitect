@@ -145,8 +145,10 @@ div.card-title a{
     cursor: pointer;
 }
 .card-content{
+    font-family: "Helvetica Neue", "YuGothic";
     font-weight: lighter;
     font-size: 1.7rem;
+    line-height: 2;
     color: #787878;
     height: 45px;
     padding-right: 50px;
@@ -199,8 +201,10 @@ div.card-title a{
 }
 
 .card-content-mini{
+    font-family: "Helvetica Neue", "YuGothic";
     font-weight: lighter;
     font-size: 1.7rem;
+    line-height: 2;
     color: #787878;
     padding-right: 50px;
     height: 45px;
@@ -260,6 +264,7 @@ div.card-title a{
 }
 
 .article-detail-description{
+    font-family: "Helvetica Neue", "YuGothic";
     width: 900px;
     margin: 20px auto;
     border-bottom: 1px solid black;
@@ -268,6 +273,7 @@ div.card-title a{
     box-sizing: border-box;
     padding-left: 50px;
     padding-right: 50px;
+    line-height: 2;
  }
 
 .article-sub-info{
@@ -387,6 +393,79 @@ div.card-title a{
     word-wrap: break-word;
 }
 
+/* mordal login view */
+.back-board{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 5;
+    background-color: rgba(0,0,0,0.7);
+}
+.back-board-color{
+    width: 650px;
+    height: 400px;
+    margin-left: 400px;
+    margin-top: 200px;
+    background-color: white;
+    border: 1px solid #FF8300;
+
+    border-radius: 8px;
+}
+.enter-login{
+    width: 650px;
+    height: 400px;
+    background: white;
+    border: 1px solid #FF8300;
+    box-sizing: border-box;
+    border-radius: 8px;
+}
+div.enter-login form{
+    width:100%;
+    height: 100%;
+}
+div.enter-login h2{
+    text-align: center;
+    margin: 0 auto;
+    box-sizing: border-box;
+    line-height: 2;
+    margin-bottom: 30px;
+    background-color: rgba(255,131,0,0.7);
+}
+div.enter-login #id_username,
+div.enter-login #id_password{
+    width: 300px;
+    height: 15px;
+    margin: 20px;
+    margin-left: 170px;
+    border-radius: 5px;
+}
+div.enter-login #id_submit{
+    width: 300px;
+    height: 30px;
+    margin-left: 70px;
+    border: none;
+    border: 1px solid grey;
+    border-radius: 8px;
+    background-color: rgba(255,131,0,0.7);
+}
+.submit_area{
+    width: 300px;
+    height: 20px;
+    margin: 20px;
+    margin-left: 100px;
+}
+.close_area{
+    width: 70px;
+    height: 20px;
+    margin-left: 400px;
+    border: 1px solid grey;
+    border-radius: 8px;
+    font-size: 1.4rem;
+    text-align: center;
+    background-color: rgba(255,131,0,0.5);
+}
 
 
 /*  not_found  */

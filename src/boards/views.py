@@ -11,6 +11,7 @@ from .forms import CreateArticleForm
 from .serializer import GoodSerializer, FavoriteSerializer, CommentSerializer
 import time
 import timeout_decorator
+from accounts.forms import LoginUserForm
 
 def index(request):
     # 緊急地震情報
@@ -171,7 +172,16 @@ def articleDetail(request, article_id):
     comments_sum = comments.count()
     good_sum = Good.objects.filter(article=articles).count()
 
-    is_good = Good.objects.filter(user=request.user, article=article).count()
+    enter_login_form = False
+    try:
+        is_good = Good.objects.filter(user=request.user, article=article).count()
+    except:
+        is_good = 0
+        enter_login_form = True
+
+
+
+
     done_good_flag = 0
     if is_good != 0:
         done_good_flag = 1
@@ -184,11 +194,11 @@ def articleDetail(request, article_id):
 
         return render(request, 'boards/article_detail.html',
                       {'articles': articles, 'article_id': article_id, 'good_sum': good_sum, 'user_id': user_id,
-                       'comments': copy_comments, 'comments_sum': comments_sum, 'tags':tags,'done_good_flag':done_good_flag})
+                       'comments': copy_comments, 'comments_sum': comments_sum, 'tags':tags,'done_good_flag':done_good_flag, 'enter_login_form':enter_login_form, 'form': LoginUserForm})
 
     return render(request, 'boards/article_detail.html',
                   {'articles': articles, 'article_id': article_id, 'good_sum': good_sum, 'comments': copy_comments,
-                   'comments_sum': comments_sum,'tags':tags,'done_good_flag':done_good_flag})
+                   'comments_sum': comments_sum,'tags':tags,'done_good_flag':done_good_flag, 'enter_login_form':enter_login_form, 'form': LoginUserForm})
 
 
 def good(request):
@@ -321,7 +331,7 @@ from urllib.error import HTTPError, URLError
 def get_quake_info():
     # 緊急速報の取得
     try:
-        html = urllib.request.urlopen("http://www.jma.go.jp/jp/quake/quake_sindo_index.html",timeout=5)
+        html = urllib.request.urlopen("http://www.jma.go.jp/jp/quake/quake_sindo_index.html",timeout=2)
     except (HTTPError, URLError) as error:
         # タイムアウト処理
         return 0, 0

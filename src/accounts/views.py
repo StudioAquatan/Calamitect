@@ -21,6 +21,7 @@ class RegisterView(View):
         user = form.save(commit=False)
         user.set_password(form.cleaned_data['password'])
         user.save()
+        auth_login(request, user)
         return redirect('boards:index')
 
 
@@ -44,7 +45,7 @@ class LoginView(View):
 class LogoutView(View):
     def get(self, request):
         auth_logout(request)
-        return render(request, 'boards/index.html')
+        return redirect('boards:index')
 
 
 register = RegisterView.as_view()
