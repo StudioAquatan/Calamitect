@@ -56,6 +56,9 @@
 
         <div class="article-detail-description">
             {{ articles.get_description_as_markdown }}
+            <a href="{{ articles.image.url }}">
+                <img src="{{ articles.image.url }}" title="article-image" width="300px">
+            </a>
         </div>
         <div class="article-sub-info">
             <div class="good-info">
@@ -92,8 +95,8 @@
                 fjs.parentNode.insertBefore(js, fjs);
             }(document, 'script', 'facebook-jssdk'));</script>
         </div>
-            <div class="article-comment-create">
-        <div class="article-comment-title">
+        <div class="article-comment-create">
+            <div class="article-comment-title">
                 Comments
             </div>
             <form class="comment-form" method="post" action="{% url 'boards:article_detail' article_id %}">

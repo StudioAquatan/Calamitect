@@ -133,6 +133,6 @@ pip-selfcheck.json
 
 # Other
 src/media/images/
-
+src/media/profile_icons/
 
 # End of https://www.gitignore.io/api/python
