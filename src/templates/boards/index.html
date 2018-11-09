@@ -2,44 +2,44 @@
 
 
 {% block content %}
-<div class="description">
-    <div class="bxslider">
-        {#  地震速報時に表示  #}
-        {% if display == True %}
-            <div class="description-box" style="background-color: #eaeaea">
-                <div class="quake-title blinking">
-                    [ 地震速報 ]
+    <div class="description">
+        <div class="bxslider">
+            {#  地震速報時に表示  #}
+            {% if display == True %}
+                <div class="description-box" style="background-color: #eaeaea">
+                    <div class="quake-title blinking">
+                        [ 地震速報 ]
+                    </div>
+                    {% for info in quake_info %}
+                        {% if info == quake_info.0 %}
+                            <div class="quake-info1">
+                                {{ quake_info.0 }}
+                            </div>
+                        {% elif info == quake_info.1 %}
+                            <div class="quake-info2">
+                                {{ quake_info.1 }}
+                            </div>
+                        {% else %}
+                            <div class="quake-position">
+                                {{ info }}
+                            </div>
+                        {% endif %}
+                    {% endfor %}
                 </div>
-                {%  for info in quake_info %}
-                    {%  if info == quake_info.0 %}
-                        <div class="quake-info1">
-                            {{ quake_info.0 }}
-                        </div>
-                    {% elif info == quake_info.1 %}
-                        <div class="quake-info2">
-                            {{ quake_info.1 }}
-                        </div>
-                    {% else %}
-                        <div class="quake-position">
-                            {{ info }}
-                        </div>
-                    {% endif %}
-                {% endfor %}
-            </div>
-        {% endif %}
+            {% endif %}
 
-        <div class="description-box">
-            <div class="description-title">bosite</div>
-            <div class="description-subtitle">災害知見共有サイト</div>
-        </div>
-        <div class="description-box">
-            <div class="description-title">Sample</div>
-        </div>
-        <div class="description-box">
-            <div class="description-title">Demo</div>
+            <div class="description-box">
+                <div class="description-title">bosite</div>
+                <div class="description-subtitle">災害知見共有サイト</div>
+            </div>
+            <div class="description-box">
+                <div class="description-title">Sample</div>
+            </div>
+            <div class="description-box">
+                <div class="description-title">Demo</div>
+            </div>
         </div>
     </div>
-</div>
 
 <div class="pickup">
     <div class="pickup-title">
@@ -55,27 +55,28 @@
             <div class="card-right-mini">
                 <div class="card-title">
                     <a href="{% url 'boards:article_detail' article.id%}">{{ article.title }}</a>
+                        </div>
+                        <div class="card-content-mini">
+                            {{ article.description }}
+                        </div>
+                        <div class="card-tag">
+                            {{ article.tag }}
+                        </div>
+                        <div class="card-good">
+                            {{ article.good }}
+                        </div>
+                        <div class="card-status">
+                            {% if articles.draft_flag %}
+                                下書き
+                            {% endif %}
+                        </div>
+                    </div>
+                            <a href="{% url 'boards:article_detail' article.id %}">{{ article.title }}</a>
                 </div>
-                <div class="card-content-mini">
-                    {{ article.description }}
-                </div>
-                <div class="card-tag">
-                    {{ article.tag }}
-                </div>
-                <div class="card-good">
-                    {{ article.good }}
-                </div>
-                <div class="card-status">
-                     {% if articles.draft_flag  %}
-                         下書き
-                     {% endif %}
-                </div>
-            </div>
-         </div>
-         {% endif %}
-     {% endfor %}
+            {% endif %}
+        {% endfor %}
 
-</div>
+    </div>
 
 
 {% endblock %}
