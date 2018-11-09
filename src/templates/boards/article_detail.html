@@ -31,9 +31,14 @@
                     </form>
                 </div>
             </div>
-            <div class="article-detail-mylist">
-                mylist<br/>
-                {# TODOここにmylistボタン設置 #}
+            <div class="article-detail-favorite">
+                <form class="favorite_form" action="{% url 'boards:favorite' %}" method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" class="input_article_id" name="article_id" value="{{ article_id }}">
+                    <button type="submit" class="favorite-button-layout">
+                        <div id="favorite_1" class="favoritebtn"><i class="far fa-thumbs-up"></i></div>
+                    </button>
+                </form>
             </div>
             <div class="article-detail-category">
                 カテゴリ：
@@ -70,10 +75,13 @@
                     </button>
                 </form>
             </div>
-            <div class="mylist-info">
-                <form class="mylist_form" action="{% url 'boards:mylist' %}" method="POST">
+            <div class="favorite-info">
+                <form class="favorite_form" action="{% url 'boards:favorite' %}" method="POST">
                     {% csrf_token %}
-                    {# TODO ここにマイリストボタン設置#}
+                    <input type="hidden" class="input_article_id" name="article_id" value="{{ article_id }}">
+                    <button type="submit" class="favorite-button-layout">
+                        <div id="favorite_2" class="favoritebtn"><i class="far fa-thumbs-up"></i></div>
+                    </button>
                 </form>
             </div>
             <div style="position: relative; top: -23px;left: 140px;"><a
@@ -147,7 +155,6 @@
                             {% endfor %}
                         </ul>
                     {% endif %}
-
                     <div class="submit_area"><input id="id_submit" type="submit" value="送信"></div>
                     <br>
                     <div class="close_area">閉じる</div>
@@ -207,52 +214,46 @@
             }
         });
 
-        var done_favorite_flag = {{ done_good_flag }};
+        var done_favorite_flag = {{ done_favorite_flag }};
         var current_done_favorite_flag = true;
-        $('.mylist_form').submit(function (event) {
+        $('.favorite_form').submit(function (event) {
             event.preventDefault();
             var form = $(this);
-            var enter_login = "{{ enter_login_form }}";
-            if (enter_login === "True") {
-                $('#enter_login').removeClass("display-none");
-                $('#back_board').removeClass("display-none");
-            } else {
-                $.ajax({
-                    method: form.prop("method"),
-                    url: form.prop("action"),
-                    data: {
-                        csrfmiddlewaretoken: '{{ csrf_token }}',
-                        article_id: $('.input_article_id').val()
-                    },
-                    dataType: "text",
-                    async: true, //trueなら非同期処理。falseなら同期処理。
-                    timeout: 10000,
-                })
-                    .done(function () {
-                        if (done_mylist_flag === 0) {
-                            if (in_flag) {
-                                var h = '<i class="far fa-book"></i>' + '<i class="fas fa-check"></i>';
-                                in_flag = false;
-                            } else {
-                                var h = '<i class="far fa-book"></i>';
-                                in_flag = true;
-                            }
+            $.ajax({
+                method: form.prop("method"),
+                url: form.prop("action"),
+                data: {
+                    csrfmiddlewaretoken: '{{ csrf_token }}',
+                    article_id: $('.input_article_id').val()
+                },
+                dataType: "text",
+                async: true, //trueなら非同期処理。falseなら同期処理。
+                timeout: 10000,
+            })
+                .done(function () {
+                    if (done_favorite_flag === 0) {
+                        if (current_done_favorite_flag) {
+                            var h = '<i class="far fa-book"></i>' + '<i class="fas fa-check"></i>';
+                            current_done_favorite_flag = false;
                         } else {
-                            if (in_flag) {
-                                var h = '<i class="far fa-book"></i>';
-                                in_flag = false;
-                            } else {
-                                var h = '<i class="far fa-book"></i>' + '<i class="fas fa-check"></i>';
-                                in_flag = true;
-                            }
+                            var h = '<i class="far fa-book"></i>';
+                            current_done_favorite_flag = true;
                         }
-                        $("#mylist").html(h);
-                    }).fail(function () {
-                    console.log("failed")
-                });
-            }
+                    } else {
+                        if (current_done_favorite_flag) {
+                            var h = '<i class="far fa-book"></i>';
+                            current_done_favorite_flag = false;
+                        } else {
+                            var h = '<i class="far fa-book"></i>' + '<i class="fas fa-check"></i>';
+                            current_done_favorite_flag = true;
+                        }
+                    }
+                    $("#favorite_1").html(h);
+                    $("#favorite_2").html(h);
+                }).fail(function () {
+                console.log("failed")
+            });
         });
-
         $('.close_area').click(function () {
             $('#back_board').addClass("display-none");
             $('#enter_login').addClass("display-none")
