@@ -31,14 +31,15 @@ ul.left-menu li{
     display: flex;
     justify-content: flex-start;
     position: relative;
+
 }
 
 input.category-search-box{
     border: none;
     width: 550px;
     height: 30px;
-    border: 1px solid grey;
     border-radius: 6px;
+    border: 1px solid grey;
     padding-left: 30px;
     margin-left: 150px;
 }
@@ -48,44 +49,49 @@ input.category-search-box{
 }
 .category-search-menu {
     flex-basis: 40px;
-    height: 30px;
+    height: 34px;
     text-align: center;
-    border: 0.8px solid grey;
     border-radius: 5px;
     margin-left: 30px;
+    padding-top: 7px;
     cursor: pointer;
     box-sizing: border-box;
-    line-height: 1.2;
+    line-height: 1.6;
+    border: 1px solid black;
+    background-color: rgba(255,131,0,0.6);
 }
 div.category-search-decision form{
     display: inline-block;
     height: 30px;
 }
-.category-search-menu{
-    padding-top: 5px;
-}
+
 button.category-search-mark{
     width: 40px;
-    height: 100%;
-    border: none;
-    background-color: rgba(255,255,255,0.1);
+    height: 33px;
+    border: 1px solid black;
+    background-color: rgba(255,131,0,0.6);
     font-size: 2rem;
     user-select: none;
     cursor: pointer;
     display: inline-block;
+    border-radius: 5px;
     margin-left: 30px;
+    text-align: left;
+    padding-left: 10px;
 }
+
 
 .search-menu-bar{
     position:absolute;
     top: 37px;
-    right: 10px;
-    width:120px;
+    right: 0px;
+    width:80px;
     height: 70px;
-    border: 1px solid grey;
+    border: 0.5px solid grey;
     background-color: #ffffff;
     padding: 5px;
     box-sizing: border-box;
+    border-radius: 5px;
 }
 .sorted-new, .sorted-good{
     width: 100%;
@@ -94,9 +100,15 @@ button.category-search-mark{
     box-sizing: border-box;
     line-height: 1.6;
     font-size: 1.7rem;
+    font-weight: bold;
     border-radius: 8px;
     user-select: none;
 }
+div.search-menu-bar a:hover {
+    text-decoration: none;
+    color:black
+}
+
 .sorted-new:hover, .sorted-good:hover{
     background-color: rgba(255,131,0,0.6);
     cursor: pointer;
@@ -112,7 +124,7 @@ div.sorted-new a, div.sorted-good a{
 
 .post-card {
     margin: 30px auto;
-    border: 1px solid black;
+    border: 0.4px solid grey;
     border-radius: 8px;
     width: 1000px;
     height: 200px;
@@ -173,13 +185,17 @@ div.card-title a{
 
 .pickup-title{
     font-weight: bold;
+    width: 180px;
+    border-radius: 8px;
+    padding: 5px;
+    text-align: center;
 }
 
 
 
 .post-card-mini {
     margin: 30px auto;
-    border: 1px solid black;
+    border: 0.4px solid grey;
     border-radius: 8px;
     width: 1000px;
     height: 200px;
@@ -204,7 +220,7 @@ div.card-title a{
     font-family: "Helvetica Neue", "YuGothic";
     font-weight: lighter;
     font-size: 1.7rem;
-    line-height: 2;
+    line-height: 1.5;
     color: #787878;
     padding-right: 50px;
     height: 45px;
@@ -218,12 +234,16 @@ div.card-title a{
     -webkit-line-clamp: 2;
 }
 
+
 /* article detail */
 
 .article-detail{
-    width: 1100px;
+    width: 1000px;
     margin: 50px auto;
+    padding-top: 20px;
     margin-bottom: 0px;
+    border: 0.5px solid grey;
+    border-radius: 8px;
 }
 
 .article-detail-info{
@@ -241,7 +261,7 @@ div.card-title a{
 
 .article-detail-title{
     width: 900px;
-    height: 50px;
+    height: 70px;
     text-align: left;
     font-weight: bold;
     font-size: 3rem;
@@ -255,12 +275,14 @@ div.card-title a{
     flex-basis: 200px;
     height: 55px;
     font-size: 1.5rem;
+    margin-bottom: 10px;
 }
 
 .article-detail-category,
 .article-detail-tag{
-    flex-basis: 200px;
+    flex-basis: 500px;
     height: 30px;
+    font-size: 1.7rem;
 }
 
 .article-detail-description{
@@ -313,9 +335,17 @@ div.card-title a{
     box-sizing: border-box;
     font-weight: bold;
     text-align: center;
+    padding: 0px;
+    transition-property: all;
+    transition-duration:  200ms;
+}
+.good-button-layout:hover{
+    cursor: pointer;
+    background-color: rgba(255,131,0,0.8);
 }
 .goodbtn{
     font-size: 1.8rem;
+    line-height: 1.3;
 }
 
 .article-comment-create{
@@ -326,7 +356,6 @@ div.card-title a{
     padding-left: 50px;
     padding-right: 50px;
     margin-bottom: 10px;
-    border-bottom: 1px solid grey;
 }
 .article-comment-title{
     font-size: 2rem;
@@ -348,27 +377,38 @@ div.card-title a{
     box-sizing: border-box;
     border: 1px solid grey;
     padding: 1px;
-    margin-right: 50px;
-    font-size: 2rem;
+    margin-right: 25px;
+    font-size: 1.7rem;
 }
 .comment-button{
     display: inline-block;
-    flex-basis: 50px;
+    flex-basis: 100px;
     height: 30px;
     background-color: rgba(255,131,0,0.6);
     border: 1px solid grey;
     border-radius: 8px;
+    line-height: 1.4;
+    font-size: 1.7rem;
+    font-weight: bold;
+    transition-property: all;
+    transition-duration:  200ms;
+}
+.comment-button:hover{
+    background-color: rgba(255,131,0,0.8);
+    cursor: pointer;
 }
 
 .article-comment-list{
-    width: 800px;
+    width: 1000px;
     height: 100%;
     margin: 20px auto;
     border: 1px solid grey;
     border-radius: 8px;
     box-sizing: border-box;
-    padding-left: 30px;
-    padding-right: 30px;
+    padding-left: 80px;
+    padding-right: 80px;
+    padding-top: 10px;
+    padding-bottom: 20px;
 }
 .article-comment-list-header{
     width: 700px;
@@ -386,7 +426,8 @@ div.card-title a{
     font-size: 1.5rem;
 }
 .article-comment-content{
-    width: 640px;
+    width: 750px;
+    font-size: 1.8rem;
     min-height: 50px;
     height: 100%;
     overflow: hidden;
@@ -409,7 +450,7 @@ div.card-title a{
     margin-left: 400px;
     margin-top: 200px;
     background-color: white;
-    border: 1px solid #FF8300;
+    border: 1px solid #ffc107;
 
     border-radius: 8px;
 }
@@ -417,7 +458,7 @@ div.card-title a{
     width: 650px;
     height: 400px;
     background: white;
-    border: 1px solid #FF8300;
+    border: 1px solid #ffc107;
     box-sizing: border-box;
     border-radius: 8px;
 }
