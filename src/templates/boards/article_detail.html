@@ -54,17 +54,23 @@
                     </button>
                 </form>
             </div>
-            <div style="position: relative; top: -23px;left: 140px;"><a href="https://twitter.com/share?ref_src=twsrc%5Etfw" style="display: inline-block;width:100px;" class="twitter-share-button" data-show-count="false" data-size="large">Tweet</a></div>
+            <div style="position: relative; top: -23px;left: 140px;"><a
+                    href="https://twitter.com/share?ref_src=twsrc%5Etfw" style="display: inline-block;width:100px;"
+                    class="twitter-share-button" data-show-count="false" data-size="large">Tweet</a></div>
             <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
-            <div style="position:relative; left:260px; top: -56px;"><div class="fb-like" data-href="{% url 'boards:article_detail' article_id %}" data-layout="button_count" data-action="like" data-size="large" data-show-faces="true" data-share="true"></div></div>
+            <div style="position:relative; left:260px; top: -56px;">
+                <div class="fb-like" data-href="{% url 'boards:article_detail' article_id %}" data-layout="button_count"
+                     data-action="like" data-size="large" data-show-faces="true" data-share="true"></div>
+            </div>
             <div id="fb-root"></div>
-            <script>(function(d, s, id) {
-              var js, fjs = d.getElementsByTagName(s)[0];
-              if (d.getElementById(id)) return;
-              js = d.createElement(s); js.id = id;
-              js.src = 'https://connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v3.2';
-              fjs.parentNode.insertBefore(js, fjs);
+            <script>(function (d, s, id) {
+                var js, fjs = d.getElementsByTagName(s)[0];
+                if (d.getElementById(id)) return;
+                js = d.createElement(s);
+                js.id = id;
+                js.src = 'https://connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v3.2';
+                fjs.parentNode.insertBefore(js, fjs);
             }(document, 'script', 'facebook-jssdk'));</script>
         </div>
     </div>
@@ -100,6 +106,36 @@
     {% endfor %}
 
 
+    {#  ログイン画面を促す表示  #}
+    <div id="back_board" class="back-board display-none">
+        <div class="back-board-color">
+            <div id="enter_login" class="enter-login display-none">
+                <form method="post" action="{% url 'accounts:login' %}">
+                    <h2>Login</h2>
+                    {% csrf_token %}
+                    {% for field in form %}
+                        <div style="font-size: 2rem; font-weight: bold; text-align: center;">{{ field.label }}</div>
+                        {{ field }}
+                        {% if field.errors %}
+                            <p>{{ field.errors.0 }}</p>
+                        {% endif %}
+                    {% endfor %}
+                    {% if form.non_field_errors %}
+                        <ul>
+                            {% for non_field_error in form.non_field_errors %}
+                                <li>{{ non_field_error }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+
+                    <div class="submit_area"><input id="id_submit" type="submit" value="送信"></div><br>
+                    <div class="close_area">閉じる</div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script>
     <script>
@@ -108,40 +144,51 @@
         $('.good_form').submit(function (event) {
             event.preventDefault();
             var form = $(this);
-            $.ajax({
-                method: form.prop("method"),
-                url: form.prop("action"),
-                data: {
-                    csrfmiddlewaretoken: '{{ csrf_token }}',
-                    article_id: $('.input_article_id').val()
-                },
-                dataType: "text",
-                async: true, //trueなら非同期処理。falseなら同期処理。
-                timeout: 10000,
-            })
-                .done(function (data) {
-                    if (done_good_flag === 0) {
-                        if (in_flag) {
-                            var h = '<i class="far fa-thumbs-up"></i>' + ({{ good_sum }}+1) + '<i class="fas fa-check"></i>';
-                            in_flag = false;
+            var enter_login = "{{ enter_login_form }}"
+            if (enter_login === "True") {
+                $('#enter_login').removeClass("display-none");
+                $('#back_board').removeClass("display-none");
+            } else {
+                $.ajax({
+                    method: form.prop("method"),
+                    url: form.prop("action"),
+                    data: {
+                        csrfmiddlewaretoken: '{{ csrf_token }}',
+                        article_id: $('.input_article_id').val()
+                    },
+                    dataType: "text",
+                    async: true, //trueなら非同期処理。falseなら同期処理。
+                    timeout: 10000,
+                })
+                    .done(function (data) {
+                        if (done_good_flag === 0) {
+                            if (in_flag) {
+                                var h = '<i class="far fa-thumbs-up"></i>' + ({{ good_sum }}+1) + '<i class="fas fa-check"></i>';
+                                in_flag = false;
+                            } else {
+                                var h = '<i class="far fa-thumbs-up"></i>' + ({{ good_sum }});
+                                in_flag = true;
+                            }
                         } else {
-                            var h = '<i class="far fa-thumbs-up"></i>' + ({{ good_sum }});
-                            in_flag = true;
+                            if (in_flag) {
+                                var h = '<i class="far fa-thumbs-up"></i>' + ({{ good_sum }} -1);
+                                in_flag = false;
+                            } else {
+                                var h = '<i class="far fa-thumbs-up"></i>' + ({{ good_sum }}) + '<i class="fas fa-check"></i>';
+                                in_flag = true;
+                            }
                         }
-                    } else {
-                        if (in_flag) {
-                            var h = '<i class="far fa-thumbs-up"></i>' + ({{ good_sum }} -1);
-                            in_flag = false;
-                        } else {
-                            var h = '<i class="far fa-thumbs-up"></i>' + ({{ good_sum }}) + '<i class="fas fa-check"></i>';
-                            in_flag = true;
-                        }
-                    }
-                    $("#good_sum_1").html(h);
-                    $("#good_sum_2").html(h);
-                }).fail(function () {
+                        $("#good_sum_1").html(h);
+                        $("#good_sum_2").html(h);
+                    }).fail(function () {
                     console.log("failed")
-            });
+                });
+            }
+        });
+
+        $('.close_area').click(function () {
+            $('#back_board').addClass("display-none");
+            $('#enter_login').addClass("display-none")
         });
     </script>
 {% endblock %}
