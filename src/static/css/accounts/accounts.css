@@ -152,7 +152,8 @@ input.profile-input-icon{
 .post-card-good{
     width: 650px;
     height: 190px;
-    border: 1px solid grey;
+    border: 0.5px solid;
+    border-color: rgba(0,0,0,0.2);
     border-radius: 8px;
     margin: 30px auto;
     display: flex;
