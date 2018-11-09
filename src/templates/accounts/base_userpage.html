@@ -4,6 +4,7 @@
   <head>
       <meta charset="utf-8">
       <title>Calamitect</title>
+      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
       <link rel="stylesheet" href="{% static 'css/base.css' %}">
       <link rel="stylesheet" href="{% static 'css/boards/boards.css' %}">
       <link rel="stylesheet" href="{% static 'css/accounts/accounts.css' %}">
@@ -22,9 +23,10 @@
 
             <i id="search_btn" class="search fas fa-search"></i>
             {% if user.is_authenticated %}
-            <div class="logout"><a href="{% url 'accounts:logout' %}">ログアウト</a></div>
-{#            <div class="post"><a href="{% url 'boards:create' %}">投稿</a></div>#}
-            <div class="post"><a href="{% url 'boards:userpage' user_id%}">MyPage</a></div>
+            <div class="logout">
+                {{ user.username }}
+            </div>
+            <i id="my_menu_btn" class="post fa fa-angle-down"></i>
             {% else %}
             <div class="signin"><a href="{% url 'accounts:create'%}">登録</a></div>
             <div class="login"><a href="{% url 'accounts:login' %}">ログイン</a></div>
@@ -48,6 +50,13 @@
                     </button>
                 </form>
             </div>
+            <div id="my_menu" class="header-my display-none shadow">
+                <ul>
+                    <li class="header-my-menu"><a href="{% url 'boards:newpost' user_id %}">記事投稿</a></li>
+                    <li class="header-my-menu"><a href="{% url 'boards:userpage' user_id %}">マイページ</a></li>
+                    <li class="header-my-menu"><a href="{% url 'accounts:logout' %}">サインアウト</a></li>
+                </ul>
+            </div>
 
         </div>
     </header>
@@ -64,19 +73,19 @@
                 MyPage
             </div>
             <ul class="userpage-left-menu">
-                <li class="userpage-list">
+                <li class="userpage-list shadow">
                     <a href="{% url 'boards:newpost' user_id%}">新規投稿</a>
                 </li>
-                <li class="userpage-list">
+                <li class="userpage-list shadow">
                     <a href="{% url 'boards:postall' user_id%}">投稿一覧</a>
                 </li>
-                <li class="userpage-list">
+                <li class="userpage-list shadow">
                     <a href="{% url 'boards:mygood' user_id%}">いいね</a>
                 </li>
-                <li class="userpage-list">
+                <li class="userpage-list shadow">
                     <a href="{% url 'boards:favorite' user_id%}">お気に入り</a>
                 </li>
-                <li class="userpage-list">
+                <li class="userpage-list shadow">
                     <a href="{% url 'boards:userpage' user_id%}">プロフィール</a>
                 </li>
             </ul>
@@ -96,6 +105,9 @@
 
 
     {#  js  #}
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script>
     <script src="{% static 'js/base.js' %}"></script>

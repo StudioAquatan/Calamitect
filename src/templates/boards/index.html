@@ -42,14 +42,13 @@
 </div>
 
 <div class="pickup">
-    <div class="pickup-title">
+    <div class="pickup-title shadow">
         Pickup Atricle
     </div>
-
      {{ empty }}
      {% for article in articles %}
          {% if article.draft_flag == False %}
-         <div class="post-card-mini">
+         <div class="post-card-mini shadow">
             <div class="card-image-mini">
                 [image]
             </div>

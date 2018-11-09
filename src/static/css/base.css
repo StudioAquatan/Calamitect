@@ -3,6 +3,9 @@
 html{
     font-size: 62.5%;
 }
+a:hover {
+    color: rgba(10,10,10,0.4);
+}
 
 @import url(http://fonts.googleapis.com/earlyaccess/notosansjapanese.css);
 body{
@@ -43,8 +46,11 @@ a {
     height: 100%;
     line-height: 3;
 }
-.signin, .login, .logout, .post {
+.signin, .login, .post {
     cursor: pointer;
+    flex-basis: 120px;
+}
+.logout{
     flex-basis: 120px;
 }
 .title {
@@ -64,12 +70,23 @@ a {
 .navi-button, .search,.signin, .login, .logout, .post {
     text-align: center;
 }
+.post{
+    flex-basis: 27px;
+    height: 27px;
+    cursor: pointer;
+    margin-top: 20px;
+    font-size: 2.5rem;
+    line-height: 1;
+    text-align: center;
+    background-color: rgba(255,131,0,1);
+    border-radius: 8px;
+}
 .search {
     width: 50px;
     cursor: pointer;
     font-size: 2.5rem;
     margin-top: 20px;
-    margin-right: 20px;
+    margin-right: 25px;
 }
 .navi-button {
     width: 27px;
@@ -78,26 +95,28 @@ a {
     font-size: 2.5rem;
     text-align: center;
     margin-top: 20px;
-    margin-right: 500px;
+    margin-right: 580px;
     background-color: rgba(255,131,0,1);
     border-radius: 8px;
 }
 
 .header-category {
     position: absolute;
-    left: 115px;
+    left: 170px;
     top: 55px;
     text-align: left;
     font-size: 0px;
+    width:130px;
     z-index: 4;
     background-color: rgba(255,255,255,1);
+    border: 0.5px solid grey;
+    border-radius: 5px;
 }
 header ul {
     margin: 0;
     list-style-type: none;
     padding: 5px 10px;
-    width:120px;
-    border: 2px solid grey;
+    width:130px;
 }
 header li{
     display: inline-block;
@@ -105,27 +124,32 @@ header li{
     padding: 0px;
     font-size: 1.6rem;
     font-weight: bold;
-    width: 120px;
+    width: 110px;
     line-height: 2;
     border-radius: 8px;
 }
 header li:hover{
     background-color: rgba(255,131,0,0.7);
 }
+header li a:hover {
+    color: #000;
+    text-decoration: none;
+}
 header ul li a{
     text-decoration: none;
     display:inline-block;
     width:100%;
-    padding: 0px 10px;
+    padding: 0px 5px;
 }
 
 .search-bar{
     position: absolute;
     top: 55px;
     right: 100px;
-    width: 250px;
+    width: 270px;
     height: 40px;
-    border: 2px solid grey;
+    border: 0.5px solid grey;
+    border-radius: 8px;
     background-color: rgba(255,255,255,1);
 }
 /*inputの影など初期化*/
@@ -134,24 +158,40 @@ header input{
     background:none;
 }
 .search-box{
-    margin-top: 5px;
-    border: 1px solid grey;
+    border: 0.5px solid grey;
     border-radius: 8px;
-    width: 180px;
+    width: 200px;
     height: 20px;
+    font-size: 1.5rem;
     box-shadow: 0px 0px;
     padding-left: 10px;
 }
 .search-decisiton{
-    background-color: rgba(255,131,0,0.7);
-    font-size: 2rem;
+    background-color: rgba(255,131,0,0.6);
+    font-size: 1.7rem;
     width:32px;
     border-radius: 8px;
     border: 1px solid grey;
     box-shadow: 0px 0px;
     margin-top: 5px;
 }
+.search-decisiton:hover{
+    background-color: rgba(255,131,0,0.8);
+    cursor: pointer;
+}
 
+.header-my {
+    position: absolute;
+    right: 48px;
+    top: 55px;
+    text-align: left;
+    font-size: 0px;
+    width:130px;
+    z-index: 4;
+    background-color: rgba(255,255,255,1);
+    border: 0.5px solid grey;
+    border-radius: 5px;
+}
 
  /* headerの補正 */
 .header-opacity-cancel{

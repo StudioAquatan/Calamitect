@@ -31,10 +31,10 @@ form{
     margin: 0 auto;
 }
 .form-category {
-    width: 40px;
+    width: 140px;
     height: 40px;
     margin: 0 auto;
-    margin-right: 15px;
+    margin-right: 10px;
 }
 .form-tag {
     width: 300px;
@@ -97,8 +97,6 @@ ul.userpage-left-menu li.userpage-list{
     display: inline-block;
     width: 160px;
     line-height: 40px;
-    border-bottom: 1px solid black;
-    border-top: 1px solid black;
     margin: 10px 0px;
     text-align: center;
 }

@@ -2,18 +2,18 @@
 
 
 {% block content %}
-    <div class="article-detail">
+    <div class="article-detail shadow">
         <div class="article-detail-title">
             {{ articles.title }}
         </div>
         <div class="article-detail-info">
             <div class="article-detail-username">
                 ユーザー名: <br/>
-                {{ articles.user }}
+                <span style="display: inline-block; font-size: 1.6rem; margin-top: 7px;">{{ articles.user }}</span>
             </div>
             <div class="article-detail-created-at">
                 投稿日: <br/>
-                {{ articles.created_at }}
+                <span style="display: inline-block; font-size: 1.6rem; margin-top: 7px;">{{ articles.created_at }}</span>
             </div>
             <div class="article-detail-comments">
                 comment<br/>
@@ -68,7 +68,7 @@
                     class="twitter-share-button" data-show-count="false" data-size="large">Tweet</a></div>
             <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
-            <div style="position:relative; left:260px; top: -56px;">
+            <div style="position:relative; left:260px; top: -60px;">
                 <div class="fb-like" data-href="{% url 'boards:article_detail' article_id %}" data-layout="button_count"
                      data-action="like" data-size="large" data-show-faces="true" data-share="true"></div>
             </div>
@@ -82,24 +82,22 @@
                 fjs.parentNode.insertBefore(js, fjs);
             }(document, 'script', 'facebook-jssdk'));</script>
         </div>
-    </div>
-
-
-    <div class="article-comment-create">
+            <div class="article-comment-create">
         <div class="article-comment-title">
-            Comments
+                Comments
+            </div>
+            <form class="comment-form" method="post" action="{% url 'boards:article_detail' article_id %}">
+                {% csrf_token %}
+                <textarea class="comment-box" name="text" placeholder="コメント入力欄"></textarea>
+                <button type="submit" class="comment-button">
+                    送信
+                </button>
+            </form>
         </div>
-        <form class="comment-form" method="post" action="{% url 'boards:article_detail' article_id %}">
-            {% csrf_token %}
-            <textarea class="comment-box" name="text">comments</textarea>
-            <button type="submit" class="comment-button">
-                送信
-            </button>
-        </form>
     </div>
 
     {% for comment in comments %}
-        <div class="article-comment-list">
+        <div class="article-comment-list shadow">
             <div class="article-comment-list-header">
                 <div class="article-comment-user">
                     名前:{{ comment.username }}

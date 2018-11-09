@@ -37,7 +37,7 @@
             <i id="category-search" class="category-search-menu fa fa-angle-down"></i>
 
             {#     クリックで出現    #}
-            <div id="category_search-menu" class="search-menu-bar display-none">
+            <div id="category_search-menu" class="search-menu-bar display-none shadow">
                 <div class="sorted-new">
                     <a href="{% url 'boards:categoryTop' %}?category_type={{ category_type }}&sort_type=1">New</a>
                 </div>
@@ -49,7 +49,7 @@
 
         {{ empty }}
         {% for article in articles %}
-        <div class="post-card">
+        <div class="post-card shadow">
             <div class="card-image">
                 [image]
             </div>
