@@ -220,8 +220,7 @@ div.card-title a{
 .card-image-mini {
     box-sizing: border-box;
     padding-top: 20px;
-    padding-left: 30px;
-    flex-basis: 200px;
+    flex-basis: 120px;
 }
 .card-right-mini{
     flex-basis: 700px;
@@ -571,8 +570,15 @@ div.enter-login #id_submit{
 .card-username{
     display: inline-block;
     margin-top: 20px;
-    margin-right: 7px;
+    margin-right: 55px;
     color: rgba(0,0,0,0.8);
+    font-size: 1.5rem;
+}
+.card-created-at{
+    display: inline-block;
+    margin-top: 20px;
+    color: rgba(0,0,0,0.8);
+    font-size: 1.5rem;
 }
 .card-good{
     display: inline-block;
@@ -582,8 +588,8 @@ div.card-good-sum i{
     width: 80px;
     height: 22px;
     position: relative;
-    left: 40px;
-    top: 2px;
+    left: 60px;
+    top: 0px;
     background-color: rgba(255,131,0,0.6);
     box-sizing: border-box;
     border: 1px solid rgba(0,0,0,0.3);
@@ -595,6 +601,74 @@ div.card-good-sum i{
     padding-top: 2px;
     text-align: center;
 }
+
+
+/*  good.html */
+/* card */
+.card-username-good{
+    display: inline-block;
+    margin-top: 20px;
+    margin-right: 30px;
+    color: rgba(0,0,0,0.8);
+    font-size: 1.5rem;
+}
+.card-created-at-good{
+    display: inline-block;
+    margin-top: 20px;
+    color: rgba(0,0,0,0.8);
+    font-size: 1.5rem;
+}
+.card-good-good{
+    display: inline-block;
+    width:100px;
+    margin-top: 20px;
+}
+div.card-good-good i{
+    width: 80px;
+    height: 22px;
+    position: relative;
+    left: 450px;
+    top: -42px;
+    background-color: rgba(255,131,0,0.6);
+    box-sizing: border-box;
+    border: 1px solid rgba(0,0,0,0.3);
+    line-height: 1;
+    font-size: 1.7rem;
+    box-sizing: border-box;
+    border: 1px solid grey;
+    border-radius: 8px;
+    padding-top: 2px;
+    text-align: center;
+}
+
+.card-good-good2{
+    display: inline-block;
+    width:100px;
+    margin-top: 20px;
+}
+div.card-good-good2 i{
+    width: 80px;
+    height: 22px;
+    position: relative;
+    left: 50px;
+    top: 3px;
+    background-color: rgba(255,131,0,0.6);
+    box-sizing: border-box;
+    border: 1px solid rgba(0,0,0,0.3);
+    line-height: 1;
+    font-size: 1.7rem;
+    box-sizing: border-box;
+    border: 1px solid grey;
+    border-radius: 8px;
+    padding-top: 2px;
+    text-align: center;
+}
+.card-status{
+    position: relative;
+    left: -120px;
+    top: -30px;
+}
+
 
 /*  not_found  */
 

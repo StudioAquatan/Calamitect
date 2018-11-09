@@ -18,18 +18,19 @@
             </div>
             <div class="card-right-good">
                 <div class="card-title-good">
-                    <a href="{% url 'boards:article_detail' favorite.article.id%}">{{ favorite.article.title }}</a>
+                    <a href="{% url 'boards:article_detail' favorite.article.id %}">{{ favorite.article.title }}</a>
                 </div>
                 <div class="card-content-good">
                     {{ favorite.article.description }}
                 </div>
-                <div class="card-tag-good">
-                    {{ favorite.article.tag }}
+                <div class="card-username-good">
+                    投稿者：{{ favorite.article.user.username }}
+                </div>
+                <div class="card-created-at-good">
+                    投稿日時：{{ favorite.article.created_at }}
                 </div>
                 <div class="card-good-good">
-                    <div class="card-good-good-info">
-                        <i class="far fa-thumbs-up"></i>{{ favorite.article.good_sum }}
-                    </div>
+                    <div class="card-good-sum-good"><i class="far fa-thumbs-up">{{ good.article.good_cnt }}</i></div>
                 </div>
             </div>
          </div>

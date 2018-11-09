@@ -16,21 +16,22 @@
                     </a>
                 {% endif %}
             </div>
-            <div class="card-right-postall">
-                <div class="card-title-postall">
+            <div class="card-right-good">
+                <div class="card-title-good">
                     <a href="{% url 'boards:article_detail' article.id %}">{{ article.title }}</a>
                     <a href="{% url 'boards:post_edit' user_id article.id %}"><span style="color:blue;">[編集]</span></a>
                 </div>
-                <div class="card-content-postall">
+                <div class="card-content-good">
                     {{ article.description }}
                 </div>
-                <div class="card-tag-postall">
-                    {{ article.tag }}
+                <div class="card-username-good">
+                    投稿者：{{ article.user.username }}
                 </div>
-                <div class="card-good-postall">
-                    <div class="card-postall-good-info">
-                        <i class="far fa-thumbs-up"></i>{{ article.good_sum }}
-                    </div>
+                <div class="card-created-at-good">
+                    投稿日時：{{ article.created_at }}
+                </div>
+                <div class="card-good-good2">
+                    <div class="card-good-sum-good"><i class="far fa-thumbs-up">{{ article.good_cnt }}</i></div>
                 </div>
                 <div class="card-status">
                     {% if article.draft_flag %}
