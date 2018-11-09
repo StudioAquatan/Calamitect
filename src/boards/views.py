@@ -13,6 +13,7 @@ import time
 import timeout_decorator
 from accounts.forms import LoginUserForm
 
+
 def index(request):
     # 緊急地震情報
     quake_info, display = get_quake_info()
@@ -29,9 +30,11 @@ def index(request):
 
     if request.user.is_authenticated:
         user = request.user
-        return render(request, 'boards/index.html', {'articles': articles, 'user': user,'user_id': user.id,'quake_info':quake_info, 'display':display})
+        return render(request, 'boards/index.html',
+                      {'articles': articles, 'user': user, 'user_id': user.id, 'quake_info': quake_info,
+                       'display': display})
 
-    return render(request, 'boards/index.html', {'articles': articles, 'quake_info':quake_info, 'display':display})
+    return render(request, 'boards/index.html', {'articles': articles, 'quake_info': quake_info, 'display': display})
 
 
 def categoryTop(request):
@@ -58,12 +61,17 @@ def categoryTop(request):
         # createdが新しい順(降順)
         articles = articles.order_by('created_at').reverse()
     if sort_type == '2':
-        # createdが古い順(昇順)
-        articles = articles.order_by('created_at')
+        # いいねの多い順
+        for article in articles:
+            good_cnt = Good.objects.filter(article=article).count()
+            article.good_cnt = good_cnt
+            article.save()
+        articles = articles.order_by('good_cnt').reverse()
 
     if search_key:
         # 検索時
-        articles = Article.objects.filter(Q(description__icontains=search_key) | Q(title__icontains=search_key) ,category_type=category_type)
+        articles = Article.objects.filter(Q(description__icontains=search_key) | Q(title__icontains=search_key),
+                                          category_type=category_type)
 
     if request.user.is_authenticated:
         user = request.user
@@ -101,8 +109,12 @@ def search(request):
         # createdが新しい順(降順)
         articles = articles.order_by('created_at').reverse()
     elif sort_type == '2':
-        # createdが古い順(昇順)
-        articles = articles.order_by('created_at')
+        # いいねの多い順
+        for article in articles:
+            good_cnt = Good.objects.filter(article=article).count()
+            article.good_cnt = good_cnt
+            article.save()
+        articles = articles.order_by('good_cnt').reverse()
 
     if request.user.is_authenticated:
         user = request.user
@@ -173,7 +185,6 @@ def articleDetail(request, article_id):
     comments_sum = comments.count()
     good_sum = Good.objects.filter(article=articles).count()
 
-
     # いいね済みかどうか
     enter_login_form = False
     try:
@@ -185,7 +196,6 @@ def articleDetail(request, article_id):
     done_good_flag = 0
     if is_good != 0:
         done_good_flag = 1
-
 
     # マイリスト登録済かどうか
     try:
@@ -201,15 +211,19 @@ def articleDetail(request, article_id):
         user = request.user
         user_id = user.id
         if request.method == 'POST':
-            return redirect('boards:article_detail',article_id=article_id)
+            return redirect('boards:article_detail', article_id=article_id)
 
         return render(request, 'boards/article_detail.html',
                       {'articles': articles, 'article_id': article_id, 'good_sum': good_sum, 'user_id': user_id,
-                       'comments': copy_comments, 'comments_sum': comments_sum, 'tags':tags,'done_good_flag':done_good_flag,'done_favorite_flag':done_favorite_flag, 'enter_login_form':enter_login_form, 'form': LoginUserForm})
+                       'comments': copy_comments, 'comments_sum': comments_sum, 'tags': tags,
+                       'done_good_flag': done_good_flag, 'done_favorite_flag': done_favorite_flag,
+                       'enter_login_form': enter_login_form, 'form': LoginUserForm})
 
     return render(request, 'boards/article_detail.html',
                   {'articles': articles, 'article_id': article_id, 'good_sum': good_sum, 'comments': copy_comments,
-                   'comments_sum': comments_sum,'tags':tags,'done_good_flag':done_good_flag,'done_favorite_flag':done_favorite_flag, 'enter_login_form':enter_login_form, 'form': LoginUserForm})
+                   'comments_sum': comments_sum, 'tags': tags, 'done_good_flag': done_good_flag,
+                   'done_favorite_flag': done_favorite_flag, 'enter_login_form': enter_login_form,
+                   'form': LoginUserForm})
 
 
 def good(request):
@@ -228,6 +242,7 @@ def good(request):
     )
     return redirect('boards:article_detail', article_id=article_id)
 
+
 def favorite(request):
     article_id = int(request.POST['article_id'])
     article = Article.objects.get(id=article_id)
@@ -242,6 +257,7 @@ def favorite(request):
         article=article
     )
     return redirect('boards:article_detail', article_id=article_id)
+
 
 class GoodViewSet(viewsets.ModelViewSet):
     queryset = Good.objects.all()
@@ -268,7 +284,6 @@ def userPage(request, user_id):
         description = request.POST['description']
         category_type = request.POST['category_type']
         draft_flag = request.POST['draft_flag']
-
 
     return render(request, 'accounts/userpage.html', {'user_id': user_id, 'user': user})
 
@@ -311,11 +326,11 @@ def postEdit(request, user_id, article_id):
 
             articles.title = title
             articles.description = description
-            articles.category_type =category_type
-            articles.draft_flag =draft_flag
+            articles.category_type = category_type
+            articles.draft_flag = draft_flag
             articles.save()
 
-            return redirect('boards:post_edit', article_id=article_id, user_id=user_id )
+            return redirect('boards:post_edit', article_id=article_id, user_id=user_id)
     return render(request, 'accounts/post_edit.html', {'user_id': user_id, 'user': user, 'articles': articles})
 
 
@@ -353,17 +368,17 @@ def myFavorite(request, user_id):
     return render(request, 'accounts/favorite.html', {'user_id': user_id, 'user': user})
 
 
-
 #  地震速報の取得
 
 import urllib.request
 from bs4 import BeautifulSoup
 from urllib.error import HTTPError, URLError
 
+
 def get_quake_info():
     # 緊急速報の取得
     try:
-        html = urllib.request.urlopen("http://www.jma.go.jp/jp/quake/quake_sindo_index.html",timeout=2)
+        html = urllib.request.urlopen("http://www.jma.go.jp/jp/quake/quake_sindo_index.html", timeout=2)
     except (HTTPError, URLError) as error:
         # タイムアウト処理
         return 0, 0
@@ -382,8 +397,8 @@ def get_quake_info():
     get_text = infotable_up_to_date[0].text
 
     # 余分な文字消去
-    get_text = get_text.replace("震度速報","")
-    #　配列化
+    get_text = get_text.replace("震度速報", "")
+    # 　配列化
     get_text_array = get_text.split("\n")
 
     info = []
@@ -414,7 +429,6 @@ def get_quake_info():
     display_on_off = False
     for _info in info:
         if "震度３" in _info:
-            display_on_off =True
+            display_on_off = True
 
     return info, display_on_off
-
