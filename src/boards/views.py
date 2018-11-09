@@ -9,7 +9,8 @@ from accounts.models import User
 from .models import Article, Good, Favorite, Comment, Tag
 from .forms import CreateArticleForm
 from .serializer import GoodSerializer, FavoriteSerializer, CommentSerializer
-
+import time
+import timeout_decorator
 
 def index(request):
     # 緊急地震情報
@@ -315,10 +316,15 @@ def favorite(request, user_id):
 
 import urllib.request
 from bs4 import BeautifulSoup
+from urllib.error import HTTPError, URLError
 
 def get_quake_info():
     # 緊急速報の取得
-    html = urllib.request.urlopen("http://www.jma.go.jp/jp/quake/quake_sindo_index.html")
+    try:
+        html = urllib.request.urlopen("http://www.jma.go.jp/jp/quake/quake_sindo_index.html",timeout=5)
+    except (HTTPError, URLError) as error:
+        # タイムアウト処理
+        return 0, 0
     soup = BeautifulSoup(html, "lxml")
     infotable = soup.find_all("div", attrs={"id": "info", "class": "infotable"})
 
