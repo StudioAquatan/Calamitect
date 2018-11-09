@@ -6,7 +6,7 @@
         <div class="bxslider">
             {#  地震速報時に表示  #}
             {% if display == True %}
-                <div class="description-box" style="background-color: #eaeaea">
+                <div class="description-box" style="border: 3px solid #ffc107; background-color: #eaeaea">
                     <div class="quake-title blinking">
                         [ 地震速報 ]
                     </div>
@@ -33,7 +33,8 @@
                 <div class="description-subtitle">災害知見共有サイト</div>
             </div>
             <div class="description-box">
-                <div class="description-title">万が一に備えて！冬に防災</div>
+                <div class="description-exsample">冬の寒さをしのぐ！</div>
+                <div class="description-exsample">冬の防災グッズ特集‼</div>
             </div>
             <div class="description-box">
                 <div class="description-title">Demo</div>
@@ -68,11 +69,11 @@
                         <div class="card-content-mini">
                             {{ article.description }}
                         </div>
-                        <div class="card-tag">
-                            {{ article.tag }}
+                        <div class="card-username">
+                            投稿者：{{ article.user.username }}
                         </div>
                         <div class="card-good">
-                            {{ article.good }}
+                            <div class="card-good-sum"><i class="far fa-thumbs-up">{{ article.good_cnt }}</i></div>
                         </div>
                     </div>
                 </div>

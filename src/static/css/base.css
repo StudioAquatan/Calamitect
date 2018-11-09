@@ -307,7 +307,7 @@ footer {
 .description-title{
     font-family: "Berlin Sans FB";
     margin: 0 auto;
-    margin-top: 90px;
+    margin-top: 70px;
     width: 500px;
     text-align: center;
     font-size: 11rem;
@@ -323,7 +323,15 @@ footer {
     font-weight: bold;
     padding-left: 3px;
 }
-
+.description-exsample{
+    margin: 50px auto;
+    width: 600px;
+    text-align: center;
+    font-size: 4rem;
+    letter-spacing: 1.2rem;
+    font-weight: bold;
+    padding-left: 3px;
+}
 
 /* 緊急速報時　地震速報 */
 
