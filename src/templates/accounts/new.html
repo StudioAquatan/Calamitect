@@ -6,7 +6,7 @@
             {% csrf_token %}
             <h2>Sign up</h2>
             {% for field in form %}
-                <div style="width: 200px; font-size: 2rem; font-weight: bold; margin-left: 100px;">{{ field.label }}</div>
+                <div class="signin-form-title">{{ field.label }}</div>
                 {{ field }}
                 {% if field.errors %}
                     <p>{{ field.errors.0 }}</p>
@@ -21,7 +21,7 @@
                 </ul>
             {% endif %}
 
-            <div><input type="submit" value="送信"></div>
+           <div class="submit-outline"><input id="submit" type="submit" value="登録"></div>
         </form>
     </div>
 {% endblock %}

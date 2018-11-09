@@ -14,6 +14,157 @@ form{
     margin: 0 auto;
 }
 
+
+/* signin new.html */
+div.post-form h2{
+    width: 200px;
+    margin: 0 auto;
+    margin-top: 50px;
+    margin-bottom: 30px;
+    font-size: 3rem;
+    text-align: center;
+}
+.signin-form-title {
+    width: 450px;
+    text-align: left;
+    margin: 0 auto;
+    font-size: 1.8rem;
+    margin-bottom: 10px;
+}
+div.post-form input{
+    position: relative;
+    left: 135px;
+}
+#id_username,
+#id_email,
+#id_password,
+#id_confirm_password{
+    border: 1px solid rgba(0,0,0,0.2);
+    border-radius: 8px;
+    width: 450px;
+    font-size: 1.8rem;
+    margin: 0 auto;
+    text-align: center;
+    margin-bottom: 30px;
+}
+#id_profile_icon{
+    left: 250px;
+    width: 450px;
+    font-size: 1.8rem;
+    margin: 0 auto;
+    text-align: center;
+    margin-bottom: 30px;
+}
+input#submit{
+    border:none;
+    background: none;
+    margin: 0;
+    padding: 0;
+    height: 40px;
+    font-weight: bold;
+    transition-property: background-color;
+    transition-duration:  200ms;
+}
+div.post-form input#submit{
+    position: relative;
+    left: 0px;
+}
+#submit{
+    border: 1px solid rgba(0,0,0,0.2);
+    border-radius: 8px;
+    width: 450px;
+    font-size: 1.8rem;
+    margin: 0 auto;
+    text-align: center;
+    margin-bottom: 30px;
+}
+.submit-outline{
+    margin: 40px auto;
+    width:450px;
+    height:40px;
+    border: 1px solid rgba(0,0,0,0.5);
+    border-radius: 8px;
+    background-color: rgba(255,131,0,0.7);
+}
+input#submit:hover{
+    cursor: pointer;
+    background-color: rgba(255,131,0,0.8);
+}
+
+/* login login.html */
+div.login-form h2{
+    width: 200px;
+    margin: 0 auto;
+    margin-top: 50px;
+    margin-bottom: 30px;
+    font-size: 3rem;
+    text-align: center;
+}
+.login-form-title {
+    width: 450px;
+    text-align: left;
+    margin: 0 auto;
+    font-size: 1.8rem;
+    margin-bottom: 10px;
+}
+div.post-form input{
+    position: relative;
+    left: 135px;
+}
+#id_username,
+#id_password{
+    border: 1px solid rgba(0,0,0,0.2);
+    border-radius: 8px;
+    width: 450px;
+    font-size: 1.8rem;
+    margin: 0 auto;
+    text-align: center;
+    margin-bottom: 30px;
+}
+#id_profile_icon{
+    left: 250px;
+    width: 450px;
+    font-size: 1.8rem;
+    margin: 0 auto;
+    text-align: center;
+    margin-bottom: 30px;
+}
+input#submit{
+    border:none;
+    background: none;
+    margin: 0;
+    padding: 0;
+    height: 40px;
+    font-weight: bold;
+    transition-property: background-color;
+    transition-duration:  200ms;
+}
+div.post-form input#submit{
+    position: relative;
+    left: 0px;
+}
+#submit{
+    border: 1px solid rgba(0,0,0,0.2);
+    border-radius: 8px;
+    width: 450px;
+    font-size: 1.8rem;
+    margin: 0 auto;
+    text-align: center;
+    margin-bottom: 30px;
+}
+.submit-outline2{
+    margin: 70px auto;
+    width:450px;
+    height:40px;
+    border: 1px solid rgba(0,0,0,0.5);
+    border-radius: 8px;
+    background-color: rgba(255,131,0,0.7);
+}
+input#submit:hover{
+    cursor: pointer;
+    background-color: rgba(255,131,0,0.8);
+}
+
 /*  new_post  */
 .post-form {
     width: 720px;
@@ -47,7 +198,6 @@ form{
     margin: 0 auto;
     padding: 1px;
 }
-
 
 
 /*   userpage  */

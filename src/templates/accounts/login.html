@@ -2,11 +2,11 @@
 
 {% block content %}
     <div class="login-form">
-      <form method="post" action="">
-      <h2>ログイン</h2>
-          {% csrf_token %}
-          {% for field in form %}
-                <div style="width: 200px; font-size: 2rem; font-weight: bold; margin-left: 100px;">{{ field.label }}</div>
+        <form method="post" action="">
+            <h2>ログイン</h2>
+            {% csrf_token %}
+            {% for field in form %}
+                <div class="login-form-title">{{ field.label }}</div>
                 {{ field }}
                 {% if field.errors %}
                     <p>{{ field.errors.0 }}</p>
@@ -21,7 +21,7 @@
                 </ul>
             {% endif %}
 
-          <div><input type="submit" value="送信"></div>
-      </form>
+            <div class="submit-outline2"><input id="submit" type="submit" value="登録"></div>
+        </form>
     </div>
 {% endblock %}
