@@ -41,20 +41,22 @@
         </div>
     </div>
 
-<div class="pickup">
-    <div class="pickup-title">
-        新着記事一覧
-    </div>
-     {{ empty }}
-     {% for article in articles %}
-         {% if article.draft_flag == False %}
-         <div class="post-card-mini shadow">
-            <div class="card-image-mini">
-                [image]
-            </div>
-            <div class="card-right-mini">
-                <div class="card-title">
-                    <a href="{% url 'boards:article_detail' article.id%}">{{ article.title }}</a>
+    <div class="pickup">
+        <div class="pickup-title">
+            新着記事一覧
+        </div>
+        {{ empty }}
+        {% for article in articles %}
+            {% if article.draft_flag == False %}
+                <div class="post-card-mini shadow">
+                    <div class="card-image-mini">
+                        <a href="{{ user.profile_icon.url }}">
+                            <img src="{{ user.profile_icon.url }}" title="article-image" width="100px" height="100px">
+                        </a>
+                    </div>
+                    <div class="card-right-mini">
+                        <div class="card-title">
+                            <a href="{% url 'boards:article_detail' article.id %}">{{ article.title }}</a>
                         </div>
                         <div class="card-content-mini">
                             {{ article.description }}
@@ -71,7 +73,7 @@
                             {% endif %}
                         </div>
                     </div>
-                            <a href="{% url 'boards:article_detail' article.id %}">{{ article.title }}</a>
+                    <a href="{% url 'boards:article_detail' article.id %}">{{ article.title }}</a>
                 </div>
             {% endif %}
         {% endfor %}
