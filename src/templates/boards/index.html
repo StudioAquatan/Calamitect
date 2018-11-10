@@ -50,7 +50,7 @@
         {% for article in articles %}
             {% if article.draft_flag == False %}
                 <div class="post-card-mini shadow">
-                    <div class="card-image-mini">
+                    <div class="card-image">
                         {% if article.user.profile_icon %}
                             <a href="{{ article.user.profile_icon.url }}">
                                 <img src="{{ article.user.profile_icon.url }}" title="user-icon" width="100px" height="100px">
