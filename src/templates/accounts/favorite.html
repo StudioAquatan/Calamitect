@@ -1,0 +1,38 @@
+{% extends 'accounts/base_userpage.html' %}
+{% load static %}
+
+{% block content %}
+{% for favorite in favorites %}
+         <div class="post-card-good shadow">
+            <div class="card-image-mini">
+                {% if favorite.article.user.profile_icon %}
+                    <a href="{{ favorite.article.user.profile_icon.url }}">
+                        <img src="{{ favorite.article.user.profile_icon.url }}" title="user-icon" width="100px" height="100px">
+                    </a>
+                {% else %}
+                    <a href="{% get_media_prefix %}/profile_icons/default.png">
+                        <img src="{% get_media_prefix %}/profile_icons/default.png" title="user-icon"
+                             width="100px" height="100px">
+                    </a>
+                {% endif %}
+            </div>
+            <div class="card-right-good">
+                <div class="card-title-good">
+                    <a href="{% url 'boards:article_detail' favorite.article.id %}">{{ favorite.article.title }}</a>
+                </div>
+                <div class="card-content-good">
+                    {{ favorite.article.description }}
+                </div>
+                <div class="card-username-good">
+                    投稿者：{{ favorite.article.user.username }}
+                </div>
+                <div class="card-created-at-good">
+                    投稿日時：{{ favorite.article.created_at }}
+                </div>
+                <div class="card-good-good">
+                    <div class="card-good-sum-good"><i class="far fa-thumbs-up">{{ good.article.good_cnt }}</i></div>
+                </div>
+            </div>
+         </div>
+{% endfor %}
+{% endblock %}

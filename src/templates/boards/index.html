@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="description">
+        <div class="bxslider">
+            {#  地震速報時に表示  #}
+            {% if display == True %}
+                <div class="description-box" style="border: 3px solid #ffc107; background-color: #eaeaea">
+                    <div class="quake-title blinking">
+                        [ 地震速報 ]
+                    </div>
+                    {% for info in quake_info %}
+                        {% if info == quake_info.0 %}
+                            <div class="quake-info1">
+                                {{ quake_info.0 }}
+                            </div>
+                        {% elif info == quake_info.1 %}
+                            <div class="quake-info2">
+                                {{ quake_info.1 }}
+                            </div>
+                        {% else %}
+                            <div class="quake-position">
+                                {{ info }}
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            <div class="description-box">
+                <div class="description-title">bosite</div>
+                <div class="description-subtitle">災害知見共有サイト</div>
+            </div>
+            <div class="description-box">
+                <div class="description-exsample">冬の寒さをしのぐ！</div>
+                <div class="description-exsample">冬の防災グッズ特集‼</div>
+            </div>
+            <div class="description-box">
+                <div class="description-title">Demo</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="pickup">
+        <div class="pickup-title">
+            新着記事一覧
+        </div>
+        {{ empty }}
+        {% for article in articles %}
+            {% if article.draft_flag == False %}
+                <div class="post-card-mini shadow">
+                    <div class="card-image">
+                        {% if article.user.profile_icon %}
+                            <a href="{{ article.user.profile_icon.url }}">
+                                <img src="{{ article.user.profile_icon.url }}" title="user-icon" width="100px" height="100px">
+                            </a>
+                        {% else %}
+                            <a href="{% get_media_prefix %}/profile_icons/default.png">
+                                <img src="{% get_media_prefix %}/profile_icons/default.png" title="user-icon"
+                                     width="100px" height="100px">
+                            </a>
+                        {% endif %}
+                    </div>
+                    <div class="card-right-mini">
+                        <div class="card-title">
+                            <a href="{% url 'boards:article_detail' article.id %}">{{ article.title }}</a>
+                        </div>
+                        <div class="card-content-mini">
+                            {{ article.description }}
+                        </div>
+                        <div class="card-username">
+                            投稿者：{{ article.user.username }}
+                        </div>
+                        <div class="card-created-at">
+                            投稿日時：{{ article.created_at }}
+                        </div>
+                        <div class="card-good">
+                            <div class="card-good-sum"><i class="far fa-thumbs-up">{{ article.good_cnt }}</i></div>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        {% endfor %}
+
+    </div>
+
+    <a href="{% url 'boards:index' %}?emergency" style="cursor: pointer">緊急災害モード</a>
+
+
+{% endblock %}

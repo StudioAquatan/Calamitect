@@ -1,0 +1,426 @@
+.login-form {
+    width: 1100px;
+    margin: 0 auto;
+    background-color: #ffffff;
+    margin-top: 30px;
+    text-align: center;
+}
+form{
+    margin: 0 auto;
+}
+.form-login-username, .form-login-password {
+    width: 600px;
+    height: 40px;
+    margin: 0 auto;
+}
+
+
+/* signin new.html */
+div.post-form h2{
+    width: 200px;
+    margin: 0 auto;
+    margin-top: 50px;
+    margin-bottom: 30px;
+    font-size: 3rem;
+    text-align: center;
+}
+.signin-form-title {
+    width: 450px;
+    text-align: left;
+    margin: 0 auto;
+    font-size: 1.8rem;
+    margin-bottom: 10px;
+}
+div.post-form input{
+    position: relative;
+    left: 135px;
+}
+#id_username,
+#id_email,
+#id_password,
+#id_confirm_password{
+    border: 1px solid rgba(0,0,0,0.2);
+    border-radius: 8px;
+    width: 450px;
+    font-size: 1.8rem;
+    margin: 0 auto;
+    text-align: center;
+    margin-bottom: 30px;
+}
+#id_profile_icon{
+    left: 250px;
+    width: 450px;
+    font-size: 1.8rem;
+    margin: 0 auto;
+    text-align: center;
+    margin-bottom: 30px;
+}
+input#submit{
+    border:none;
+    background: none;
+    margin: 0;
+    padding: 0;
+    height: 40px;
+    font-weight: bold;
+    transition-property: background-color;
+    transition-duration:  200ms;
+}
+div.post-form input#submit{
+    position: relative;
+    left: 0px;
+}
+#submit{
+    border: 1px solid rgba(0,0,0,0.2);
+    border-radius: 8px;
+    width: 450px;
+    font-size: 1.8rem;
+    margin: 0 auto;
+    text-align: center;
+    margin-bottom: 30px;
+}
+.submit-outline{
+    margin: 40px auto;
+    width:450px;
+    height:40px;
+    border: 1px solid rgba(0,0,0,0.5);
+    border-radius: 8px;
+    background-color: rgba(255,131,0,0.7);
+}
+input#submit:hover{
+    cursor: pointer;
+    background-color: rgba(255,131,0,0.8);
+}
+
+/* login login.html */
+div.login-form h2{
+    width: 200px;
+    margin: 0 auto;
+    margin-top: 50px;
+    margin-bottom: 30px;
+    font-size: 3rem;
+    text-align: center;
+}
+.login-form-title {
+    width: 450px;
+    text-align: left;
+    margin: 0 auto;
+    font-size: 1.8rem;
+    margin-bottom: 10px;
+}
+div.post-form input{
+    position: relative;
+    left: 135px;
+}
+#id_username,
+#id_password{
+    border: 1px solid rgba(0,0,0,0.2);
+    border-radius: 8px;
+    width: 450px;
+    font-size: 1.8rem;
+    margin: 0 auto;
+    text-align: center;
+    margin-bottom: 30px;
+}
+#id_profile_icon{
+    left: 250px;
+    width: 450px;
+    font-size: 1.8rem;
+    margin: 0 auto;
+    text-align: center;
+    margin-bottom: 30px;
+}
+input#submit{
+    border:none;
+    background: none;
+    margin: 0;
+    padding: 0;
+    height: 40px;
+    font-weight: bold;
+    transition-property: background-color;
+    transition-duration:  200ms;
+}
+div.post-form input#submit{
+    position: relative;
+    left: 0px;
+}
+#submit{
+    border: 1px solid rgba(0,0,0,0.2);
+    border-radius: 8px;
+    width: 450px;
+    font-size: 1.8rem;
+    margin: 0 auto;
+    text-align: center;
+    margin-bottom: 30px;
+}
+.submit-outline2{
+    margin: 70px auto;
+    width:450px;
+    height:40px;
+    border: 1px solid rgba(0,0,0,0.5);
+    border-radius: 8px;
+    background-color: rgba(255,131,0,0.7);
+}
+input#submit:hover{
+    cursor: pointer;
+    background-color: rgba(255,131,0,0.8);
+}
+
+/*  new_post  */
+.post-form {
+    width: 720px;
+    margin: 0 auto;
+    background-color: #ffffff;
+    margin-top: 30px;
+    text-align: left;
+}
+form{
+    margin: 0 auto;
+}
+.form-title {
+    width: 720px;
+    height: 40px;
+    margin: 0 auto;
+}
+.form-category {
+    width: 140px;
+    height: 40px;
+    margin: 0 auto;
+    margin-right: 10px;
+}
+.form-tag {
+    width: 300px;
+    height: 20px;
+    margin: 0 auto;
+}
+.form-description {
+    width: 720px;
+    height: 200px;
+    margin: 0 auto;
+    padding: 1px;
+}
+
+
+/*   userpage  */
+
+.userpage {
+    width: 1100px;
+    height: 100%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: flex-start;
+    margin-top: 20px;
+    margin-bottom: 100px;
+}
+.userpage-left-dummy{
+    flex-basis: 200px;
+    height:100%;
+}
+.userpage-middle {
+    flex-basis: 550px;
+    height: 100%;
+    min-height: 300px;
+    box-sizing: border-box;
+    padding-left: 20px;
+    margin-right: 50px;
+    margin-top: 50px;
+}
+
+
+.userpage-left{
+    position: fixed;
+    top: 90px;
+    width: 200px;
+}
+.userpage-left-title{
+    font-weight: bold;
+    font-size: 2rem;
+    width:200px;
+    box-sizing: border-box;
+    padding-left: 80px;
+    margin-bottom: 70px;
+}
+ul.userpage-left-menu {
+    list-style-type: none;
+    margin: 0px;
+}
+ul.userpage-left-menu li.userpage-list{
+    display: inline-block;
+    width: 160px;
+    line-height: 40px;
+    margin: 10px 0px;
+    text-align: center;
+}
+ul.userpage-left-menu li.userpage-list a{
+    text-decoration: none;
+}
+
+.profile-title{
+    font-size: 3rem;
+    font-weight: bold;
+    text-align: center;
+    width: 100%;
+}
+.profile-name, .profile-mail, .profile-icon{
+    height: 100px;
+    width: 100%;
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 40px;
+}
+div.userpage-middle input.profile-input{
+    border: 1px solid grey;
+    background:none;
+}
+.profile-input{
+    margin-top: 10px;
+    margin-bottom: 10px;
+    width: 100%;
+    height: 25px;
+    border-radius: 8px;
+}
+
+input.profile-change{
+    border: 0px;
+    background-color: #FFFFFF;
+    font-weight: bold;
+    font-size: 1.5rem;
+    width: 100%;
+    text-align: center;
+    border-bottom: 1px solid grey;
+    cursor: pointer;
+}
+
+input.profile-input-icon{
+    height: 100px;
+
+}
+
+
+
+/*   good.html */
+
+.post-card-good{
+    width: 705px;
+    height: 190px;
+    border: 0.5px solid;
+    border-color: rgba(0,0,0,0.2);
+    border-radius: 8px;
+    margin: 30px auto;
+    display: flex;
+    justify-content: center;
+}
+.card-image-good{
+    flex-basis: 100px;
+}
+.card-right-good{
+    flex-basis: 550px;
+}
+.card-title-good{
+    margin: 15px 0px;
+    font-weight: bold;
+    height: 30px;
+}
+div.card-title-good a{
+    text-decoration: none;
+}
+.card-content-good{
+    font-size: 1.7rem;
+    height: 45px;
+    width: 500px;
+    margin-right: 40px;
+    overflow: hidden;
+    word-wrap: break-word;
+    /*chrome とsafariのみ効く三点リーダー*/
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+}
+
+.card-tag-good{
+    width: 300px;
+    height: 30px;
+}
+.card-good-good{
+    width: 150px;
+    height: 30px;
+    margin-top: 14px;
+}
+.card-good-good-info{
+    height: 20px;
+    width: 70px;
+    font-size: 1.5rem;
+    margin-left: 10px;
+    box-sizing: border-box;
+    text-align: center;
+    border: 1px solid grey;
+    border-radius: 8px;
+    background-color: rgba(255,131,0,0.6);
+}
+.fixed{
+    position: relative;
+    top: 0px;
+    left: 0px;
+}
+
+
+/*    post_all */
+.post-card-postall{
+    width: 650px;
+    height: 190px;
+    border: 1px solid grey;
+    border-radius: 8px;
+    margin: 30px auto;
+    display: flex;
+    justify-content: center;
+}
+.card-image-postall{
+    flex-basis: 100px;
+}
+.card-right-postall{
+    flex-basis: 550px;
+}
+.card-title-postall{
+    margin: 15px;
+    font-weight: bold;
+}
+div.card-title-postall a{
+    text-decoration: none;
+}
+.card-content-postall{
+    font-size: 1.7rem;
+    height: 45px;
+    width: 500px;
+    margin-right: 40px;
+    overflow: hidden;
+    word-wrap: break-word;
+    /*chrome とsafariのみ効く三点リーダー*/
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+}
+
+.card-tag-postall{
+    width: 300px;
+    height: 30px;
+}
+.card-good-postall{
+    width: 150px;
+    height: 30px;
+    display: inline-block;
+}
+.card-postall-good-info{
+    height: 20px;
+    width: 70px;
+    font-size: 1.5rem;
+    margin-left: 10px;
+    box-sizing: border-box;
+    text-align: center;
+    border: 1px solid grey;
+    border-radius: 8px;
+    background-color: rgba(255,131,0,0.6);
+}
+.card-status{
+    width: 150px;
+    height: 30px;
+    display: inline-block;
+}

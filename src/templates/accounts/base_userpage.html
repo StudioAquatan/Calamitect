@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+  <head>
+      <meta charset="utf-8">
+      <title>Calamitect</title>
+      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+      <link rel="stylesheet" href="{% static 'css/base.css' %}">
+      <link rel="stylesheet" href="{% static 'css/boards/boards.css' %}">
+      <link rel="stylesheet" href="{% static 'css/accounts/accounts.css' %}">
+      <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.css">
+      {% block stylesheet %}{% endblock %}
+      {% block javascript %}{% endblock %}
+  </head>
+
+
+  <body>
+    <header>
+        <div class="header-menu">
+            <div class="title"><a href="{% url 'boards:index' %}">bosite</a></div>
+            <div class="header-category-text">カテゴリー</div>
+            <i id="nav_btn" class="navi-button fa fa-angle-down"></i>
+
+            <i id="search_btn" class="search fas fa-search"></i>
+            {% if user.is_authenticated %}
+            <div class="username">
+                <a href="{% url 'boards:userpage'  user_id %}">{{ user.username }}</a>
+            </div>
+            <i id="my_menu_btn" class="post fa fa-angle-down"></i>
+            {% else %}
+            <div class="signin"><a href="{% url 'accounts:create'%}">登録</a></div>
+            <div class="login"><a href="{% url 'accounts:login' %}">ログイン</a></div>
+            {% endif %}
+
+            {#   クリック時のバー      #}
+            <nav id="navi" class="header-category display-none">
+                <ul>
+                    <li class="header-category-menu"><a href="{% url 'boards:categoryTop' %}?category_type=1">事前対策</a></li>
+                    <li class="header-category-menu"><a href="{% url 'boards:categoryTop' %}?category_type=2">災害中対応</a></li>
+                    <li class="header-category-menu"><a href="{% url 'boards:categoryTop' %}?category_type=3">ボランティア</a></li>
+                    <li class="header-category-menu"><a href="{% url 'boards:categoryTop' %}?category_type=4">アイテム紹介</a></li>
+                </ul>
+            </nav>
+            <div id="search" class="search-bar display-none">
+                <form method="post" action="{% url 'boards:search' %}">
+                    {% csrf_token %}
+                    <input class="search-box" type="text" name="search-words" placeholder="検索"/>
+                    <button type="submit" class="search-decisiton">
+	                    <i class="fas fa-search"></i>
+                    </button>
+                </form>
+            </div>
+            <div id="my_menu" class="header-my display-none shadow">
+                <ul>
+                    <li class="header-my-menu"><a href="{% url 'boards:newpost' user_id %}">記事投稿</a></li>
+                    <li class="header-my-menu"><a href="{% url 'boards:postall' user_id %}">マイページ</a></li>
+                    <li class="header-my-menu"><a href="{% url 'accounts:logout' %}">サインアウト</a></li>
+                </ul>
+            </div>
+
+        </div>
+    </header>
+    {#  fixed の補正  #}
+    <div class="header-opacity-cancel"></div>
+    <div class="header-margin-cancel"></div>
+
+    {#  内容  #}
+    <div class="userpage">
+        <div class="userpage-left-dummy">
+        </div>
+        <div class="userpage-left">
+            <div class="userpage-left-title">
+                MyPage
+            </div>
+            <ul class="userpage-left-menu">
+                <li class="userpage-list shadow">
+                    <a href="{% url 'boards:newpost' user_id%}">新規投稿</a>
+                </li>
+                <li class="userpage-list shadow">
+                    <a href="{% url 'boards:postall' user_id%}">投稿一覧</a>
+                </li>
+                <li class="userpage-list shadow">
+                    <a href="{% url 'boards:mygood' user_id%}">いいね</a>
+                </li>
+                <li class="userpage-list shadow">
+                    <a href="{% url 'boards:myfavorite' user_id%}">マイリスト</a>
+                </li>
+{#                <li class="userpage-list shadow">#}
+{#                    <a href="{% url 'boards:userpage' user_id%}">プロフィール</a>#}
+{#                </li>#}
+            </ul>
+        </div>
+
+        <div class="userpage-middle">
+            {% block content %}
+            {% endblock %}
+        </div>
+    </div>
+
+
+    <footer id="footer" >
+        <div class="copy">&copy kitガジェット研究所</div>
+    </footer>
+
+
+
+    {#  js  #}
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script>
+    <script src="{% static 'js/base.js' %}"></script>
+    <script src="{% static 'js/footerFixed.min.js' %}"></script>
+    <script>
+        $(document).ready(function(){
+          $('.bxslider').bxSlider({
+              mode: 'fade',
+              captions: true,
+              slideWidth: 1100,
+              slideHeight: 500,
+          });
+        });
+    </script>
+
+  </body>
+</html>

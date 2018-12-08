@@ -24,9 +24,8 @@ if os.path.exists(dotenv_file):
     dotenv.load_dotenv(dotenv_file)
 
 # 環境変数から読み込む
-
 SECRET_KEY = os.getenv('SECRET_KEY')
-SECRET_KEY = "=^z)p=2bi+=u6pg^b!6w&kf1&6f@kiz-21gxrbznq=zx%gp4c6"
+
 # Djangoのデバッグ機能の有効/無効．デプロイ時にはFalseにしないといけない．
 # 'true'や'True'などを与えるとTrueが返る．それ以外ではFalseが返る．
 DEBUG = (os.getenv('DEBUG', 'False').lower() == 'true')
@@ -38,8 +37,16 @@ ALLOWED_HOSTS = []
 for host in os.getenv('ALLOWED_HOSTS', '*').split(','):
     ALLOWED_HOSTS.append(host.strip())
 
-
 # Application definition
+AUTH_USER_MODEL = 'accounts.User'
+
+# ログイン後トップページにリダイレクト
+LOGIN_REDIRECT_URL = '/'
+
+# Authentication backends
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+)
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -48,6 +55,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'accounts',
+    'boards',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
@@ -65,7 +75,7 @@ ROOT_URLCONF = 'calamitect.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -80,7 +90,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'calamitect.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
@@ -90,7 +99,6 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
@@ -110,7 +118,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/2.1/topics/i18n/
 
@@ -124,13 +131,14 @@ USE_L10N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
 
-DEBUG=True
-ALLOWED_HOSTS="*"
-LANGUAGE_CODE="ja-jp"
-TIME_ZONE="Asia/Tokyo"
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+]
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'

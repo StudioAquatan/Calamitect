@@ -1,0 +1,278 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="article-detail shadow">
+        <div class="article-detail-title">
+            {{ articles.title }}
+        </div>
+        <div class="article-detail-info">
+            <div class="article-detail-username">
+                ユーザー名: <br/>
+                <span style="display: inline-block; font-size: 1.6rem; margin-top: 7px;">{{ articles.user }}</span>
+            </div>
+            <div class="article-detail-created-at">
+                投稿日: <br/>
+                <span style="display: inline-block; font-size: 1.6rem; margin-top: 7px;">{{ articles.created_at }}</span>
+            </div>
+            <div class="article-detail-comments">
+                comment<br/>
+                <span style="display: inline-block; font-size: 2.3rem; margin-left: 50px;">{{ comments_sum }}</span>
+            </div>
+            <div class="article-detail-good">
+                good<br/>
+                <div class="good-info-upper">
+                    <form class="good_form" action="{% url 'boards:good' %}" method="POST">
+                        {% csrf_token %}
+                        <input type="hidden" id="input_article_id" name="article_id" value="{{ article_id }}">
+                        <button type="submit" class="good-button-layout">
+                            <div id="good_sum_1" class="goodbtn"><i class="far fa-thumbs-up"></i>{{ good_sum }}</div>
+                        </button>
+                    </form>
+                </div>
+            </div>
+            <div class="article-detail-favorite">
+                <div class="favorite_text">マイリスト登録</div>
+                <form class="favorite_form_upper" action="{% url 'boards:favorite' %}" method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" class="input_article_id" name="article_id" value="{{ article_id }}">
+                    <button type="submit" class="favorite-button-layout">
+                        <div id="favorite_1" class="favoritebtn">
+                            {% if done_favorite_flag %}
+                                <i class="far fa-folder"></i><i class="fas fa-check"></i>
+                            {% else %}
+                                <i class="fas fa-folder-plus"></i>
+                            {% endif %}
+                        </div>
+                    </button>
+                </form>
+            </div>
+            <div class="article-detail-category">
+                カテゴリ：
+                {% if articles.category_type == 1 %}
+                    事前対策
+                {% elif articles.category_type == 2 %}
+                    災害中
+                {% elif articles.category_type == 3 %}
+                    ボランティア
+                {% else %}
+                    アイテム紹介
+                {% endif %}
+            </div>
+            <div class="article-detail-tag">
+                {% for tag in tags %}
+                    <i class="fas fa-tags"></i> {{ tag.name }}
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="article-detail-description">
+            {{ articles.get_description_as_markdown }}
+            {% if articles.image %}
+                <a href="{{ articles.image.url }}">
+                    <img src="{{ articles.image.url }}" title="article-image" width="300px">
+                </a>
+            {% endif %}
+        </div>
+        <div class="article-sub-info">
+            <div class="good-info">
+                <form class="good_form" action="{% url 'boards:good' %}" method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" class="input_article_id" name="article_id" value="{{ article_id }}">
+                    <button type="submit" class="good-button-layout">
+                        <div id="good_sum_2" class="goodbtn"><i class="far fa-thumbs-up"></i>{{ good_sum }}</div>
+                    </button>
+                </form>
+            </div>
+            <div class="favorite-info">
+                <form class="favorite_form" action="{% url 'boards:favorite' %}" method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" class="input_article_id" name="article_id" value="{{ article_id }}">
+                    <button type="submit" style="position: relative; top: -24px;  left: 140px;" class="favorite-button-layout">
+                        <div id="favorite_2" class="favoritebtn">
+                            {% if done_favorite_flag %}
+                                <i class="far fa-folder"></i><i class="fas fa-check"></i>
+                            {% else %}
+                                <i class="fas fa-folder-plus"></i>
+                            {% endif %}
+                        </div>
+                    </button>
+                </form>
+            </div>
+            <div style="position: relative; top: -51px;left: 270px;"><a
+                    href="https://twitter.com/share?ref_src=twsrc%5Etfw" style="display: inline-block;width:100px;"
+                    class="twitter-share-button" data-show-count="false" data-size="large">Tweet</a></div>
+            <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+            <div style="position:relative; left:400px; top: -88px;">
+                <div class="fb-like" data-href="{% url 'boards:article_detail' article_id %}" data-layout="button_count"
+                     data-action="like" data-size="large" data-show-faces="true" data-share="true"></div>
+            </div>
+            <div id="fb-root"></div>
+            <script>(function (d, s, id) {
+                var js, fjs = d.getElementsByTagName(s)[0];
+                if (d.getElementById(id)) return;
+                js = d.createElement(s);
+                js.id = id;
+                js.src = 'https://connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v3.2';
+                fjs.parentNode.insertBefore(js, fjs);
+            }(document, 'script', 'facebook-jssdk'));</script>
+        </div>
+        <div class="article-comment-create">
+            <div class="article-comment-title">
+                Comments
+            </div>
+            <form class="comment-form" method="post" action="{% url 'boards:article_detail' article_id %}">
+                {% csrf_token %}
+                <textarea class="comment-box" name="text" placeholder="コメント入力欄"></textarea>
+                <button type="submit" class="comment-button">
+                    送信
+                </button>
+            </form>
+        </div>
+    </div>
+
+    {% for comment in comments %}
+        <div class="article-comment-list shadow">
+            <div class="article-comment-list-header">
+                <div class="article-comment-user">
+                    名前:{{ comment.username }}
+                </div>
+                <div class="article-comment-create-at">
+                    コメント日:{{ comment.created_at }}
+                </div>
+            </div>
+            <div class="article-comment-content">
+                {{ comment.text }}
+            </div>
+        </div>
+    {% endfor %}
+
+
+    {#  ログイン画面を促す表示  #}
+    <div id="back_board" class="back-board display-none">
+        <div class="back-board-color">
+            <div id="enter_login" class="enter-login display-none">
+                <form method="post" action="{% url 'accounts:login' %}">
+                    <h2>Login</h2>
+                    {% csrf_token %}
+                    {% for field in form %}
+                        <div style="font-size: 2rem; font-weight: bold; text-align: center;">{{ field.label }}</div>
+                        {{ field }}
+                        {% if field.errors %}
+                            <p>{{ field.errors.0 }}</p>
+                        {% endif %}
+                    {% endfor %}
+                    {% if form.non_field_errors %}
+                        <ul>
+                            {% for non_field_error in form.non_field_errors %}
+                                <li>{{ non_field_error }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                    <div class="submit_area"><input id="id_submit" type="submit" value="送信"></div>
+                    <br>
+                    <div class="close_area">閉じる</div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script>
+    <script>
+    var done_favorite_flag = {{ done_favorite_flag }};
+        var current_done_favorite_flag = true;
+        $('.favorite_form').submit(function (event) {
+            event.preventDefault();
+            var form = $(this);
+            $.ajax({
+                method: form.prop("method"),
+                url: form.prop("action"),
+                data: {
+                    csrfmiddlewaretoken: '{{ csrf_token }}',
+                    article_id: $('.input_article_id').val()
+                },
+                dataType: "text",
+                async: true, //trueなら非同期処理。falseなら同期処理。
+                timeout: 10000,
+            })
+                .done(function () {
+                    if (done_favorite_flag === 0) {
+                        if (current_done_favorite_flag) {
+                            var h = '<i class="far fa-folder"></i>' + '<i class="fas fa-check"></i>';
+                            current_done_favorite_flag = false;
+                        } else {
+                            var h = '<i class="fas fa-folder-plus"></i>';
+                            current_done_favorite_flag = true;
+                        }
+                    } else {
+                        if (current_done_favorite_flag) {
+                            var h = '<i class="fas fa-folder-plus"></i>';
+                            current_done_favorite_flag = false;
+                        } else {
+                            var h = '<i class="far fa-folder"></i>' + '<i class="fas fa-check"></i>';
+                            current_done_favorite_flag = true;
+                        }
+                    }
+                    $("#favorite_1").html(h);
+                    $("#favorite_2").html(h);
+                }).fail(function () {
+                console.log("failed")
+            });
+        });
+
+        var done_good_flag = {{ done_good_flag }};
+        var in_flag = true;
+        $('.good_form').submit(function (event) {
+            event.preventDefault();
+            var form = $(this);
+            var enter_login = "{{ enter_login_form }}";
+            if (enter_login === "True") {
+                $('#enter_login').removeClass("display-none");
+                $('#back_board').removeClass("display-none");
+            } else {
+                $.ajax({
+                    method: form.prop("method"),
+                    url: form.prop("action"),
+                    data: {
+                        csrfmiddlewaretoken: '{{ csrf_token }}',
+                        article_id: $('.input_article_id').val()
+                    },
+                    dataType: "text",
+                    async: true, //trueなら非同期処理。falseなら同期処理。
+                    timeout: 10000,
+                })
+                    .done(function () {
+                        if (done_good_flag === 0) {
+                            if (in_flag) {
+                                var h = '<i class="far fa-thumbs-up"></i>' + ({{ good_sum }}+1) + '<i class="fas fa-check"></i>';
+                                in_flag = false;
+                            } else {
+                                var h = '<i class="far fa-thumbs-up"></i>' + ({{ good_sum }});
+                                in_flag = true;
+                            }
+                        } else {
+                            if (in_flag) {
+                                var h = '<i class="far fa-thumbs-up"></i>' + ({{ good_sum }} -1);
+                                in_flag = false;
+                            } else {
+                                var h = '<i class="far fa-thumbs-up"></i>' + ({{ good_sum }}) + '<i class="fas fa-check"></i>';
+                                in_flag = true;
+                            }
+                        }
+                        $("#good_sum_1").html(h);
+                        $("#good_sum_2").html(h);
+                    }).fail(function () {
+                    console.log("failed")
+                });
+            }
+        });
+
+        $('.close_area').click(function () {
+            $('#back_board').addClass("display-none");
+            $('#enter_login').addClass("display-none")
+        });
+    </script>
+{% endblock %}

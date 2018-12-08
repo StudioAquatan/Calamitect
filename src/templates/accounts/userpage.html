@@ -1,0 +1,36 @@
+{% extends 'accounts/base_userpage.html' %}
+
+{% block content %}
+<div class="profile-title">
+   Profile
+</div>
+
+<div class="profile-name">
+     Name
+     <form method="post" action="">
+         {% csrf_token %}
+         <input class="profile-input" type="text" name="title" value=""  />
+         <input class="profile-change" type="submit" value="変更する">
+     </form>
+</div>
+
+<div class="profile-mail">
+    Address
+    <form method="post" action="">
+        {% csrf_token %}
+        <input class="profile-input" type="email" name="title" />
+        <input class="profile-change"  type="submit" value="変更する">
+    </form>
+</div>
+
+<div class="profile-icon">
+    Icon
+    <form method="post" action="">
+        {% csrf_token %}
+        <input class="profile-input-icon" type="text" name="title" />
+        <input class="profile-change" type="submit" value="変更する">
+    </form>
+</div>
+
+
+{% endblock %}

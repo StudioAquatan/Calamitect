@@ -1,0 +1,394 @@
+
+/*     base     */
+html{
+    font-size: 62.5%;
+}
+a{
+    transition-property: color;
+    transition-duration:  300ms;
+}
+
+a:hover {
+    text-decoration: none;
+    color: rgba(10,10,10,0.4);
+}
+
+@import url(http://fonts.googleapis.com/earlyaccess/notosansjapanese.css);
+body{
+    margin: 0px;
+    background-color: white;
+    font-size: 2rem;
+    font-family: 'Verdana','Noto Sans Japanese';
+}
+
+
+/*     header    */
+header {
+    width: 100%;
+    height: 60px;
+    margin: 0 auto;
+    position: fixed;
+    z-index: 2;
+    user-select: none;
+    background-color: rgba(255,131,0,0.7);
+    border-bottom: 2px solid grey;
+}
+
+.header-menu{
+    width: 1100px;
+    height: 60px;
+    display: flex;
+    margin: 0 auto;
+    text-align: center;
+    border-bottom: 2px solid grey;
+    font-weight: bold;
+    position: relative;
+}
+a {
+    color: black;
+}
+.title, .header-category-text .signin, .login, .username, .post {
+    box-sizing: border-box;
+    height: 100%;
+    line-height: 3;
+}
+.post {
+    cursor: pointer;
+    flex-basis: 120px;
+}
+.signin, .login{
+    cursor: pointer;
+    flex-basis: 94px;
+    line-height: 3;
+}
+.username{
+    flex-basis: 143px;
+    box-sizing: border-box;
+    padding-left: 32px;
+    margin-right: 10px;
+}
+.header-category-text{
+    flex-basis: 100px;
+    font-size: 1.8rem;
+    line-height: 2;
+    height:50px;
+    margin-top: 15px;
+}
+.title {
+    flex-basis: 205px;
+    text-align: left;
+    line-height: 1.6;
+    box-sizing: border-box;
+    padding-left: 50px;
+    font-family: "Berlin Sans FB";
+}
+.title a {
+    text-decoration: none;
+    font-size: 4rem;
+    font-weight: bold;
+}
+
+.navi-button, .search,.signin, .login, .post {
+    text-align: center;
+}
+.username{
+    text-align: right;
+}
+.post{
+    flex-basis: 27px;
+    height: 27px;
+    cursor: pointer;
+    margin-top: 20px;
+    font-size: 2.5rem;
+    line-height: 1;
+    text-align: center;
+    background-color: rgba(255,131,0,1);
+    border-radius: 8px;
+    transition-property: all;
+    transition-duration:  200ms;
+}
+.post:hover{
+    background-color: rgba(220,120,0,1);
+}
+.search {
+    width: 40px;
+    height: 35px;
+    cursor: pointer;
+    font-size: 2.5rem;
+    box-sizing: border-box;
+    border-radius: 10px;
+    margin-top: 16px;
+    padding-top: 3px;
+    transition-property: all;
+    transition-duration:  200ms;
+}
+.search:hover{
+    background-color: rgba(220,120,0,1);
+}
+.navi-button {
+    width: 27px;
+    height: 27px;
+    cursor: pointer;
+    font-size: 2.5rem;
+    text-align: center;
+    margin-top: 20px;
+    margin-right: 500px;
+    background-color: rgba(255,131,0,1);
+    border-radius: 8px;
+    transition-property: all;
+    transition-duration:  200ms;
+}
+.navi-button:hover{
+    background-color: rgba(220,120,0,1);
+}
+
+.header-category {
+    position: absolute;
+    left: 200px;
+    top: 55px;
+    text-align: left;
+    font-size: 0px;
+    width:130px;
+    z-index: 4;
+    background-color: rgba(255,255,255,1);
+    border: 0.5px solid grey;
+    border-radius: 5px;
+}
+header ul {
+    margin: 0;
+    list-style-type: none;
+    padding: 5px 10px;
+    width:130px;
+}
+header li{
+    display: inline-block;
+    box-sizing: border-box;
+    padding: 0px;
+    font-size: 1.6rem;
+    font-weight: bold;
+    width: 110px;
+    line-height: 2;
+    border-radius: 8px;
+    transition-property: all;
+    transition-duration:  200ms;
+}
+header li:hover{
+    background-color: rgba(255,131,0,0.7);
+}
+header li a:hover {
+    color: #000;
+    text-decoration: none;
+}
+header ul li a{
+    text-decoration: none;
+    display:inline-block;
+    width:100%;
+    padding: 0px 5px;
+}
+
+.search-bar{
+    position: absolute;
+    top: 55px;
+    right: 100px;
+    width: 270px;
+    height: 40px;
+    border: 0.5px solid grey;
+    border-radius: 8px;
+    background-color: rgba(255,255,255,1);
+}
+/*inputの影など初期化*/
+header input{
+    border:none;
+    background:none;
+}
+.search-box{
+    border: 0.5px solid grey;
+    border-radius: 8px;
+    width: 200px;
+    height: 20px;
+    font-size: 1.5rem;
+    box-shadow: 0px 0px;
+    padding-left: 10px;
+}
+.search-decisiton{
+    background-color: rgba(255,131,0,0.6);
+    font-size: 1.7rem;
+    width:32px;
+    border-radius: 8px;
+    border: 1px solid grey;
+    box-shadow: 0px 0px;
+    margin-top: 5px;
+    transition-property: all;
+    transition-duration:  200ms;
+}
+.search-decisiton:hover{
+    background-color: rgba(255,131,0,1);
+    cursor: pointer;
+}
+
+.header-my {
+    position: absolute;
+    right: 48px;
+    top: 55px;
+    text-align: left;
+    font-size: 0px;
+    width:130px;
+    z-index: 4;
+    background-color: rgba(255,255,255,1);
+    border: 0.5px solid grey;
+    border-radius: 5px;
+}
+
+ /* headerの補正 */
+.header-opacity-cancel{
+    background-color: #FFFFFF;
+    width:100%;
+    height: 60px;
+    position: fixed;
+    z-index: 1;
+}
+.header-category-opacity-cancel{
+    position: absolute;
+    left: 115px;
+    top: 55px;
+
+    background-color: white;
+    width:142px;
+    height:140px;
+    z-index: 3;
+}
+.header-margin-cancel{
+    height:60px;
+}
+
+
+.display-none{
+    display: none;
+}
+
+
+/*     footer    */
+footer {
+    width: 100%;
+    height: 100px;
+    background-color: rgba(255,131,0,0.6);
+    border-top: 1px solid grey;
+    margin: 0 auto;
+    font-weight: bold;
+}
+.copy {
+    width: 1000px;
+    margin: 0 auto;
+    text-align: right;
+    margin-top: 20px;
+}
+
+
+
+/*  description index.html */
+
+.description {
+    width: 1000px;
+    min-height: 400px;
+    height: 100%;
+    margin: 0 auto;
+    margin-top: 20px;
+    background-color: white;
+    position: relative;
+    z-index: 0;
+}
+
+.description-box{
+    min-height:350px;
+    height:100%;
+}
+
+/*  contents  */
+.description-title{
+    font-family: "Berlin Sans FB";
+    margin: 0 auto;
+    margin-top: 70px;
+    width: 500px;
+    text-align: center;
+    font-size: 11rem;
+    font-weight: bold;
+}
+.description-subtitle{
+    margin: 0 auto;
+    margin-top: 10px;
+    width: 500px;
+    text-align: center;
+    font-size: 2rem;
+    letter-spacing: 1.2rem;
+    font-weight: bold;
+    padding-left: 3px;
+}
+.description-exsample{
+    margin: 50px auto;
+    width: 600px;
+    text-align: center;
+    font-size: 4rem;
+    letter-spacing: 1.2rem;
+    font-weight: bold;
+    padding-left: 3px;
+}
+
+/* 緊急速報時　地震速報 */
+
+.quake-title{
+    color:red;
+    text-align: center;
+    font-weight: bold;
+    margin-top: 30px;
+    font-size: 4rem;
+}
+.quake-info1{
+    color: black;
+    font-size: 1.7rem;
+    font-weight: bold;
+    width:600px;
+    margin: 0 auto;
+    text-align: center;
+    margin-top: 20px;
+}
+.quake-info2{
+    color:black;
+    font-size: 1.7rem;
+    font-weight: bold;
+    width:600px;
+    margin: 0 auto;
+    text-align: left;
+    margin-top: 10px;
+}
+.quake-position{
+    color:blue;
+    font-size: 1.7rem;
+    font-weight: bold;
+    width:600px;
+    box-sizing: border-box;
+    padding-right: 20px;
+    margin: 0 auto;
+    margin-top: 20px;
+
+}
+.quake-position:last-child{
+    color: black;
+}
+
+.blinking{
+	-webkit-animation:blink 1.0s ease-in-out infinite alternate;
+    -moz-animation:blink 1.0s ease-in-out infinite alternate;
+    animation:blink 1.0s ease-in-out infinite alternate;
+}
+@-webkit-keyframes blink{
+    0% {opacity:0;}
+    100% {opacity:1;}
+}
+@-moz-keyframes blink{
+    0% {opacity:0;}
+    100% {opacity:1;}
+}
+@keyframes blink{
+    0% {opacity:0;}
+    100% {opacity:1;}
+}

@@ -1,0 +1,44 @@
+{% extends 'accounts/base_userpage.html' %}
+{% load static %}
+
+{% block content %}
+    {% for article in articles %}
+        <div class="post-card-good shadow">
+            <div class="card-image-mini">
+                {% if article.user.profile_icon %}
+                    <a href="{{ article.user.profile_icon.url }}">
+                        <img src="{{ article.user.profile_icon.url }}" title="user-icon" width="100px" height="100px">
+                    </a>
+                {% else %}
+                    <a href="{% get_media_prefix %}/profile_icons/default.png">
+                        <img src="{% get_media_prefix %}/profile_icons/default.png" title="user-icon"
+                             width="100px" height="100px">
+                    </a>
+                {% endif %}
+            </div>
+            <div class="card-right-good">
+                <div class="card-title-good">
+                    <a href="{% url 'boards:article_detail' article.id %}">{{ article.title }}</a>
+                    <a href="{% url 'boards:post_edit' user_id article.id %}"><span style="color:blue;">[編集]</span></a>
+                </div>
+                <div class="card-content-good">
+                    {{ article.description }}
+                </div>
+                <div class="card-username-good">
+                    投稿者：{{ article.user.username }}
+                </div>
+                <div class="card-created-at-good">
+                    投稿日時：{{ article.created_at }}
+                </div>
+                <div class="card-good-good2">
+                    <div class="card-good-sum-good"><i class="far fa-thumbs-up">{{ article.good_cnt }}</i></div>
+                </div>
+                <div class="card-status">
+                    {% if article.draft_flag %}
+                        [下書き]
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+{% endblock %}

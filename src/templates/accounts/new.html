@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="post-form">
+        <form method="post" action="">
+            {% csrf_token %}
+            <h2>Sign up</h2>
+            {% for field in form %}
+                <div class="signin-form-title">{{ field.label }}</div>
+                {{ field }}
+                {% if field.errors %}
+                    <p>{{ field.errors.0 }}</p>
+                {% endif %}
+            {% endfor %}
+
+            {% if form.non_field_errors %}
+                <ul>
+                    {% for non_field_error in form.non_field_errors %}
+                        <li>{{ non_field_error }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+
+           <div class="submit-outline"><input id="submit" type="submit" value="登録"></div>
+        </form>
+    </div>
+{% endblock %}
